@@ -1,0 +1,141 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * AstroVital — "Deep Field" palette
+ * Cool graphite neutrals, a single calm steel-blue accent for interaction,
+ * and a reserved clinical status scale (nominal / caution / critical).
+ * Status colors are never used decoratively and always ship with icon + label.
+ */
+:root {
+  --radius: 0.625rem;
+
+  --background: #07090d;
+  --foreground: #e7eaf0;
+
+  --card: #0d1117;
+  --card-foreground: #e7eaf0;
+  --popover: #11161e;
+  --popover-foreground: #e7eaf0;
+
+  --primary: #8aa8ff;
+  --primary-foreground: #0a0f1f;
+  --secondary: #161c26;
+  --secondary-foreground: #d5dbe6;
+  --muted: #131821;
+  --muted-foreground: #8b95a7;
+  --accent: #1a2130;
+  --accent-foreground: #e7eaf0;
+
+  --destructive: #f0616d;
+  --border: #1f2733;
+  --input: #252e3c;
+  --ring: #8aa8ff;
+
+  /* Clinical status scale */
+  --nominal: #4fbf8b;
+  --caution: #e8b04b;
+  --critical: #f0616d;
+  --info: #8aa8ff;
+
+  /* Data-viz neutrals */
+  --grid: #1a212c;
+  --surface-raised: #11161e;
+
+  --sidebar: #0a0d12;
+  --sidebar-foreground: #c9d0dc;
+  --sidebar-border: #1a212c;
+  --sidebar-accent: #141a24;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-nominal: var(--nominal);
+  --color-caution: var(--caution);
+  --color-critical: var(--critical);
+  --color-info: var(--info);
+  --color-grid: var(--grid);
+  --color-surface-raised: var(--surface-raised);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent: var(--sidebar-accent);
+
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    color-scheme: dark;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "ss01", "cv11";
+  }
+  ::selection {
+    background: color-mix(in oklab, var(--primary) 35%, transparent);
+  }
+}
+
+@layer utilities {
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+  .eyebrow {
+    @apply font-mono text-[10.5px] font-medium uppercase tracking-[0.12em] text-muted-foreground;
+  }
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+  }
+  .bg-dotgrid {
+    background-image: radial-gradient(color-mix(in oklab, var(--foreground) 7%, transparent) 1px, transparent 1px);
+    background-size: 18px 18px;
+  }
+}
+
+@keyframes ecg-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
