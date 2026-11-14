@@ -1,0 +1,165 @@
+{
+  "diagnoses": [
+    {
+      "id": "d1",
+      "astronaut_id": "rostova",
+      "title": "Síndrome neuro-ocular asociado al vuelo (SANS)",
+      "status": "WARNING",
+      "probability": 94.6,
+      "summary": "Desplazamiento cefálico de fluidos con alteración morfológica del nervio óptico, correlacionado entre OCT, PIC estimada y agudeza visual.",
+      "evidence": [
+        {
+          "label": "OCT retinal",
+          "value": "Edema +12 µm"
+        },
+        {
+          "label": "PIC estimada",
+          "value": "19.5 mmHg"
+        },
+        {
+          "label": "Agudeza visual",
+          "value": "20/25"
+        }
+      ],
+      "recommendation": "LBNP −35 mmHg durante 45 min, dos sesiones diarias. Repetir OCT en 72 h.",
+      "differentials": [
+        {
+          "label": "SANS grado 1",
+          "probability": 94.6
+        },
+        {
+          "label": "Hipertensión intracraneal idiopática",
+          "probability": 3.1
+        },
+        {
+          "label": "Papiledema por hipercapnia",
+          "probability": 2.3
+        }
+      ]
+    },
+    {
+      "id": "d2",
+      "astronaut_id": "rostova",
+      "title": "Adaptación cardiovascular a gravedad parcial",
+      "status": "NOMINAL",
+      "probability": 98.1,
+      "summary": "Remodelado adaptativo sin hipertrofia patológica ni taponamiento. ECG derivación II sin alteración del segmento ST.",
+      "evidence": [
+        {
+          "label": "FEVI",
+          "value": "62 %"
+        },
+        {
+          "label": "Gasto cardíaco",
+          "value": "4.8 L/min"
+        },
+        {
+          "label": "Arritmias 72 h",
+          "value": "0 eventos"
+        }
+      ],
+      "recommendation": "Mantener ejercicio aeróbico de 30 min diarios. Sin intervención necesaria.",
+      "differentials": [
+        {
+          "label": "Adaptación fisiológica",
+          "probability": 98.1
+        },
+        {
+          "label": "Miocardiopatía incipiente",
+          "probability": 1.2
+        },
+        {
+          "label": "Derrame pericárdico",
+          "probability": 0.7
+        }
+      ]
+    },
+    {
+      "id": "d3",
+      "astronaut_id": "rostova",
+      "title": "Pérdida de densidad ósea trabecular",
+      "status": "WARNING",
+      "probability": 88.3,
+      "summary": "Resorción proximal de fémur −1.2 % acumulada desde el lanzamiento, dentro del margen tolerado por protocolo.",
+      "evidence": [
+        {
+          "label": "DMO fémur",
+          "value": "0.96 g/cm²"
+        },
+        {
+          "label": "Calciuria",
+          "value": "Elevada leve"
+        },
+        {
+          "label": "Adherencia ARED",
+          "value": "92 %"
+        }
+      ],
+      "recommendation": "Aumentar carga resistiva a 6 sesiones semanales y revisar aporte de vitamina D.",
+      "differentials": [
+        {
+          "label": "Desuso por gravedad parcial",
+          "probability": 88.3
+        },
+        {
+          "label": "Déficit de vitamina D",
+          "probability": 9.4
+        },
+        {
+          "label": "Hiperparatiroidismo",
+          "probability": 2.3
+        }
+      ]
+    }
+  ],
+  "clinical_files": [
+    {
+      "id": "f1",
+      "astronaut_id": "rostova",
+      "name": "ECG_Holter_S284.pdf",
+      "kind": "pdf",
+      "size_mb": 1.4,
+      "captured_at": "06:15",
+      "findings": "Holter 24 h sin alteraciones del segmento ST ni arritmias ventriculares. PR 148 ms, QRS 82 ms, QTc 410 ms.",
+      "confidence": 99.2,
+      "model": "OCR + extracción clínica",
+      "latency_ms": 18
+    },
+    {
+      "id": "f2",
+      "astronaut_id": "rostova",
+      "name": "Fonocardio_Rostova.wav",
+      "kind": "audio",
+      "size_mb": 3.8,
+      "captured_at": "07:40",
+      "findings": "R1 y R2 rítmicos de intensidad normal. Sin soplos, chasquidos ni tercer ruido. Variabilidad RR compatible con descondicionamiento.",
+      "confidence": 98.7,
+      "model": "CNN espectral",
+      "latency_ms": 9
+    },
+    {
+      "id": "f3",
+      "astronaut_id": "rostova",
+      "name": "Eco_Apical_4C.mp4",
+      "kind": "video",
+      "size_mb": 18.2,
+      "captured_at": "08:30",
+      "findings": "Ventana apical 4 cámaras: FEVI 62 %, sin derrame pericárdico. Remodelado esférico leve típico de microgravedad.",
+      "confidence": 96.9,
+      "model": "Segmentación endocárdica",
+      "latency_ms": 41
+    },
+    {
+      "id": "f4",
+      "astronaut_id": "rostova",
+      "name": "OCT_Retina_OD.dcm",
+      "kind": "dicom",
+      "size_mb": 24.6,
+      "captured_at": "09:12",
+      "findings": "Engrosamiento de la capa de fibras nerviosas +12 µm y micro-pliegues coroideos leves, compatibles con SANS grado 1.",
+      "confidence": 97.4,
+      "model": "Reconstrucción volumétrica",
+      "latency_ms": 22
+    }
+  ]
+}

@@ -1,0 +1,2580 @@
+{
+  "astronauts": [
+    {
+      "id": "rostova",
+      "name": "Cdr. Elena Rostova",
+      "short_name": "E. Rostova",
+      "initials": "ER",
+      "role": "Comandante de misión",
+      "suit_id": "SUIT-01",
+      "blood_type": "A+",
+      "height_cm": 172,
+      "note": "Protocolo LBNP recomendado"
+    },
+    {
+      "id": "thorne",
+      "name": "Marcus Thorne",
+      "short_name": "M. Thorne",
+      "initials": "MT",
+      "role": "Piloto de tránsito",
+      "suit_id": "SUIT-02",
+      "blood_type": "O−",
+      "height_cm": 184,
+      "note": "Estabilidad cognitiva 99 %"
+    },
+    {
+      "id": "khan",
+      "name": "Dra. Aisha Khan",
+      "short_name": "A. Khan",
+      "initials": "AK",
+      "role": "Oficial médico",
+      "suit_id": "SUIT-03",
+      "blood_type": "B+",
+      "height_cm": 165,
+      "note": "Ritmo circadiano estable"
+    },
+    {
+      "id": "lee",
+      "name": "Kenji Lee",
+      "short_name": "K. Lee",
+      "initials": "KL",
+      "role": "Ingeniero de sistemas",
+      "suit_id": "SUIT-04",
+      "blood_type": "AB+",
+      "height_cm": 178,
+      "note": "Fatiga circadiana baja"
+    }
+  ],
+  "assessments": [
+    {
+      "astronaut_id": "rostova",
+      "structure_id": "brain",
+      "clinical_status": "WARNING",
+      "status": "WARNING",
+      "title": "SANS grado 1 en curso",
+      "summary": "El desplazamiento cefálico continuo de fluidos genera estasis venosa yugular, aplanamiento del polo posterior del globo ocular y edema papilar leve.",
+      "metrics": [
+        {
+          "label": "Edema de disco",
+          "value": "+12",
+          "unit": "µm",
+          "hint": "OCT macular"
+        },
+        {
+          "label": "Agudeza visual",
+          "value": "20/25",
+          "hint": "Snellen cabina"
+        },
+        {
+          "label": "PIC estimada",
+          "value": "19.5",
+          "unit": "mmHg",
+          "hint": "No invasiva"
+        }
+      ],
+      "recommended_action": "Iniciar protocolo LBNP"
+    },
+    {
+      "astronaut_id": "rostova",
+      "structure_id": "eyes",
+      "clinical_status": "WARNING",
+      "status": "WARNING",
+      "title": "Aplanamiento del globo posterior",
+      "summary": "Aplanamiento del polo posterior y pliegues coroideos leves, con aumento del diámetro de la vaina del nervio óptico. Compatible con SANS grado 1.",
+      "metrics": [
+        {
+          "label": "Vaina n. óptico",
+          "value": "6.1",
+          "unit": "mm",
+          "hint": "Ecografía"
+        },
+        {
+          "label": "Refracción",
+          "value": "+0.50",
+          "unit": "D"
+        },
+        {
+          "label": "PIO",
+          "value": "17",
+          "unit": "mmHg",
+          "hint": "Tonómetro"
+        }
+      ],
+      "recommended_action": "Ecografía ocular de control"
+    },
+    {
+      "astronaut_id": "rostova",
+      "structure_id": "thyroid",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Homeostasis metabólica",
+      "summary": "TSH y T4 libre balanceadas. Tasa metabólica basal ajustada al gasto muscular reducido en gravedad parcial.",
+      "metrics": [
+        {
+          "label": "TSH",
+          "value": "1.8",
+          "unit": "mUI/L"
+        },
+        {
+          "label": "T4 libre",
+          "value": "1.2",
+          "unit": "ng/dL"
+        },
+        {
+          "label": "TMB",
+          "value": "1680",
+          "unit": "kcal"
+        }
+      ],
+      "recommended_action": "Analizar perfil hormonal"
+    },
+    {
+      "astronaut_id": "rostova",
+      "structure_id": "lungs",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Intercambio gaseoso óptimo",
+      "summary": "Relación ventilación-perfusión homogénea, sin zonas de atelectasia dependientes de la gravedad. Saturación tisular estable.",
+      "metrics": [
+        {
+          "label": "SpO₂",
+          "value": "98.4",
+          "unit": "%"
+        },
+        {
+          "label": "Frec. resp.",
+          "value": "14",
+          "unit": "rpm"
+        },
+        {
+          "label": "EtCO₂",
+          "value": "38",
+          "unit": "mmHg"
+        }
+      ],
+      "recommended_action": "Espirometría rápida"
+    },
+    {
+      "astronaut_id": "rostova",
+      "structure_id": "heart",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Ritmo sinusal, gasto conservado",
+      "summary": "Leve reducción adaptativa de masa ventricular izquierda por descarga hidrostática. Sin arritmias ventriculares en las últimas 72 h.",
+      "metrics": [
+        {
+          "label": "Frec. cardíaca",
+          "value": "64",
+          "unit": "lpm"
+        },
+        {
+          "label": "Fracción eyección",
+          "value": "62",
+          "unit": "%"
+        },
+        {
+          "label": "Gasto cardíaco",
+          "value": "4.8",
+          "unit": "L/min"
+        }
+      ],
+      "recommended_action": "Sincronizar ECG de 12 derivaciones"
+    },
+    {
+      "astronaut_id": "rostova",
+      "structure_id": "liver",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Función hepática normal",
+      "summary": "Metabolismo CYP450 dentro de rango. Transaminasas normales, sin toxicidad farmacológica acumulada.",
+      "metrics": [
+        {
+          "label": "ALT",
+          "value": "24",
+          "unit": "U/L"
+        },
+        {
+          "label": "AST",
+          "value": "21",
+          "unit": "U/L"
+        },
+        {
+          "label": "Bilirrubina",
+          "value": "0.8",
+          "unit": "mg/dL"
+        }
+      ],
+      "recommended_action": "Revisar farmacocinética"
+    },
+    {
+      "astronaut_id": "rostova",
+      "structure_id": "stomach",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Motilidad gástrica regular",
+      "summary": "Vaciamiento gástrico dentro de lo esperado para gravedad parcial. Sin reflujo sintomático.",
+      "metrics": [
+        {
+          "label": "Vaciamiento",
+          "value": "92",
+          "unit": "min"
+        },
+        {
+          "label": "pH",
+          "value": "2.1"
+        },
+        {
+          "label": "Náusea",
+          "value": "0",
+          "unit": "/10"
+        }
+      ],
+      "recommended_action": "Registrar ingesta"
+    },
+    {
+      "astronaut_id": "rostova",
+      "structure_id": "kidneys",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Balance hídrico estable",
+      "summary": "Hipercalciuria leve secundaria a resorción ósea, controlada con hidratación alcalinizante. Filtrado glomerular conservado.",
+      "metrics": [
+        {
+          "label": "eGFR",
+          "value": "105",
+          "unit": "mL/min"
+        },
+        {
+          "label": "pH urinario",
+          "value": "6.8"
+        },
+        {
+          "label": "Densidad",
+          "value": "1.018"
+        }
+      ],
+      "recommended_action": "Monitorizar balance hídrico"
+    },
+    {
+      "astronaut_id": "rostova",
+      "structure_id": "intestine",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Microbioma equilibrado",
+      "summary": "Tránsito colónico preservado con dieta de fibra formulada. Sin disbiosis significativa en la última muestra.",
+      "metrics": [
+        {
+          "label": "Diversidad",
+          "value": "3.9",
+          "unit": "H′"
+        },
+        {
+          "label": "Carga bact.",
+          "value": "8.4",
+          "unit": "×10⁹"
+        },
+        {
+          "label": "Absorción",
+          "value": "97",
+          "unit": "%"
+        }
+      ],
+      "recommended_action": "Registrar absorción nutricional"
+    },
+    {
+      "astronaut_id": "rostova",
+      "structure_id": "wrist",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Enlace UWB activo",
+      "summary": "Enlace de baja latencia a 120 Hz con el traje. Respuesta galvánica de piel y temperatura periférica en rango.",
+      "metrics": [
+        {
+          "label": "Temp. piel",
+          "value": "34.2",
+          "unit": "°C"
+        },
+        {
+          "label": "Muestreo",
+          "value": "120",
+          "unit": "Hz"
+        },
+        {
+          "label": "GSR",
+          "value": "0.4",
+          "unit": "kΩ"
+        }
+      ],
+      "recommended_action": "Recalibrar biomapeo del traje"
+    },
+    {
+      "astronaut_id": "rostova",
+      "structure_id": "femur",
+      "clinical_status": "WARNING",
+      "status": "WARNING",
+      "title": "Vigilancia de resorción ósea",
+      "summary": "Desmineralización trabecular de fémur proximal de −1.2 %, dentro del margen tolerado. Se recomienda carga resistiva diaria.",
+      "metrics": [
+        {
+          "label": "Δ densidad",
+          "value": "−1.2",
+          "unit": "%"
+        },
+        {
+          "label": "T-score",
+          "value": "−0.4"
+        },
+        {
+          "label": "DMO",
+          "value": "0.96",
+          "unit": "g/cm²"
+        }
+      ],
+      "recommended_action": "Programar sesión de carga"
+    },
+    {
+      "astronaut_id": "rostova",
+      "structure_id": "calcaneus",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Contramedidas de fluid shift listas",
+      "summary": "Reducción de volumen tisular en pantorrillas por desplazamiento cefálico. Thigh cuffs y LBNP disponibles para restablecer el gradiente.",
+      "metrics": [
+        {
+          "label": "LBNP",
+          "value": "−35",
+          "unit": "mmHg"
+        },
+        {
+          "label": "Perím. gemelo",
+          "value": "32.4",
+          "unit": "cm"
+        },
+        {
+          "label": "Adherencia",
+          "value": "98",
+          "unit": "%"
+        }
+      ],
+      "recommended_action": "Activar thigh cuffs"
+    },
+    {
+      "astronaut_id": "rostova",
+      "structure_id": "vessels",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Flujo yugular y aórtico normales",
+      "summary": "Sin estasis ni flujo retrógrado en la vena yugular interna. Rigidez arterial estable respecto a la línea base preflight.",
+      "metrics": [
+        {
+          "label": "Flujo yugular",
+          "value": "Anterógrado"
+        },
+        {
+          "label": "Vel. onda pulso",
+          "value": "7.1",
+          "unit": "m/s"
+        },
+        {
+          "label": "Área VYI",
+          "value": "0.62",
+          "unit": "cm²"
+        }
+      ],
+      "recommended_action": "Ecografía de vena yugular"
+    },
+    {
+      "astronaut_id": "rostova",
+      "structure_id": "spleen",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Bazo de tamaño normal",
+      "summary": "Sin esplenomegalia. Recuento linfocitario estable pese a la reactivación latente esperada en vuelo prolongado.",
+      "metrics": [
+        {
+          "label": "Eje mayor",
+          "value": "10.8",
+          "unit": "cm"
+        },
+        {
+          "label": "Linfocitos",
+          "value": "1.9",
+          "unit": "×10⁹/L"
+        },
+        {
+          "label": "PCR",
+          "value": "1.2",
+          "unit": "mg/L"
+        }
+      ],
+      "recommended_action": "Perfil hematológico rápido"
+    },
+    {
+      "astronaut_id": "rostova",
+      "structure_id": "pancreas",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Control glucémico estable",
+      "summary": "Sensibilidad a la insulina dentro de rango a pesar de la reducción de actividad muscular en gravedad parcial.",
+      "metrics": [
+        {
+          "label": "Glucosa",
+          "value": "92",
+          "unit": "mg/dL"
+        },
+        {
+          "label": "HbA1c",
+          "value": "5.2",
+          "unit": "%"
+        },
+        {
+          "label": "Lipasa",
+          "value": "38",
+          "unit": "U/L"
+        }
+      ],
+      "recommended_action": "Curva de glucosa capilar"
+    },
+    {
+      "astronaut_id": "rostova",
+      "structure_id": "skull",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Bóveda craneal íntegra",
+      "summary": "Sin lesiones ni fracturas. Densidad ósea craneal estable; en microgravedad puede aumentar levemente por redistribución de carga.",
+      "metrics": [
+        {
+          "label": "Δ densidad",
+          "value": "+0.3",
+          "unit": "%"
+        },
+        {
+          "label": "Impactos",
+          "value": "0",
+          "hint": "Últimos 30 soles"
+        },
+        {
+          "label": "Casco EVA",
+          "value": "OK"
+        }
+      ],
+      "recommended_action": "Revisar registro de impactos"
+    },
+    {
+      "astronaut_id": "rostova",
+      "structure_id": "spine",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Elongación espinal compensada",
+      "summary": "Los discos intervertebrales se expanden sin carga axial y la columna se alarga. Sin dolor lumbar significativo ni herniación.",
+      "metrics": [
+        {
+          "label": "Elongación",
+          "value": "+3.2",
+          "unit": "cm"
+        },
+        {
+          "label": "Altura disco L4-L5",
+          "value": "+1.1",
+          "unit": "mm"
+        },
+        {
+          "label": "Dolor lumbar",
+          "value": "1",
+          "unit": "/10"
+        }
+      ],
+      "recommended_action": "Programar ejercicio de estabilización"
+    },
+    {
+      "astronaut_id": "rostova",
+      "structure_id": "ribcage",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Caja torácica sin hallazgos",
+      "summary": "Excursión torácica simétrica. Sin fracturas costales ni dolor a la palpación.",
+      "metrics": [
+        {
+          "label": "Excursión",
+          "value": "6.4",
+          "unit": "cm"
+        },
+        {
+          "label": "Δ densidad",
+          "value": "−0.4",
+          "unit": "%"
+        },
+        {
+          "label": "Dolor",
+          "value": "0",
+          "unit": "/10"
+        }
+      ],
+      "recommended_action": "Registrar espirometría"
+    },
+    {
+      "astronaut_id": "rostova",
+      "structure_id": "shoulder",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Hombros sin sobrecarga EVA",
+      "summary": "Rango de movimiento completo. Sin signos de pinzamiento por uso prolongado del traje presurizado.",
+      "metrics": [
+        {
+          "label": "Abducción",
+          "value": "175",
+          "unit": "°"
+        },
+        {
+          "label": "Fuerza",
+          "value": "5",
+          "unit": "/5"
+        },
+        {
+          "label": "Horas EVA",
+          "value": "38",
+          "unit": "h"
+        }
+      ],
+      "recommended_action": "Evaluar rango de movimiento"
+    },
+    {
+      "astronaut_id": "rostova",
+      "structure_id": "humerus",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Húmero estable",
+      "summary": "Pérdida ósea mínima en miembro superior, que mantiene carga funcional durante las tareas de la misión.",
+      "metrics": [
+        {
+          "label": "Δ densidad",
+          "value": "−0.3",
+          "unit": "%"
+        },
+        {
+          "label": "Masa muscular",
+          "value": "−1.1",
+          "unit": "%"
+        },
+        {
+          "label": "Fuerza agarre",
+          "value": "41",
+          "unit": "kg"
+        }
+      ],
+      "recommended_action": "Medir fuerza de agarre"
+    },
+    {
+      "astronaut_id": "rostova",
+      "structure_id": "forearm",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Antebrazo sin hallazgos",
+      "summary": "Radio y cúbito con densidad conservada. Sin tendinopatía por manipulación de herramientas en EVA.",
+      "metrics": [
+        {
+          "label": "Δ densidad",
+          "value": "−0.2",
+          "unit": "%"
+        },
+        {
+          "label": "Pronación",
+          "value": "85",
+          "unit": "°"
+        },
+        {
+          "label": "Supinación",
+          "value": "88",
+          "unit": "°"
+        }
+      ],
+      "recommended_action": "Evaluar movilidad"
+    },
+    {
+      "astronaut_id": "rostova",
+      "structure_id": "hand",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Manos y uñas íntegras",
+      "summary": "Sin onicólisis ni lesiones por presión de los guantes del traje. Sensibilidad digital conservada.",
+      "metrics": [
+        {
+          "label": "Onicólisis",
+          "value": "0",
+          "unit": "dedos"
+        },
+        {
+          "label": "Sensibilidad",
+          "value": "Normal"
+        },
+        {
+          "label": "Destreza",
+          "value": "98",
+          "unit": "%"
+        }
+      ],
+      "recommended_action": "Inspección post-EVA"
+    },
+    {
+      "astronaut_id": "rostova",
+      "structure_id": "pelvis",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Pelvis y cadera estables",
+      "summary": "Densidad del cuello femoral y la cresta ilíaca dentro del margen tolerado por protocolo.",
+      "metrics": [
+        {
+          "label": "DMO cadera",
+          "value": "0.98",
+          "unit": "g/cm²"
+        },
+        {
+          "label": "Δ densidad",
+          "value": "−0.8",
+          "unit": "%"
+        },
+        {
+          "label": "T-score",
+          "value": "−0.2"
+        }
+      ],
+      "recommended_action": "Programar densitometría"
+    },
+    {
+      "astronaut_id": "rostova",
+      "structure_id": "tibia",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Tibia y peroné conservados",
+      "summary": "Pérdida trabecular leve en tibia distal, compensada con la cinta de correr y la carga resistiva diaria.",
+      "metrics": [
+        {
+          "label": "Δ densidad",
+          "value": "−0.9",
+          "unit": "%"
+        },
+        {
+          "label": "Masa gemelo",
+          "value": "−2.4",
+          "unit": "%"
+        },
+        {
+          "label": "Adherencia",
+          "value": "96",
+          "unit": "%"
+        }
+      ],
+      "recommended_action": "Programar sesión de carga"
+    },
+    {
+      "astronaut_id": "thorne",
+      "structure_id": "brain",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Presión neuro-ocular estable",
+      "summary": "Sin signos de edema papilar. El desplazamiento cefálico de fluidos se mantiene compensado y la vaina del nervio óptico no muestra congestión.",
+      "metrics": [
+        {
+          "label": "Edema de disco",
+          "value": "+2",
+          "unit": "µm",
+          "hint": "OCT macular"
+        },
+        {
+          "label": "Agudeza visual",
+          "value": "20/20",
+          "hint": "Snellen cabina"
+        },
+        {
+          "label": "PIC estimada",
+          "value": "13.2",
+          "unit": "mmHg",
+          "hint": "No invasiva"
+        }
+      ],
+      "recommended_action": "Programar OCT de control"
+    },
+    {
+      "astronaut_id": "thorne",
+      "structure_id": "eyes",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Globo ocular y nervio óptico normales",
+      "summary": "Sin aplanamiento del polo posterior ni pliegues coroideos. Diámetro de la vaina del nervio óptico dentro de rango por ecografía ocular.",
+      "metrics": [
+        {
+          "label": "Vaina n. óptico",
+          "value": "4.9",
+          "unit": "mm",
+          "hint": "Ecografía"
+        },
+        {
+          "label": "Refracción",
+          "value": "0.00",
+          "unit": "D"
+        },
+        {
+          "label": "PIO",
+          "value": "15",
+          "unit": "mmHg",
+          "hint": "Tonómetro"
+        }
+      ],
+      "recommended_action": "Programar ecografía ocular"
+    },
+    {
+      "astronaut_id": "thorne",
+      "structure_id": "thyroid",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Homeostasis metabólica",
+      "summary": "TSH y T4 libre balanceadas. Tasa metabólica basal ajustada al gasto muscular reducido en gravedad parcial.",
+      "metrics": [
+        {
+          "label": "TSH",
+          "value": "1.8",
+          "unit": "mUI/L"
+        },
+        {
+          "label": "T4 libre",
+          "value": "1.2",
+          "unit": "ng/dL"
+        },
+        {
+          "label": "TMB",
+          "value": "1680",
+          "unit": "kcal"
+        }
+      ],
+      "recommended_action": "Analizar perfil hormonal"
+    },
+    {
+      "astronaut_id": "thorne",
+      "structure_id": "lungs",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Intercambio gaseoso óptimo",
+      "summary": "Relación ventilación-perfusión homogénea, sin zonas de atelectasia dependientes de la gravedad. Saturación tisular estable.",
+      "metrics": [
+        {
+          "label": "SpO₂",
+          "value": "98.4",
+          "unit": "%"
+        },
+        {
+          "label": "Frec. resp.",
+          "value": "14",
+          "unit": "rpm"
+        },
+        {
+          "label": "EtCO₂",
+          "value": "38",
+          "unit": "mmHg"
+        }
+      ],
+      "recommended_action": "Espirometría rápida"
+    },
+    {
+      "astronaut_id": "thorne",
+      "structure_id": "heart",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Alta tolerancia hemodinámica",
+      "summary": "Bradicardia de origen deportivo. Función microvascular estable sin fatiga miocárdica ni desaturación en aceleraciones transitorias.",
+      "metrics": [
+        {
+          "label": "Frec. cardíaca",
+          "value": "58",
+          "unit": "lpm"
+        },
+        {
+          "label": "Fracción eyección",
+          "value": "65",
+          "unit": "%"
+        },
+        {
+          "label": "Gasto cardíaco",
+          "value": "5.1",
+          "unit": "L/min"
+        }
+      ],
+      "recommended_action": "Calibrar perfil G-load"
+    },
+    {
+      "astronaut_id": "thorne",
+      "structure_id": "liver",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Función hepática normal",
+      "summary": "Metabolismo CYP450 dentro de rango. Transaminasas normales, sin toxicidad farmacológica acumulada.",
+      "metrics": [
+        {
+          "label": "ALT",
+          "value": "24",
+          "unit": "U/L"
+        },
+        {
+          "label": "AST",
+          "value": "21",
+          "unit": "U/L"
+        },
+        {
+          "label": "Bilirrubina",
+          "value": "0.8",
+          "unit": "mg/dL"
+        }
+      ],
+      "recommended_action": "Revisar farmacocinética"
+    },
+    {
+      "astronaut_id": "thorne",
+      "structure_id": "stomach",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Motilidad gástrica regular",
+      "summary": "Vaciamiento gástrico dentro de lo esperado para gravedad parcial. Sin reflujo sintomático.",
+      "metrics": [
+        {
+          "label": "Vaciamiento",
+          "value": "92",
+          "unit": "min"
+        },
+        {
+          "label": "pH",
+          "value": "2.1"
+        },
+        {
+          "label": "Náusea",
+          "value": "0",
+          "unit": "/10"
+        }
+      ],
+      "recommended_action": "Registrar ingesta"
+    },
+    {
+      "astronaut_id": "thorne",
+      "structure_id": "kidneys",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Balance hídrico estable",
+      "summary": "Hipercalciuria leve secundaria a resorción ósea, controlada con hidratación alcalinizante. Filtrado glomerular conservado.",
+      "metrics": [
+        {
+          "label": "eGFR",
+          "value": "105",
+          "unit": "mL/min"
+        },
+        {
+          "label": "pH urinario",
+          "value": "6.8"
+        },
+        {
+          "label": "Densidad",
+          "value": "1.018"
+        }
+      ],
+      "recommended_action": "Monitorizar balance hídrico"
+    },
+    {
+      "astronaut_id": "thorne",
+      "structure_id": "intestine",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Microbioma equilibrado",
+      "summary": "Tránsito colónico preservado con dieta de fibra formulada. Sin disbiosis significativa en la última muestra.",
+      "metrics": [
+        {
+          "label": "Diversidad",
+          "value": "3.9",
+          "unit": "H′"
+        },
+        {
+          "label": "Carga bact.",
+          "value": "8.4",
+          "unit": "×10⁹"
+        },
+        {
+          "label": "Absorción",
+          "value": "97",
+          "unit": "%"
+        }
+      ],
+      "recommended_action": "Registrar absorción nutricional"
+    },
+    {
+      "astronaut_id": "thorne",
+      "structure_id": "wrist",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Enlace UWB activo",
+      "summary": "Enlace de baja latencia a 120 Hz con el traje. Respuesta galvánica de piel y temperatura periférica en rango.",
+      "metrics": [
+        {
+          "label": "Temp. piel",
+          "value": "34.2",
+          "unit": "°C"
+        },
+        {
+          "label": "Muestreo",
+          "value": "120",
+          "unit": "Hz"
+        },
+        {
+          "label": "GSR",
+          "value": "0.4",
+          "unit": "kΩ"
+        }
+      ],
+      "recommended_action": "Recalibrar biomapeo del traje"
+    },
+    {
+      "astronaut_id": "thorne",
+      "structure_id": "femur",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Vigilancia de resorción ósea",
+      "summary": "Desmineralización trabecular de fémur proximal de −1.2 %, dentro del margen tolerado. Se recomienda carga resistiva diaria.",
+      "metrics": [
+        {
+          "label": "Δ densidad",
+          "value": "−0.6",
+          "unit": "%"
+        },
+        {
+          "label": "T-score",
+          "value": "0.1"
+        },
+        {
+          "label": "DMO",
+          "value": "1.02",
+          "unit": "g/cm²"
+        }
+      ],
+      "recommended_action": "Programar sesión de carga"
+    },
+    {
+      "astronaut_id": "thorne",
+      "structure_id": "calcaneus",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Contramedidas de fluid shift listas",
+      "summary": "Reducción de volumen tisular en pantorrillas por desplazamiento cefálico. Thigh cuffs y LBNP disponibles para restablecer el gradiente.",
+      "metrics": [
+        {
+          "label": "LBNP",
+          "value": "−35",
+          "unit": "mmHg"
+        },
+        {
+          "label": "Perím. gemelo",
+          "value": "32.4",
+          "unit": "cm"
+        },
+        {
+          "label": "Adherencia",
+          "value": "98",
+          "unit": "%"
+        }
+      ],
+      "recommended_action": "Activar thigh cuffs"
+    },
+    {
+      "astronaut_id": "thorne",
+      "structure_id": "vessels",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Flujo yugular y aórtico normales",
+      "summary": "Sin estasis ni flujo retrógrado en la vena yugular interna. Rigidez arterial estable respecto a la línea base preflight.",
+      "metrics": [
+        {
+          "label": "Flujo yugular",
+          "value": "Anterógrado"
+        },
+        {
+          "label": "Vel. onda pulso",
+          "value": "7.1",
+          "unit": "m/s"
+        },
+        {
+          "label": "Área VYI",
+          "value": "0.62",
+          "unit": "cm²"
+        }
+      ],
+      "recommended_action": "Ecografía de vena yugular"
+    },
+    {
+      "astronaut_id": "thorne",
+      "structure_id": "spleen",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Bazo de tamaño normal",
+      "summary": "Sin esplenomegalia. Recuento linfocitario estable pese a la reactivación latente esperada en vuelo prolongado.",
+      "metrics": [
+        {
+          "label": "Eje mayor",
+          "value": "10.8",
+          "unit": "cm"
+        },
+        {
+          "label": "Linfocitos",
+          "value": "1.9",
+          "unit": "×10⁹/L"
+        },
+        {
+          "label": "PCR",
+          "value": "1.2",
+          "unit": "mg/L"
+        }
+      ],
+      "recommended_action": "Perfil hematológico rápido"
+    },
+    {
+      "astronaut_id": "thorne",
+      "structure_id": "pancreas",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Control glucémico estable",
+      "summary": "Sensibilidad a la insulina dentro de rango a pesar de la reducción de actividad muscular en gravedad parcial.",
+      "metrics": [
+        {
+          "label": "Glucosa",
+          "value": "92",
+          "unit": "mg/dL"
+        },
+        {
+          "label": "HbA1c",
+          "value": "5.2",
+          "unit": "%"
+        },
+        {
+          "label": "Lipasa",
+          "value": "38",
+          "unit": "U/L"
+        }
+      ],
+      "recommended_action": "Curva de glucosa capilar"
+    },
+    {
+      "astronaut_id": "thorne",
+      "structure_id": "skull",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Bóveda craneal íntegra",
+      "summary": "Sin lesiones ni fracturas. Densidad ósea craneal estable; en microgravedad puede aumentar levemente por redistribución de carga.",
+      "metrics": [
+        {
+          "label": "Δ densidad",
+          "value": "+0.3",
+          "unit": "%"
+        },
+        {
+          "label": "Impactos",
+          "value": "0",
+          "hint": "Últimos 30 soles"
+        },
+        {
+          "label": "Casco EVA",
+          "value": "OK"
+        }
+      ],
+      "recommended_action": "Revisar registro de impactos"
+    },
+    {
+      "astronaut_id": "thorne",
+      "structure_id": "spine",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Elongación espinal compensada",
+      "summary": "Los discos intervertebrales se expanden sin carga axial y la columna se alarga. Sin dolor lumbar significativo ni herniación.",
+      "metrics": [
+        {
+          "label": "Elongación",
+          "value": "+3.2",
+          "unit": "cm"
+        },
+        {
+          "label": "Altura disco L4-L5",
+          "value": "+1.1",
+          "unit": "mm"
+        },
+        {
+          "label": "Dolor lumbar",
+          "value": "1",
+          "unit": "/10"
+        }
+      ],
+      "recommended_action": "Programar ejercicio de estabilización"
+    },
+    {
+      "astronaut_id": "thorne",
+      "structure_id": "ribcage",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Caja torácica sin hallazgos",
+      "summary": "Excursión torácica simétrica. Sin fracturas costales ni dolor a la palpación.",
+      "metrics": [
+        {
+          "label": "Excursión",
+          "value": "6.4",
+          "unit": "cm"
+        },
+        {
+          "label": "Δ densidad",
+          "value": "−0.4",
+          "unit": "%"
+        },
+        {
+          "label": "Dolor",
+          "value": "0",
+          "unit": "/10"
+        }
+      ],
+      "recommended_action": "Registrar espirometría"
+    },
+    {
+      "astronaut_id": "thorne",
+      "structure_id": "shoulder",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Hombros sin sobrecarga EVA",
+      "summary": "Rango de movimiento completo. Sin signos de pinzamiento por uso prolongado del traje presurizado.",
+      "metrics": [
+        {
+          "label": "Abducción",
+          "value": "175",
+          "unit": "°"
+        },
+        {
+          "label": "Fuerza",
+          "value": "5",
+          "unit": "/5"
+        },
+        {
+          "label": "Horas EVA",
+          "value": "38",
+          "unit": "h"
+        }
+      ],
+      "recommended_action": "Evaluar rango de movimiento"
+    },
+    {
+      "astronaut_id": "thorne",
+      "structure_id": "humerus",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Húmero estable",
+      "summary": "Pérdida ósea mínima en miembro superior, que mantiene carga funcional durante las tareas de la misión.",
+      "metrics": [
+        {
+          "label": "Δ densidad",
+          "value": "−0.3",
+          "unit": "%"
+        },
+        {
+          "label": "Masa muscular",
+          "value": "−1.1",
+          "unit": "%"
+        },
+        {
+          "label": "Fuerza agarre",
+          "value": "41",
+          "unit": "kg"
+        }
+      ],
+      "recommended_action": "Medir fuerza de agarre"
+    },
+    {
+      "astronaut_id": "thorne",
+      "structure_id": "forearm",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Antebrazo sin hallazgos",
+      "summary": "Radio y cúbito con densidad conservada. Sin tendinopatía por manipulación de herramientas en EVA.",
+      "metrics": [
+        {
+          "label": "Δ densidad",
+          "value": "−0.2",
+          "unit": "%"
+        },
+        {
+          "label": "Pronación",
+          "value": "85",
+          "unit": "°"
+        },
+        {
+          "label": "Supinación",
+          "value": "88",
+          "unit": "°"
+        }
+      ],
+      "recommended_action": "Evaluar movilidad"
+    },
+    {
+      "astronaut_id": "thorne",
+      "structure_id": "hand",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Manos y uñas íntegras",
+      "summary": "Sin onicólisis ni lesiones por presión de los guantes del traje. Sensibilidad digital conservada.",
+      "metrics": [
+        {
+          "label": "Onicólisis",
+          "value": "0",
+          "unit": "dedos"
+        },
+        {
+          "label": "Sensibilidad",
+          "value": "Normal"
+        },
+        {
+          "label": "Destreza",
+          "value": "98",
+          "unit": "%"
+        }
+      ],
+      "recommended_action": "Inspección post-EVA"
+    },
+    {
+      "astronaut_id": "thorne",
+      "structure_id": "pelvis",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Pelvis y cadera estables",
+      "summary": "Densidad del cuello femoral y la cresta ilíaca dentro del margen tolerado por protocolo.",
+      "metrics": [
+        {
+          "label": "DMO cadera",
+          "value": "0.98",
+          "unit": "g/cm²"
+        },
+        {
+          "label": "Δ densidad",
+          "value": "−0.8",
+          "unit": "%"
+        },
+        {
+          "label": "T-score",
+          "value": "−0.2"
+        }
+      ],
+      "recommended_action": "Programar densitometría"
+    },
+    {
+      "astronaut_id": "thorne",
+      "structure_id": "tibia",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Tibia y peroné conservados",
+      "summary": "Pérdida trabecular leve en tibia distal, compensada con la cinta de correr y la carga resistiva diaria.",
+      "metrics": [
+        {
+          "label": "Δ densidad",
+          "value": "−0.9",
+          "unit": "%"
+        },
+        {
+          "label": "Masa gemelo",
+          "value": "−2.4",
+          "unit": "%"
+        },
+        {
+          "label": "Adherencia",
+          "value": "96",
+          "unit": "%"
+        }
+      ],
+      "recommended_action": "Programar sesión de carga"
+    },
+    {
+      "astronaut_id": "khan",
+      "structure_id": "brain",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Presión neuro-ocular estable",
+      "summary": "Sin signos de edema papilar. El desplazamiento cefálico de fluidos se mantiene compensado y la vaina del nervio óptico no muestra congestión.",
+      "metrics": [
+        {
+          "label": "Edema de disco",
+          "value": "+2",
+          "unit": "µm",
+          "hint": "OCT macular"
+        },
+        {
+          "label": "Agudeza visual",
+          "value": "20/20",
+          "hint": "Snellen cabina"
+        },
+        {
+          "label": "PIC estimada",
+          "value": "13.2",
+          "unit": "mmHg",
+          "hint": "No invasiva"
+        }
+      ],
+      "recommended_action": "Programar OCT de control"
+    },
+    {
+      "astronaut_id": "khan",
+      "structure_id": "eyes",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Globo ocular y nervio óptico normales",
+      "summary": "Sin aplanamiento del polo posterior ni pliegues coroideos. Diámetro de la vaina del nervio óptico dentro de rango por ecografía ocular.",
+      "metrics": [
+        {
+          "label": "Vaina n. óptico",
+          "value": "4.9",
+          "unit": "mm",
+          "hint": "Ecografía"
+        },
+        {
+          "label": "Refracción",
+          "value": "0.00",
+          "unit": "D"
+        },
+        {
+          "label": "PIO",
+          "value": "15",
+          "unit": "mmHg",
+          "hint": "Tonómetro"
+        }
+      ],
+      "recommended_action": "Programar ecografía ocular"
+    },
+    {
+      "astronaut_id": "khan",
+      "structure_id": "thyroid",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Vigilancia metabólica y circadiana",
+      "summary": "Patrón de sueño estable en cabina 03. Sin desajuste de cortisol salival ni estrés neurosensorial en el sol 284.",
+      "metrics": [
+        {
+          "label": "TSH",
+          "value": "2.1",
+          "unit": "mUI/L"
+        },
+        {
+          "label": "Cortisol",
+          "value": "11.4",
+          "unit": "nmol/L"
+        },
+        {
+          "label": "Sueño",
+          "value": "7.2",
+          "unit": "h"
+        }
+      ],
+      "recommended_action": "Registrar análisis biomédico"
+    },
+    {
+      "astronaut_id": "khan",
+      "structure_id": "lungs",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Intercambio gaseoso óptimo",
+      "summary": "Relación ventilación-perfusión homogénea, sin zonas de atelectasia dependientes de la gravedad. Saturación tisular estable.",
+      "metrics": [
+        {
+          "label": "SpO₂",
+          "value": "98.4",
+          "unit": "%"
+        },
+        {
+          "label": "Frec. resp.",
+          "value": "14",
+          "unit": "rpm"
+        },
+        {
+          "label": "EtCO₂",
+          "value": "38",
+          "unit": "mmHg"
+        }
+      ],
+      "recommended_action": "Espirometría rápida"
+    },
+    {
+      "astronaut_id": "khan",
+      "structure_id": "heart",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Ritmo sinusal, gasto conservado",
+      "summary": "Leve reducción adaptativa de masa ventricular izquierda por descarga hidrostática. Sin arritmias ventriculares en las últimas 72 h.",
+      "metrics": [
+        {
+          "label": "Frec. cardíaca",
+          "value": "64",
+          "unit": "lpm"
+        },
+        {
+          "label": "Fracción eyección",
+          "value": "62",
+          "unit": "%"
+        },
+        {
+          "label": "Gasto cardíaco",
+          "value": "4.8",
+          "unit": "L/min"
+        }
+      ],
+      "recommended_action": "Sincronizar ECG de 12 derivaciones"
+    },
+    {
+      "astronaut_id": "khan",
+      "structure_id": "liver",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Función hepática normal",
+      "summary": "Metabolismo CYP450 dentro de rango. Transaminasas normales, sin toxicidad farmacológica acumulada.",
+      "metrics": [
+        {
+          "label": "ALT",
+          "value": "24",
+          "unit": "U/L"
+        },
+        {
+          "label": "AST",
+          "value": "21",
+          "unit": "U/L"
+        },
+        {
+          "label": "Bilirrubina",
+          "value": "0.8",
+          "unit": "mg/dL"
+        }
+      ],
+      "recommended_action": "Revisar farmacocinética"
+    },
+    {
+      "astronaut_id": "khan",
+      "structure_id": "stomach",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Motilidad gástrica regular",
+      "summary": "Vaciamiento gástrico dentro de lo esperado para gravedad parcial. Sin reflujo sintomático.",
+      "metrics": [
+        {
+          "label": "Vaciamiento",
+          "value": "92",
+          "unit": "min"
+        },
+        {
+          "label": "pH",
+          "value": "2.1"
+        },
+        {
+          "label": "Náusea",
+          "value": "0",
+          "unit": "/10"
+        }
+      ],
+      "recommended_action": "Registrar ingesta"
+    },
+    {
+      "astronaut_id": "khan",
+      "structure_id": "kidneys",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Balance hídrico estable",
+      "summary": "Hipercalciuria leve secundaria a resorción ósea, controlada con hidratación alcalinizante. Filtrado glomerular conservado.",
+      "metrics": [
+        {
+          "label": "eGFR",
+          "value": "105",
+          "unit": "mL/min"
+        },
+        {
+          "label": "pH urinario",
+          "value": "6.8"
+        },
+        {
+          "label": "Densidad",
+          "value": "1.018"
+        }
+      ],
+      "recommended_action": "Monitorizar balance hídrico"
+    },
+    {
+      "astronaut_id": "khan",
+      "structure_id": "intestine",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Microbioma equilibrado",
+      "summary": "Tránsito colónico preservado con dieta de fibra formulada. Sin disbiosis significativa en la última muestra.",
+      "metrics": [
+        {
+          "label": "Diversidad",
+          "value": "3.9",
+          "unit": "H′"
+        },
+        {
+          "label": "Carga bact.",
+          "value": "8.4",
+          "unit": "×10⁹"
+        },
+        {
+          "label": "Absorción",
+          "value": "97",
+          "unit": "%"
+        }
+      ],
+      "recommended_action": "Registrar absorción nutricional"
+    },
+    {
+      "astronaut_id": "khan",
+      "structure_id": "wrist",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Enlace UWB activo",
+      "summary": "Enlace de baja latencia a 120 Hz con el traje. Respuesta galvánica de piel y temperatura periférica en rango.",
+      "metrics": [
+        {
+          "label": "Temp. piel",
+          "value": "34.2",
+          "unit": "°C"
+        },
+        {
+          "label": "Muestreo",
+          "value": "120",
+          "unit": "Hz"
+        },
+        {
+          "label": "GSR",
+          "value": "0.4",
+          "unit": "kΩ"
+        }
+      ],
+      "recommended_action": "Recalibrar biomapeo del traje"
+    },
+    {
+      "astronaut_id": "khan",
+      "structure_id": "femur",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Vigilancia de resorción ósea",
+      "summary": "Desmineralización trabecular de fémur proximal de −1.2 %, dentro del margen tolerado. Se recomienda carga resistiva diaria.",
+      "metrics": [
+        {
+          "label": "Δ densidad",
+          "value": "−0.9",
+          "unit": "%"
+        },
+        {
+          "label": "T-score",
+          "value": "−0.2"
+        },
+        {
+          "label": "DMO",
+          "value": "0.98",
+          "unit": "g/cm²"
+        }
+      ],
+      "recommended_action": "Programar sesión de carga"
+    },
+    {
+      "astronaut_id": "khan",
+      "structure_id": "calcaneus",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Contramedidas de fluid shift listas",
+      "summary": "Reducción de volumen tisular en pantorrillas por desplazamiento cefálico. Thigh cuffs y LBNP disponibles para restablecer el gradiente.",
+      "metrics": [
+        {
+          "label": "LBNP",
+          "value": "−35",
+          "unit": "mmHg"
+        },
+        {
+          "label": "Perím. gemelo",
+          "value": "32.4",
+          "unit": "cm"
+        },
+        {
+          "label": "Adherencia",
+          "value": "98",
+          "unit": "%"
+        }
+      ],
+      "recommended_action": "Activar thigh cuffs"
+    },
+    {
+      "astronaut_id": "khan",
+      "structure_id": "vessels",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Flujo yugular y aórtico normales",
+      "summary": "Sin estasis ni flujo retrógrado en la vena yugular interna. Rigidez arterial estable respecto a la línea base preflight.",
+      "metrics": [
+        {
+          "label": "Flujo yugular",
+          "value": "Anterógrado"
+        },
+        {
+          "label": "Vel. onda pulso",
+          "value": "7.1",
+          "unit": "m/s"
+        },
+        {
+          "label": "Área VYI",
+          "value": "0.62",
+          "unit": "cm²"
+        }
+      ],
+      "recommended_action": "Ecografía de vena yugular"
+    },
+    {
+      "astronaut_id": "khan",
+      "structure_id": "spleen",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Bazo de tamaño normal",
+      "summary": "Sin esplenomegalia. Recuento linfocitario estable pese a la reactivación latente esperada en vuelo prolongado.",
+      "metrics": [
+        {
+          "label": "Eje mayor",
+          "value": "10.8",
+          "unit": "cm"
+        },
+        {
+          "label": "Linfocitos",
+          "value": "1.9",
+          "unit": "×10⁹/L"
+        },
+        {
+          "label": "PCR",
+          "value": "1.2",
+          "unit": "mg/L"
+        }
+      ],
+      "recommended_action": "Perfil hematológico rápido"
+    },
+    {
+      "astronaut_id": "khan",
+      "structure_id": "pancreas",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Control glucémico estable",
+      "summary": "Sensibilidad a la insulina dentro de rango a pesar de la reducción de actividad muscular en gravedad parcial.",
+      "metrics": [
+        {
+          "label": "Glucosa",
+          "value": "92",
+          "unit": "mg/dL"
+        },
+        {
+          "label": "HbA1c",
+          "value": "5.2",
+          "unit": "%"
+        },
+        {
+          "label": "Lipasa",
+          "value": "38",
+          "unit": "U/L"
+        }
+      ],
+      "recommended_action": "Curva de glucosa capilar"
+    },
+    {
+      "astronaut_id": "khan",
+      "structure_id": "skull",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Bóveda craneal íntegra",
+      "summary": "Sin lesiones ni fracturas. Densidad ósea craneal estable; en microgravedad puede aumentar levemente por redistribución de carga.",
+      "metrics": [
+        {
+          "label": "Δ densidad",
+          "value": "+0.3",
+          "unit": "%"
+        },
+        {
+          "label": "Impactos",
+          "value": "0",
+          "hint": "Últimos 30 soles"
+        },
+        {
+          "label": "Casco EVA",
+          "value": "OK"
+        }
+      ],
+      "recommended_action": "Revisar registro de impactos"
+    },
+    {
+      "astronaut_id": "khan",
+      "structure_id": "spine",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Elongación espinal compensada",
+      "summary": "Los discos intervertebrales se expanden sin carga axial y la columna se alarga. Sin dolor lumbar significativo ni herniación.",
+      "metrics": [
+        {
+          "label": "Elongación",
+          "value": "+3.2",
+          "unit": "cm"
+        },
+        {
+          "label": "Altura disco L4-L5",
+          "value": "+1.1",
+          "unit": "mm"
+        },
+        {
+          "label": "Dolor lumbar",
+          "value": "1",
+          "unit": "/10"
+        }
+      ],
+      "recommended_action": "Programar ejercicio de estabilización"
+    },
+    {
+      "astronaut_id": "khan",
+      "structure_id": "ribcage",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Caja torácica sin hallazgos",
+      "summary": "Excursión torácica simétrica. Sin fracturas costales ni dolor a la palpación.",
+      "metrics": [
+        {
+          "label": "Excursión",
+          "value": "6.4",
+          "unit": "cm"
+        },
+        {
+          "label": "Δ densidad",
+          "value": "−0.4",
+          "unit": "%"
+        },
+        {
+          "label": "Dolor",
+          "value": "0",
+          "unit": "/10"
+        }
+      ],
+      "recommended_action": "Registrar espirometría"
+    },
+    {
+      "astronaut_id": "khan",
+      "structure_id": "shoulder",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Hombros sin sobrecarga EVA",
+      "summary": "Rango de movimiento completo. Sin signos de pinzamiento por uso prolongado del traje presurizado.",
+      "metrics": [
+        {
+          "label": "Abducción",
+          "value": "175",
+          "unit": "°"
+        },
+        {
+          "label": "Fuerza",
+          "value": "5",
+          "unit": "/5"
+        },
+        {
+          "label": "Horas EVA",
+          "value": "38",
+          "unit": "h"
+        }
+      ],
+      "recommended_action": "Evaluar rango de movimiento"
+    },
+    {
+      "astronaut_id": "khan",
+      "structure_id": "humerus",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Húmero estable",
+      "summary": "Pérdida ósea mínima en miembro superior, que mantiene carga funcional durante las tareas de la misión.",
+      "metrics": [
+        {
+          "label": "Δ densidad",
+          "value": "−0.3",
+          "unit": "%"
+        },
+        {
+          "label": "Masa muscular",
+          "value": "−1.1",
+          "unit": "%"
+        },
+        {
+          "label": "Fuerza agarre",
+          "value": "41",
+          "unit": "kg"
+        }
+      ],
+      "recommended_action": "Medir fuerza de agarre"
+    },
+    {
+      "astronaut_id": "khan",
+      "structure_id": "forearm",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Antebrazo sin hallazgos",
+      "summary": "Radio y cúbito con densidad conservada. Sin tendinopatía por manipulación de herramientas en EVA.",
+      "metrics": [
+        {
+          "label": "Δ densidad",
+          "value": "−0.2",
+          "unit": "%"
+        },
+        {
+          "label": "Pronación",
+          "value": "85",
+          "unit": "°"
+        },
+        {
+          "label": "Supinación",
+          "value": "88",
+          "unit": "°"
+        }
+      ],
+      "recommended_action": "Evaluar movilidad"
+    },
+    {
+      "astronaut_id": "khan",
+      "structure_id": "hand",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Manos y uñas íntegras",
+      "summary": "Sin onicólisis ni lesiones por presión de los guantes del traje. Sensibilidad digital conservada.",
+      "metrics": [
+        {
+          "label": "Onicólisis",
+          "value": "0",
+          "unit": "dedos"
+        },
+        {
+          "label": "Sensibilidad",
+          "value": "Normal"
+        },
+        {
+          "label": "Destreza",
+          "value": "98",
+          "unit": "%"
+        }
+      ],
+      "recommended_action": "Inspección post-EVA"
+    },
+    {
+      "astronaut_id": "khan",
+      "structure_id": "pelvis",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Pelvis y cadera estables",
+      "summary": "Densidad del cuello femoral y la cresta ilíaca dentro del margen tolerado por protocolo.",
+      "metrics": [
+        {
+          "label": "DMO cadera",
+          "value": "0.98",
+          "unit": "g/cm²"
+        },
+        {
+          "label": "Δ densidad",
+          "value": "−0.8",
+          "unit": "%"
+        },
+        {
+          "label": "T-score",
+          "value": "−0.2"
+        }
+      ],
+      "recommended_action": "Programar densitometría"
+    },
+    {
+      "astronaut_id": "khan",
+      "structure_id": "tibia",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Tibia y peroné conservados",
+      "summary": "Pérdida trabecular leve en tibia distal, compensada con la cinta de correr y la carga resistiva diaria.",
+      "metrics": [
+        {
+          "label": "Δ densidad",
+          "value": "−0.9",
+          "unit": "%"
+        },
+        {
+          "label": "Masa gemelo",
+          "value": "−2.4",
+          "unit": "%"
+        },
+        {
+          "label": "Adherencia",
+          "value": "96",
+          "unit": "%"
+        }
+      ],
+      "recommended_action": "Programar sesión de carga"
+    },
+    {
+      "astronaut_id": "lee",
+      "structure_id": "brain",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Presión neuro-ocular estable",
+      "summary": "Sin signos de edema papilar. El desplazamiento cefálico de fluidos se mantiene compensado y la vaina del nervio óptico no muestra congestión.",
+      "metrics": [
+        {
+          "label": "Edema de disco",
+          "value": "+2",
+          "unit": "µm",
+          "hint": "OCT macular"
+        },
+        {
+          "label": "Agudeza visual",
+          "value": "20/20",
+          "hint": "Snellen cabina"
+        },
+        {
+          "label": "PIC estimada",
+          "value": "13.2",
+          "unit": "mmHg",
+          "hint": "No invasiva"
+        }
+      ],
+      "recommended_action": "Programar OCT de control"
+    },
+    {
+      "astronaut_id": "lee",
+      "structure_id": "eyes",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Globo ocular y nervio óptico normales",
+      "summary": "Sin aplanamiento del polo posterior ni pliegues coroideos. Diámetro de la vaina del nervio óptico dentro de rango por ecografía ocular.",
+      "metrics": [
+        {
+          "label": "Vaina n. óptico",
+          "value": "4.9",
+          "unit": "mm",
+          "hint": "Ecografía"
+        },
+        {
+          "label": "Refracción",
+          "value": "0.00",
+          "unit": "D"
+        },
+        {
+          "label": "PIO",
+          "value": "15",
+          "unit": "mmHg",
+          "hint": "Tonómetro"
+        }
+      ],
+      "recommended_action": "Programar ecografía ocular"
+    },
+    {
+      "astronaut_id": "lee",
+      "structure_id": "thyroid",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Homeostasis metabólica",
+      "summary": "TSH y T4 libre balanceadas. Tasa metabólica basal ajustada al gasto muscular reducido en gravedad parcial.",
+      "metrics": [
+        {
+          "label": "TSH",
+          "value": "1.8",
+          "unit": "mUI/L"
+        },
+        {
+          "label": "T4 libre",
+          "value": "1.2",
+          "unit": "ng/dL"
+        },
+        {
+          "label": "TMB",
+          "value": "1680",
+          "unit": "kcal"
+        }
+      ],
+      "recommended_action": "Analizar perfil hormonal"
+    },
+    {
+      "astronaut_id": "lee",
+      "structure_id": "lungs",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Intercambio gaseoso óptimo",
+      "summary": "Relación ventilación-perfusión homogénea, sin zonas de atelectasia dependientes de la gravedad. Saturación tisular estable.",
+      "metrics": [
+        {
+          "label": "SpO₂",
+          "value": "98.4",
+          "unit": "%"
+        },
+        {
+          "label": "Frec. resp.",
+          "value": "14",
+          "unit": "rpm"
+        },
+        {
+          "label": "EtCO₂",
+          "value": "38",
+          "unit": "mmHg"
+        }
+      ],
+      "recommended_action": "Espirometría rápida"
+    },
+    {
+      "astronaut_id": "lee",
+      "structure_id": "heart",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Ritmo sinusal, gasto conservado",
+      "summary": "Leve reducción adaptativa de masa ventricular izquierda por descarga hidrostática. Sin arritmias ventriculares en las últimas 72 h.",
+      "metrics": [
+        {
+          "label": "Frec. cardíaca",
+          "value": "64",
+          "unit": "lpm"
+        },
+        {
+          "label": "Fracción eyección",
+          "value": "62",
+          "unit": "%"
+        },
+        {
+          "label": "Gasto cardíaco",
+          "value": "4.8",
+          "unit": "L/min"
+        }
+      ],
+      "recommended_action": "Sincronizar ECG de 12 derivaciones"
+    },
+    {
+      "astronaut_id": "lee",
+      "structure_id": "liver",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Función hepática normal",
+      "summary": "Metabolismo CYP450 dentro de rango. Transaminasas normales, sin toxicidad farmacológica acumulada.",
+      "metrics": [
+        {
+          "label": "ALT",
+          "value": "24",
+          "unit": "U/L"
+        },
+        {
+          "label": "AST",
+          "value": "21",
+          "unit": "U/L"
+        },
+        {
+          "label": "Bilirrubina",
+          "value": "0.8",
+          "unit": "mg/dL"
+        }
+      ],
+      "recommended_action": "Revisar farmacocinética"
+    },
+    {
+      "astronaut_id": "lee",
+      "structure_id": "stomach",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Motilidad gástrica regular",
+      "summary": "Vaciamiento gástrico dentro de lo esperado para gravedad parcial. Sin reflujo sintomático.",
+      "metrics": [
+        {
+          "label": "Vaciamiento",
+          "value": "92",
+          "unit": "min"
+        },
+        {
+          "label": "pH",
+          "value": "2.1"
+        },
+        {
+          "label": "Náusea",
+          "value": "0",
+          "unit": "/10"
+        }
+      ],
+      "recommended_action": "Registrar ingesta"
+    },
+    {
+      "astronaut_id": "lee",
+      "structure_id": "kidneys",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Balance hídrico estable",
+      "summary": "Hipercalciuria leve secundaria a resorción ósea, controlada con hidratación alcalinizante. Filtrado glomerular conservado.",
+      "metrics": [
+        {
+          "label": "eGFR",
+          "value": "105",
+          "unit": "mL/min"
+        },
+        {
+          "label": "pH urinario",
+          "value": "6.8"
+        },
+        {
+          "label": "Densidad",
+          "value": "1.018"
+        }
+      ],
+      "recommended_action": "Monitorizar balance hídrico"
+    },
+    {
+      "astronaut_id": "lee",
+      "structure_id": "intestine",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Microbioma equilibrado",
+      "summary": "Tránsito colónico preservado con dieta de fibra formulada. Sin disbiosis significativa en la última muestra.",
+      "metrics": [
+        {
+          "label": "Diversidad",
+          "value": "3.9",
+          "unit": "H′"
+        },
+        {
+          "label": "Carga bact.",
+          "value": "8.4",
+          "unit": "×10⁹"
+        },
+        {
+          "label": "Absorción",
+          "value": "97",
+          "unit": "%"
+        }
+      ],
+      "recommended_action": "Registrar absorción nutricional"
+    },
+    {
+      "astronaut_id": "lee",
+      "structure_id": "wrist",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Enlace UWB activo",
+      "summary": "Enlace de baja latencia a 120 Hz con el traje. Respuesta galvánica de piel y temperatura periférica en rango.",
+      "metrics": [
+        {
+          "label": "Temp. piel",
+          "value": "34.2",
+          "unit": "°C"
+        },
+        {
+          "label": "Muestreo",
+          "value": "120",
+          "unit": "Hz"
+        },
+        {
+          "label": "GSR",
+          "value": "0.4",
+          "unit": "kΩ"
+        }
+      ],
+      "recommended_action": "Recalibrar biomapeo del traje"
+    },
+    {
+      "astronaut_id": "lee",
+      "structure_id": "femur",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Densidad ósea preservada",
+      "summary": "Carga resistiva cumplida al 100 %. Calcificación dentro de parámetros óptimos, sin signos de osteopenia aguda.",
+      "metrics": [
+        {
+          "label": "Δ densidad",
+          "value": "−0.4",
+          "unit": "%"
+        },
+        {
+          "label": "T-score",
+          "value": "0.3"
+        },
+        {
+          "label": "DMO",
+          "value": "1.05",
+          "unit": "g/cm²"
+        }
+      ],
+      "recommended_action": "Protocolo de descarga muscular"
+    },
+    {
+      "astronaut_id": "lee",
+      "structure_id": "calcaneus",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Contramedidas de fluid shift listas",
+      "summary": "Reducción de volumen tisular en pantorrillas por desplazamiento cefálico. Thigh cuffs y LBNP disponibles para restablecer el gradiente.",
+      "metrics": [
+        {
+          "label": "LBNP",
+          "value": "−35",
+          "unit": "mmHg"
+        },
+        {
+          "label": "Perím. gemelo",
+          "value": "32.4",
+          "unit": "cm"
+        },
+        {
+          "label": "Adherencia",
+          "value": "98",
+          "unit": "%"
+        }
+      ],
+      "recommended_action": "Activar thigh cuffs"
+    },
+    {
+      "astronaut_id": "lee",
+      "structure_id": "vessels",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Flujo yugular y aórtico normales",
+      "summary": "Sin estasis ni flujo retrógrado en la vena yugular interna. Rigidez arterial estable respecto a la línea base preflight.",
+      "metrics": [
+        {
+          "label": "Flujo yugular",
+          "value": "Anterógrado"
+        },
+        {
+          "label": "Vel. onda pulso",
+          "value": "7.1",
+          "unit": "m/s"
+        },
+        {
+          "label": "Área VYI",
+          "value": "0.62",
+          "unit": "cm²"
+        }
+      ],
+      "recommended_action": "Ecografía de vena yugular"
+    },
+    {
+      "astronaut_id": "lee",
+      "structure_id": "spleen",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Bazo de tamaño normal",
+      "summary": "Sin esplenomegalia. Recuento linfocitario estable pese a la reactivación latente esperada en vuelo prolongado.",
+      "metrics": [
+        {
+          "label": "Eje mayor",
+          "value": "10.8",
+          "unit": "cm"
+        },
+        {
+          "label": "Linfocitos",
+          "value": "1.9",
+          "unit": "×10⁹/L"
+        },
+        {
+          "label": "PCR",
+          "value": "1.2",
+          "unit": "mg/L"
+        }
+      ],
+      "recommended_action": "Perfil hematológico rápido"
+    },
+    {
+      "astronaut_id": "lee",
+      "structure_id": "pancreas",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Control glucémico estable",
+      "summary": "Sensibilidad a la insulina dentro de rango a pesar de la reducción de actividad muscular en gravedad parcial.",
+      "metrics": [
+        {
+          "label": "Glucosa",
+          "value": "92",
+          "unit": "mg/dL"
+        },
+        {
+          "label": "HbA1c",
+          "value": "5.2",
+          "unit": "%"
+        },
+        {
+          "label": "Lipasa",
+          "value": "38",
+          "unit": "U/L"
+        }
+      ],
+      "recommended_action": "Curva de glucosa capilar"
+    },
+    {
+      "astronaut_id": "lee",
+      "structure_id": "skull",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Bóveda craneal íntegra",
+      "summary": "Sin lesiones ni fracturas. Densidad ósea craneal estable; en microgravedad puede aumentar levemente por redistribución de carga.",
+      "metrics": [
+        {
+          "label": "Δ densidad",
+          "value": "+0.3",
+          "unit": "%"
+        },
+        {
+          "label": "Impactos",
+          "value": "0",
+          "hint": "Últimos 30 soles"
+        },
+        {
+          "label": "Casco EVA",
+          "value": "OK"
+        }
+      ],
+      "recommended_action": "Revisar registro de impactos"
+    },
+    {
+      "astronaut_id": "lee",
+      "structure_id": "spine",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Elongación espinal compensada",
+      "summary": "Los discos intervertebrales se expanden sin carga axial y la columna se alarga. Sin dolor lumbar significativo ni herniación.",
+      "metrics": [
+        {
+          "label": "Elongación",
+          "value": "+3.2",
+          "unit": "cm"
+        },
+        {
+          "label": "Altura disco L4-L5",
+          "value": "+1.1",
+          "unit": "mm"
+        },
+        {
+          "label": "Dolor lumbar",
+          "value": "1",
+          "unit": "/10"
+        }
+      ],
+      "recommended_action": "Programar ejercicio de estabilización"
+    },
+    {
+      "astronaut_id": "lee",
+      "structure_id": "ribcage",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Caja torácica sin hallazgos",
+      "summary": "Excursión torácica simétrica. Sin fracturas costales ni dolor a la palpación.",
+      "metrics": [
+        {
+          "label": "Excursión",
+          "value": "6.4",
+          "unit": "cm"
+        },
+        {
+          "label": "Δ densidad",
+          "value": "−0.4",
+          "unit": "%"
+        },
+        {
+          "label": "Dolor",
+          "value": "0",
+          "unit": "/10"
+        }
+      ],
+      "recommended_action": "Registrar espirometría"
+    },
+    {
+      "astronaut_id": "lee",
+      "structure_id": "shoulder",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Hombros sin sobrecarga EVA",
+      "summary": "Rango de movimiento completo. Sin signos de pinzamiento por uso prolongado del traje presurizado.",
+      "metrics": [
+        {
+          "label": "Abducción",
+          "value": "175",
+          "unit": "°"
+        },
+        {
+          "label": "Fuerza",
+          "value": "5",
+          "unit": "/5"
+        },
+        {
+          "label": "Horas EVA",
+          "value": "38",
+          "unit": "h"
+        }
+      ],
+      "recommended_action": "Evaluar rango de movimiento"
+    },
+    {
+      "astronaut_id": "lee",
+      "structure_id": "humerus",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Húmero estable",
+      "summary": "Pérdida ósea mínima en miembro superior, que mantiene carga funcional durante las tareas de la misión.",
+      "metrics": [
+        {
+          "label": "Δ densidad",
+          "value": "−0.3",
+          "unit": "%"
+        },
+        {
+          "label": "Masa muscular",
+          "value": "−1.1",
+          "unit": "%"
+        },
+        {
+          "label": "Fuerza agarre",
+          "value": "41",
+          "unit": "kg"
+        }
+      ],
+      "recommended_action": "Medir fuerza de agarre"
+    },
+    {
+      "astronaut_id": "lee",
+      "structure_id": "forearm",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Antebrazo sin hallazgos",
+      "summary": "Radio y cúbito con densidad conservada. Sin tendinopatía por manipulación de herramientas en EVA.",
+      "metrics": [
+        {
+          "label": "Δ densidad",
+          "value": "−0.2",
+          "unit": "%"
+        },
+        {
+          "label": "Pronación",
+          "value": "85",
+          "unit": "°"
+        },
+        {
+          "label": "Supinación",
+          "value": "88",
+          "unit": "°"
+        }
+      ],
+      "recommended_action": "Evaluar movilidad"
+    },
+    {
+      "astronaut_id": "lee",
+      "structure_id": "hand",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Manos y uñas íntegras",
+      "summary": "Sin onicólisis ni lesiones por presión de los guantes del traje. Sensibilidad digital conservada.",
+      "metrics": [
+        {
+          "label": "Onicólisis",
+          "value": "0",
+          "unit": "dedos"
+        },
+        {
+          "label": "Sensibilidad",
+          "value": "Normal"
+        },
+        {
+          "label": "Destreza",
+          "value": "98",
+          "unit": "%"
+        }
+      ],
+      "recommended_action": "Inspección post-EVA"
+    },
+    {
+      "astronaut_id": "lee",
+      "structure_id": "pelvis",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Pelvis y cadera estables",
+      "summary": "Densidad del cuello femoral y la cresta ilíaca dentro del margen tolerado por protocolo.",
+      "metrics": [
+        {
+          "label": "DMO cadera",
+          "value": "0.98",
+          "unit": "g/cm²"
+        },
+        {
+          "label": "Δ densidad",
+          "value": "−0.8",
+          "unit": "%"
+        },
+        {
+          "label": "T-score",
+          "value": "−0.2"
+        }
+      ],
+      "recommended_action": "Programar densitometría"
+    },
+    {
+      "astronaut_id": "lee",
+      "structure_id": "tibia",
+      "clinical_status": "NOMINAL",
+      "status": "NOMINAL",
+      "title": "Tibia y peroné conservados",
+      "summary": "Pérdida trabecular leve en tibia distal, compensada con la cinta de correr y la carga resistiva diaria.",
+      "metrics": [
+        {
+          "label": "Δ densidad",
+          "value": "−0.9",
+          "unit": "%"
+        },
+        {
+          "label": "Masa gemelo",
+          "value": "−2.4",
+          "unit": "%"
+        },
+        {
+          "label": "Adherencia",
+          "value": "96",
+          "unit": "%"
+        }
+      ],
+      "recommended_action": "Programar sesión de carga"
+    }
+  ],
+  "baselines": {
+    "rostova": {
+      "heartRate": 64,
+      "systolic": 118,
+      "diastolic": 74,
+      "spo2": 98.4,
+      "cardiacOutput": 4.8,
+      "boneDensityDelta": -1.2,
+      "radiationMSv": 142,
+      "icp": 19.5,
+      "respRate": 14,
+      "skinTemp": 34.2
+    },
+    "thorne": {
+      "heartRate": 58,
+      "systolic": 122,
+      "diastolic": 78,
+      "spo2": 99,
+      "cardiacOutput": 5.1,
+      "boneDensityDelta": -0.6,
+      "radiationMSv": 138,
+      "icp": 13.2,
+      "respRate": 12,
+      "skinTemp": 33.9
+    },
+    "khan": {
+      "heartRate": 71,
+      "systolic": 115,
+      "diastolic": 72,
+      "spo2": 98.2,
+      "cardiacOutput": 4.6,
+      "boneDensityDelta": -0.9,
+      "radiationMSv": 140,
+      "icp": 14.1,
+      "respRate": 15,
+      "skinTemp": 34.5
+    },
+    "lee": {
+      "heartRate": 62,
+      "systolic": 120,
+      "diastolic": 75,
+      "spo2": 98.8,
+      "cardiacOutput": 4.9,
+      "boneDensityDelta": -0.4,
+      "radiationMSv": 145,
+      "icp": 12.8,
+      "respRate": 13,
+      "skinTemp": 34
+    }
+  }
+}
