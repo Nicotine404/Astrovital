@@ -17,9 +17,9 @@ export default async function OverviewPage() {
   return (
     <div className="space-y-6">
       <PageHeader
-        eyebrow={`Panel general · ${summary.environment.location} ${summary.environment.label}`}
-        title="Estado médico de la tripulación"
-        description={`Vigilancia continua de ${summary.crew.length} tripulantes. ${headline}`}
+        eyebrow={`Panel general · ${summary.habitat.label} · ${summary.environment.label}`}
+        title="Tu estado de salud hoy"
+        description={`Elige tu perfil, revisa tus alertas y tu misión del día, y toca una zona del cuerpo para ver qué pasa. ${headline}`}
       />
       <MissionOverviewView summary={summary} />
       <ClinicalAnalysisView byAstronaut={Object.fromEntries(diagnostics.map((d) => [d.astronautId, d]))} defaultAstronautId={summary.crew[0]?.astronaut.id ?? ""} />

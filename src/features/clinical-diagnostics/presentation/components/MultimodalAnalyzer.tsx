@@ -65,14 +65,14 @@ export function MultimodalAnalyzer({
         <div className="space-y-1">
           <div className="flex items-center gap-2">
             <CardTitle>Análisis clínico multimodal</CardTitle>
-            <Badge variant="outline" className="font-mono">v4.2</Badge>
+            <Badge variant="outline">Simulado</Badge>
           </div>
           <p className="text-[13px] text-muted-foreground">
-            Documentos, audio, vídeo e imagen médica analizados íntegramente en el dispositivo, sin enlace terrestre.
+            Demostración: sube un documento, audio, vídeo o imagen médica y verás un hallazgo de referencia. No hay un modelo de IA real detrás.
           </p>
         </div>
         <Badge variant="nominal">
-          <BrainCircuit /> WebGPU · local
+          <BrainCircuit /> Demo
         </Badge>
       </CardHeader>
 

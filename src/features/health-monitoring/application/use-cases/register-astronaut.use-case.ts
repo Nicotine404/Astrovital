@@ -1,6 +1,7 @@
 import { AstronautTelemetry } from "../../domain/models/astronaut-telemetry.model";
 import { ANATOMICAL_STRUCTURES, STRUCTURES } from "../../domain/value-objects/anatomical-structure.vo";
-import { CAREER_DOSE_LIMIT_MSV } from "../../domain/services/clinical-rules.domain-service";
+import { emptyNutritionLog } from "../../domain/models/nutrition-log.model";
+import { CAREER_DOSE_LIMIT_MSV, ClinicalRulesService } from "../../domain/services/clinical-rules.domain-service";
 import { isoDate, type ClockPort } from "../ports/out/clock.port";
 import type { TelemetryRepositoryPort } from "../ports/out/telemetry-repository.port";
 import type { RegisterAstronautDto } from "../dto/record-measurement.dto";
@@ -9,11 +10,13 @@ import type { RegisterAstronautDto } from "../dto/record-measurement.dto";
 export class RegisterAstronautUseCase {
   constructor(
     private readonly repository: TelemetryRepositoryPort,
+    private readonly rules: ClinicalRulesService,
     private readonly clock: ClockPort
   ) {}
 
   async execute(input: RegisterAstronautDto): Promise<{ id: string }> {
     const now = this.clock.now();
+    const { exerciseTargetMinutes } = this.rules.thresholdsFor(await this.repository.getEnvironment());
     const words = input.name.split(/\s+/).filter(Boolean);
     const id = `crew-${now.getTime().toString(36)}`;
     const telemetry = AstronautTelemetry.create({
@@ -50,9 +53,9 @@ export class RegisterAstronautUseCase {
         recommendedAction: "Programar evaluación inicial",
       })),
       radiation: { cumulativeMsv: 0, neutronCumulativeMsv: 0, careerLimitMsv: CAREER_DOSE_LIMIT_MSV, readings: [] },
-      musculoskeletal: { boneDensityDeltaPct: 0, muscleMassDeltaPct: 0, cephalicFluidShiftMmHg: 0, spinalElongationCm: 0, exerciseMinutesToday: 0, exerciseTargetMinutes: 120 },
+      musculoskeletal: { boneDensityDeltaPct: 0, muscleMassDeltaPct: 0, cephalicFluidShiftMmHg: 0, spinalElongationCm: 0, exerciseMinutesToday: 0, exerciseTargetMinutes, exerciseLoggedOn: isoDate(now), visionSymptom: 0, dizzinessSymptom: 0, symptomsRecordedAt: null },
       mentalCheckins: [],
-      nutrition: { date: isoDate(now), caloriesKcal: 0, waterMl: 0, calciumMg: 0, vitaminDIu: 0 },
+      nutrition: emptyNutritionLog(isoDate(now)),
     });
     await this.repository.save(telemetry);
     return { id };

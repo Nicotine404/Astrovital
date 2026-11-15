@@ -5,24 +5,26 @@ import { createServerContainer } from "@/core/infrastructure/di/container";
 import { runAction } from "@/core/utils/action-result";
 import {
   AstronautIdSchema,
-  ChangeGravitySchema,
+  ChangeHabitatSchema,
+  LogExerciseSchema,
   LogRadiationSchema,
   MentalCheckinSchema,
   RecordVitalSignsSchema,
   RegisterAstronautSchema,
+  ReportSymptomsSchema,
   VitalHistoryQuerySchema,
 } from "../../application/dto/record-measurement.dto";
 
 /** Every mutation re-renders the dashboard layout so all pages see the recalibrated state. */
 const refresh = () => revalidatePath("/", "layout");
 
-/** RF-03: switch the operational gravity environment; all thresholds are recalculated server-side. */
-export async function changeGravityEnvironmentAction(input: unknown) {
-  return runAction(ChangeGravitySchema, input, async (dto) => {
+/** CU-04: move the crew to another place; gravity, thresholds and routine are recalculated server-side. */
+export async function changeHabitatAction(input: unknown) {
+  return runAction(ChangeHabitatSchema, input, async (dto) => {
     const { healthMonitoring } = await createServerContainer();
-    const environment = await healthMonitoring.changeGravityEnvironment.execute(dto);
+    const habitat = await healthMonitoring.changeHabitat.execute(dto);
     refresh();
-    return environment;
+    return habitat;
   });
 }
 
@@ -50,6 +52,26 @@ export async function logMentalCheckinAction(input: unknown) {
   return runAction(MentalCheckinSchema, input, async (dto) => {
     const { healthMonitoring } = await createServerContainer();
     const evaluation = await healthMonitoring.logMentalCheckin.execute(dto);
+    refresh();
+    return evaluation;
+  });
+}
+
+/** CU-05: log a countermeasure session against today's gravity-dependent target. */
+export async function logExerciseAction(input: unknown) {
+  return runAction(LogExerciseSchema, input, async (dto) => {
+    const { healthMonitoring } = await createServerContainer();
+    const evaluation = await healthMonitoring.logPhysicalStatus.logExercise(dto);
+    refresh();
+    return evaluation;
+  });
+}
+
+/** CU-05: vision / dizziness self-report. */
+export async function reportSymptomsAction(input: unknown) {
+  return runAction(ReportSymptomsSchema, input, async (dto) => {
+    const { healthMonitoring } = await createServerContainer();
+    const evaluation = await healthMonitoring.logPhysicalStatus.reportSymptoms(dto);
     refresh();
     return evaluation;
   });

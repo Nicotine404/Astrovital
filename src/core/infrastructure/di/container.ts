@@ -4,10 +4,12 @@ import { createSupabaseServerClient } from "@/core/infrastructure/supabase/supab
 import { systemClock } from "@/core/infrastructure/clock/system-clock";
 
 import { ClinicalRulesService } from "@/features/health-monitoring/domain/services/clinical-rules.domain-service";
+import { DailyMissionService } from "@/features/health-monitoring/domain/services/daily-mission.domain-service";
 import type { TelemetryRepositoryPort } from "@/features/health-monitoring/application/ports/out/telemetry-repository.port";
-import { ChangeGravityEnvironmentUseCase } from "@/features/health-monitoring/application/use-cases/change-gravity-environment.use-case";
+import { ChangeHabitatUseCase } from "@/features/health-monitoring/application/use-cases/change-habitat.use-case";
 import { GetAstronautTelemetryUseCase } from "@/features/health-monitoring/application/use-cases/get-astronaut-telemetry.use-case";
 import { GetVitalHistoryUseCase } from "@/features/health-monitoring/application/use-cases/get-vital-history.use-case";
+import { LogPhysicalStatusUseCase } from "@/features/health-monitoring/application/use-cases/log-physical-status.use-case";
 import { LogMentalCheckinUseCase } from "@/features/health-monitoring/application/use-cases/log-mental-checkin.use-case";
 import { LogRadiationExposureUseCase } from "@/features/health-monitoring/application/use-cases/log-radiation-exposure.use-case";
 import { RecordVitalSignsUseCase } from "@/features/health-monitoring/application/use-cases/record-vital-signs.use-case";
@@ -49,13 +51,14 @@ export const createServerContainer = cache(async () => {
   return {
     dataSource: db ? ("supabase" as const) : ("in-memory" as const),
     healthMonitoring: {
-      getAstronautTelemetry: new GetAstronautTelemetryUseCase(telemetry, rules, clock),
-      changeGravityEnvironment: new ChangeGravityEnvironmentUseCase(telemetry, rules, clock),
+      getAstronautTelemetry: new GetAstronautTelemetryUseCase(telemetry, rules, new DailyMissionService(), clock),
+      changeHabitat: new ChangeHabitatUseCase(telemetry, rules, clock),
       recordVitalSigns: new RecordVitalSignsUseCase(telemetry, rules, clock),
       logRadiationExposure: new LogRadiationExposureUseCase(telemetry, rules, clock),
       logMentalCheckin: new LogMentalCheckinUseCase(telemetry, rules, clock),
+      logPhysicalStatus: new LogPhysicalStatusUseCase(telemetry, rules, clock),
       validateDailyNutrition: new ValidateDailyNutritionUseCase(telemetry, rules, clock),
-      registerAstronaut: new RegisterAstronautUseCase(telemetry, clock),
+      registerAstronaut: new RegisterAstronautUseCase(telemetry, rules, clock),
       unlinkAstronaut: new UnlinkAstronautUseCase(telemetry),
       getVitalHistory: new GetVitalHistoryUseCase(telemetry, rules),
     },

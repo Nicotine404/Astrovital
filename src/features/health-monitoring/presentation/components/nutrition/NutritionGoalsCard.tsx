@@ -1,6 +1,6 @@
 "use client";
 
-import { Coffee, Droplet, Loader2, Pill, Utensils } from "lucide-react";
+import { Coffee, Droplet, Drumstick, Loader2, Pill, Utensils } from "lucide-react";
 import { Button } from "@/core/presentation/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/core/presentation/ui/card";
 import { StatusBadge } from "@/core/presentation/shared/StatusBadge";
@@ -8,6 +8,7 @@ import { STATUS_META } from "@/core/presentation/shared/status-meta";
 import { cn } from "@/core/utils/cn";
 import type { NutritionIntake, NutritionLog } from "../../../domain/models/nutrition-log.model";
 import type { NUTRITION_TARGETS, NutritionEvaluation } from "../../../domain/services/clinical-rules.domain-service";
+import { IndicatorHelp } from "../help/IndicatorHelp";
 
 type Key = keyof typeof NUTRITION_TARGETS;
 const ROWS: { key: Key; label: string; unit: string }[] = [
@@ -15,14 +16,16 @@ const ROWS: { key: Key; label: string; unit: string }[] = [
   { key: "waterMl", label: "Agua", unit: "mL" },
   { key: "calciumMg", label: "Calcio", unit: "mg" },
   { key: "vitaminDIu", label: "Vitamina D", unit: "UI" },
+  { key: "proteinG", label: "Proteínas", unit: "g" },
 ];
 
 /** Quick-log presets from the habitat's food system. */
 const PRESETS: { label: string; icon: React.ElementType; intake: NutritionIntake }[] = [
-  { label: "Ración principal", icon: Utensils, intake: { caloriesKcal: 650, waterMl: 150, calciumMg: 220, vitaminDIu: 80 } },
+  { label: "Ración principal", icon: Utensils, intake: { caloriesKcal: 650, waterMl: 150, calciumMg: 220, vitaminDIu: 80, proteinG: 30 } },
   { label: "Agua 500 mL", icon: Droplet, intake: { waterMl: 500 } },
-  { label: "Bebida láctea", icon: Coffee, intake: { caloriesKcal: 180, waterMl: 250, calciumMg: 300, vitaminDIu: 100 } },
+  { label: "Bebida láctea", icon: Coffee, intake: { caloriesKcal: 180, waterMl: 250, calciumMg: 300, vitaminDIu: 100, proteinG: 9 } },
   { label: "Suplemento Ca + D", icon: Pill, intake: { calciumMg: 500, vitaminDIu: 800 } },
+  { label: "Barra proteica", icon: Drumstick, intake: { caloriesKcal: 220, proteinG: 20 } },
 ];
 
 /** RF-06. Pure: log (optimistic), targets, evaluation and the add handler arrive as props. */
@@ -43,7 +46,9 @@ export function NutritionGoalsCard({
     <Card>
       <CardHeader className="border-b">
         <div className="space-y-1">
-          <CardTitle>Nutrición diaria</CardTitle>
+          <CardTitle className="flex items-center gap-1.5">
+            Nutrición diaria <IndicatorHelp id="nutrition" />
+          </CardTitle>
           <p className="text-[13px] text-muted-foreground">Objetivos de vuelo · la evaluación tiene en cuenta la hora del día</p>
         </div>
         <StatusBadge status={evaluation.overall} />
@@ -84,7 +89,7 @@ export function NutritionGoalsCard({
 
         <div>
           <p className="eyebrow mb-2">Registro rápido</p>
-          <div className="grid grid-cols-2 gap-2">
+          <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
             {PRESETS.map((p) => (
               <Button key={p.label} variant="outline" size="sm" className="justify-start" disabled={pending} onClick={() => onAddIntake(p.intake, p.label)}>
                 {pending ? <Loader2 className="animate-spin" /> : <p.icon />} {p.label}

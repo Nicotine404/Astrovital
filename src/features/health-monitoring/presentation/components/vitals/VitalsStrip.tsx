@@ -1,6 +1,6 @@
 "use client";
 
-import { Activity, Brain, Droplets, Gauge, HeartPulse, LineChart, Thermometer } from "lucide-react";
+import { Activity, Brain, Droplet, Droplets, Gauge, HeartPulse, LineChart, Thermometer } from "lucide-react";
 import { Sparkline } from "@/core/presentation/shared/Sparkline";
 import { STATUS_META } from "@/core/presentation/shared/status-meta";
 import { cn } from "@/core/utils/cn";
@@ -8,6 +8,8 @@ import type { VitalSigns } from "../../../domain/models/vital-signs.model";
 import type { BodyZone } from "../../../domain/value-objects/body-zone.vo";
 import type { HealthStatus } from "../../../domain/value-objects/health-status.vo";
 import type { ClinicalThresholds, VitalsEvaluation } from "../../../domain/services/clinical-rules.domain-service";
+import type { GuideId } from "../../content/indicator-guides";
+import { IndicatorHelp } from "../help/IndicatorHelp";
 
 type Series = Record<Exclude<keyof VitalSigns, "recordedAt">, number[]>;
 
@@ -21,8 +23,10 @@ function Tile({
   status,
   caption,
   zone,
+  guide,
   onOpenTrends,
 }: {
+  guide: GuideId;
   icon: React.ElementType;
   label: string;
   value: string;
@@ -43,7 +47,10 @@ function Tile({
           <Icon className="size-3.5" />
           {label}
         </span>
-        <SIcon className={`size-3.5 ${meta.text}`} aria-label={meta.label} />
+        <span className="flex items-center gap-1">
+          <IndicatorHelp id={guide} className="size-4" />
+          <SIcon className={`size-3.5 ${meta.text}`} aria-label={meta.label} />
+        </span>
       </div>
       <p className="font-mono text-[22px] leading-none font-medium tracking-tight tabular">
         {value}
@@ -73,7 +80,9 @@ export function VitalsStrip({
   thresholds,
   source,
   onOpenTrends,
+  action,
 }: {
+  action?: React.ReactNode;
   latest: VitalSigns;
   series: Series;
   evaluation: VitalsEvaluation;
@@ -85,16 +94,26 @@ export function VitalsStrip({
     <section aria-label="Signos vitales en vivo" className="space-y-3">
       <div className="flex items-center justify-between gap-3">
         <h2 className="text-[15px] font-semibold tracking-tight">Signos vitales en vivo</h2>
-        <span className="flex items-center gap-2 font-mono text-[11px] text-muted-foreground">
+        <div className="flex items-center gap-3">
+        {action}
+        <span
+          className="flex items-center gap-2 font-mono text-[11px] text-muted-foreground"
+          title={
+            source === "supabase"
+              ? "Las mediciones reales llegan por Supabase Realtime; entre una y otra, un sensor simulado varía los valores al azar alrededor de la última real."
+              : "Sin Supabase: todos los valores son simulados alrededor de la última medición."
+          }
+        >
           <span className="relative flex size-1.5">
             <span className="absolute inline-flex size-full animate-ping rounded-full bg-nominal opacity-70" />
             <span className="relative inline-flex size-1.5 rounded-full bg-nominal" />
           </span>
-          {source === "supabase" ? "Supabase Realtime" : "Telemetría simulada"} · 1.5 s
+          {source === "supabase" ? "Realtime + sensor simulado" : "Telemetría simulada"} · 1.5 s
         </span>
+        </div>
       </div>
-      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-6">
-        <Tile icon={HeartPulse} label="Frecuencia cardíaca" value={Math.round(latest.heartRate).toString()} unit="lpm" data={series.heartRate} band={[50, 100]} status={evaluation.heartRate} caption="Ritmo sinusal" zone="CARDIO" onOpenTrends={onOpenTrends} />
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4 2xl:grid-cols-7">
+        <Tile icon={HeartPulse} label="Frecuencia cardíaca" value={Math.round(latest.heartRate).toString()} unit="lpm" data={series.heartRate} band={[50, 100]} status={evaluation.heartRate} caption="Ritmo sinusal" zone="CARDIO" guide="heartRate" onOpenTrends={onOpenTrends} />
         <Tile
           icon={Gauge}
           label="Presión arterial"
@@ -105,10 +124,11 @@ export function VitalsStrip({
           status={evaluation.bloodPressure}
           caption={`Umbral sistólico ${thresholds.systolicWarning}`}
           zone="CARDIO"
+          guide="bloodPressure"
           onOpenTrends={onOpenTrends}
         />
-        <Tile icon={Droplets} label="Saturación O₂" value={latest.spo2.toFixed(1)} unit="%" data={series.spo2} band={[95, 100]} status={evaluation.spo2} caption="SpO₂ periférica" zone="CARDIO" onOpenTrends={onOpenTrends} />
-        <Tile icon={Activity} label="Gasto cardíaco" value={latest.cardiacOutput.toFixed(1)} unit="L/min" data={series.cardiacOutput} band={[4, 8]} status="NOMINAL" caption="Bioimpedancia torácica" zone="CARDIO" onOpenTrends={onOpenTrends} />
+        <Tile icon={Droplets} label="Saturación O₂" value={latest.spo2.toFixed(1)} unit="%" data={series.spo2} band={[95, 100]} status={evaluation.spo2} caption="SpO₂ periférica" zone="CARDIO" guide="spo2" onOpenTrends={onOpenTrends} />
+        <Tile icon={Activity} label="Gasto cardíaco" value={latest.cardiacOutput.toFixed(1)} unit="L/min" data={series.cardiacOutput} band={[4, 8]} status="NOMINAL" caption="Bioimpedancia torácica" zone="CARDIO" guide="cardiacOutput" onOpenTrends={onOpenTrends} />
         <Tile
           icon={Brain}
           label="Presión intracraneal"
@@ -119,9 +139,11 @@ export function VitalsStrip({
           status={evaluation.intracranialPressure}
           caption={`Estimada · umbral ${thresholds.icpWarning}`}
           zone="NEURO"
+          guide="intracranialPressure"
           onOpenTrends={onOpenTrends}
         />
-        <Tile icon={Thermometer} label="Temperatura central" value={latest.coreTemperature.toFixed(2)} unit="°C" data={series.coreTemperature} band={[36.1, 37.5]} status={evaluation.temperature} caption="Sensor timpánico" zone="IMMUNE" onOpenTrends={onOpenTrends} />
+        <Tile icon={Thermometer} label="Temperatura central" value={latest.coreTemperature.toFixed(2)} unit="°C" data={series.coreTemperature} band={[36.1, 37.5]} status={evaluation.temperature} caption="Sensor timpánico" zone="IMMUNE" guide="temperature" onOpenTrends={onOpenTrends} />
+        <Tile icon={Droplet} label="Glucosa" value={Math.round(latest.glucose).toString()} unit="mg/dL" data={series.glucose} band={[70, 140]} status={evaluation.glucose} caption="Glucómetro capilar" zone="IMMUNE" guide="glucose" onOpenTrends={onOpenTrends} />
       </div>
     </section>
   );

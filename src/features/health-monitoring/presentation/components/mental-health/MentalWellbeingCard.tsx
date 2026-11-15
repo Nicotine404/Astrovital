@@ -12,6 +12,7 @@ import { STATUS_META } from "@/core/presentation/shared/status-meta";
 import { cn } from "@/core/utils/cn";
 import type { MentalCheckin } from "../../../domain/models/mental-health.model";
 import type { MentalEvaluation } from "../../../domain/services/clinical-rules.domain-service";
+import { IndicatorHelp } from "../help/IndicatorHelp";
 
 function Field({ id, icon: Icon, label, value, display, min, max, step, onChange }: { id: string; icon: React.ElementType; label: string; value: number; display: string; min: number; max: number; step: number; onChange: (v: number) => void }) {
   return (
@@ -55,13 +56,22 @@ export function MentalWellbeingCard({
     <Card>
       <CardHeader className="border-b">
         <div className="space-y-1">
-          <CardTitle>Salud mental</CardTitle>
+          <CardTitle className="flex items-center gap-1.5">
+            Salud mental <IndicatorHelp id="mental" />
+          </CardTitle>
           <p className="text-[13px] text-muted-foreground">Check-in diario confidencial · últimos {history.length} días</p>
         </div>
         <StatusBadge status={evaluation.overall} />
       </CardHeader>
       <CardContent className="grid gap-6 pt-5 lg:grid-cols-2">
         <div className="space-y-4">
+          {evaluation.alerts.length > 0 && (
+            <ul className={cn("space-y-1.5 rounded-md border px-3 py-2.5 text-[12.5px]", evaluation.trend === "CRITICAL" ? "border-critical/30 bg-critical/5 text-critical" : "border-caution/30 bg-caution/5 text-caution")}>
+              {evaluation.alerts.map((a) => (
+                <li key={a}>{a}</li>
+              ))}
+            </ul>
+          )}
           {trend.map((t) => (
             <div key={t.label}>
               <div className="mb-1 flex items-baseline justify-between text-[12.5px]">

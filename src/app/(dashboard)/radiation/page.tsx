@@ -12,8 +12,8 @@ export default async function RadiationPage() {
     <div className="space-y-6">
       <PageHeader
         eyebrow="Dosimetría · GCR, SPE y neutrones"
-        title="Radiación espacial"
-        description="Exposición a rayos cósmicos galácticos y eventos de partículas solares, flujo de neutrones del detector CANS y dosis acumulada frente al límite de carrera."
+        title="Tu exposición a la radiación"
+        description="Cuánta radiación recibes según el blindaje de tu hábitat, el flujo de neutrones del detector CANS y tu dosis acumulada frente al límite de carrera. Si llega una tormenta solar, aquí verás a dónde ir."
       />
       <RadiationView summary={summary} />
     </div>

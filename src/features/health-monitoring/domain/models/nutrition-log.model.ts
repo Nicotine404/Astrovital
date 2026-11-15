@@ -7,6 +7,7 @@ export interface NutritionLog {
   waterMl: number;
   calciumMg: number;
   vitaminDIu: number;
+  proteinG: number;
 }
 
 export interface NutritionIntake {
@@ -14,6 +15,7 @@ export interface NutritionIntake {
   waterMl?: number;
   calciumMg?: number;
   vitaminDIu?: number;
+  proteinG?: number;
 }
 
 /** Adds an intake entry to the day's log (pure). */
@@ -26,7 +28,8 @@ export function addIntake(log: NutritionLog, intake: NutritionIntake): Nutrition
     waterMl: log.waterMl + (intake.waterMl ?? 0),
     calciumMg: log.calciumMg + (intake.calciumMg ?? 0),
     vitaminDIu: log.vitaminDIu + (intake.vitaminDIu ?? 0),
+    proteinG: log.proteinG + (intake.proteinG ?? 0),
   };
 }
 
-export const emptyNutritionLog = (date: string): NutritionLog => ({ date, caloriesKcal: 0, waterMl: 0, calciumMg: 0, vitaminDIu: 0 });
+export const emptyNutritionLog = (date: string): NutritionLog => ({ date, caloriesKcal: 0, waterMl: 0, calciumMg: 0, vitaminDIu: 0, proteinG: 0 });

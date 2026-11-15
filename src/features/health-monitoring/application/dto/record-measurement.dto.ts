@@ -1,11 +1,12 @@
 import { z } from "zod";
-import { GRAVITY_ENVIRONMENT_IDS } from "../../domain/value-objects/gravity-environment.vo";
+import { HABITAT_IDS } from "../../domain/value-objects/habitat.vo";
 import { BODY_ZONES } from "../../domain/value-objects/body-zone.vo";
 
 const astronautId = z.string().min(1).max(64);
 
-export const ChangeGravitySchema = z.object({ environmentId: z.enum(GRAVITY_ENVIRONMENT_IDS) });
-export type ChangeGravityDto = z.infer<typeof ChangeGravitySchema>;
+/** CU-04: the crew moves to another place; gravity, shielding and routine follow from it. */
+export const ChangeHabitatSchema = z.object({ habitatId: z.enum(HABITAT_IDS) });
+export type ChangeHabitatDto = z.infer<typeof ChangeHabitatSchema>;
 
 export const RecordVitalSignsSchema = z.object({
   astronautId,
@@ -47,11 +48,21 @@ export const NutritionIntakeSchema = z
     waterMl: z.number().min(0).max(5000).optional(),
     calciumMg: z.number().min(0).max(3000).optional(),
     vitaminDIu: z.number().min(0).max(10000).optional(),
+    proteinG: z.number().min(0).max(300).optional(),
   })
-  .refine((v) => [v.caloriesKcal, v.waterMl, v.calciumMg, v.vitaminDIu].some((x) => x !== undefined && x > 0), {
+  .refine((v) => [v.caloriesKcal, v.waterMl, v.calciumMg, v.vitaminDIu, v.proteinG].some((x) => x !== undefined && x > 0), {
     message: "Registra al menos un valor de ingesta",
   });
 export type NutritionIntakeDto = z.infer<typeof NutritionIntakeSchema>;
+
+/** CU-05: a completed countermeasure session. */
+export const LogExerciseSchema = z.object({ astronautId, minutes: z.number().int().min(5).max(240) });
+export type LogExerciseDto = z.infer<typeof LogExerciseSchema>;
+
+/** CU-05: vision / dizziness self-report, 0 none · 1 mild · 2 moderate · 3 severe. */
+const severity = z.number().int().min(0).max(3);
+export const ReportSymptomsSchema = z.object({ astronautId, vision: severity, dizziness: severity });
+export type ReportSymptomsDto = z.infer<typeof ReportSymptomsSchema>;
 
 export const RegisterAstronautSchema = z.object({
   name: z.string().trim().min(3).max(80),

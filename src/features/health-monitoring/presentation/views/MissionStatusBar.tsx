@@ -3,20 +3,20 @@
 import { Siren } from "lucide-react";
 import { Button } from "@/core/presentation/ui/button";
 import type { DashboardSummaryDto } from "../../application/dto/dashboard-summary.dto";
-import { GravityEnvironmentBar } from "../components/gravity-selector/GravityEnvironmentBar";
-import { useGravityController } from "../controllers/useGravityController";
+import { HabitatSelector } from "../components/habitat/HabitatSelector";
+import { useHabitatController } from "../controllers/useHabitatController";
 import { useHealthSessionStore } from "../controllers/useHealthSession.store";
 
-/** Topbar slot: gravity environment (RF-03), crisis protocol trigger and crew alert count. */
+/** Topbar slot: where the crew is (CU-04), crisis protocol trigger and crew alert count. */
 export function MissionStatusBar({ summary }: { summary: DashboardSummaryDto }) {
-  const gravity = useGravityController(summary.environment, summary.environments);
+  const place = useHabitatController(summary.habitat, summary.habitats);
   const setCrisisOpen = useHealthSessionStore((s) => s.setCrisisOpen);
   const commander = summary.crew[0]?.astronaut;
   const alerts = summary.crew.reduce((n, c) => n + c.alerts.length, 0);
 
   return (
     <>
-      <GravityEnvironmentBar environments={gravity.environments} current={gravity.environment} pending={gravity.isPending} onChange={gravity.change} />
+      <HabitatSelector habitats={place.habitats} current={place.habitat} pending={place.isPending} onChange={place.change} />
       <Button variant="outline" size="sm" className="border-critical/40 text-critical hover:bg-critical/10 hover:text-critical" onClick={() => setCrisisOpen(true)}>
         <Siren />
         <span className="hidden sm:inline">Modo crisis</span>
@@ -29,7 +29,7 @@ export function MissionStatusBar({ summary }: { summary: DashboardSummaryDto }) 
           </div>
           <div className="hidden leading-tight 2xl:block">
             <p className="text-[13px] font-medium">{commander.name}</p>
-            <p className="text-[11.5px] text-muted-foreground">Oficial al mando</p>
+            <p className="text-[11.5px] text-muted-foreground">Comandante</p>
           </div>
         </div>
       )}

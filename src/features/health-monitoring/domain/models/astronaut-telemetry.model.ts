@@ -1,7 +1,7 @@
 import { DomainError } from "../errors/domain.error";
 import type { AnatomicalStructureId } from "../value-objects/anatomical-structure.vo";
 import type { MentalCheckin } from "./mental-health.model";
-import type { Musculoskeletal } from "./musculoskeletal.model";
+import { addExercise, reportSymptoms, type Musculoskeletal } from "./musculoskeletal.model";
 import { addIntake, emptyNutritionLog, type NutritionIntake, type NutritionLog } from "./nutrition-log.model";
 import type { OrganAssessment } from "./organ-assessment.model";
 import { accumulateExposure, type RadiationDosimetry, type RadiationReading } from "./radiation-dosimetry.model";
@@ -94,6 +94,19 @@ export class AstronautTelemetry {
   logNutrition(intake: NutritionIntake, today: string): void {
     const base = this.props.nutrition.date === today ? this.props.nutrition : emptyNutritionLog(today);
     this.props.nutrition = addIntake(base, intake);
+  }
+
+  logExercise(minutes: number, today: string): void {
+    this.props.musculoskeletal = addExercise(this.props.musculoskeletal, minutes, today);
+  }
+
+  reportSymptoms(vision: number, dizziness: number, recordedAt: string): void {
+    this.props.musculoskeletal = reportSymptoms(this.props.musculoskeletal, vision, dizziness, recordedAt);
+  }
+
+  /** The daily countermeasure target follows the gravity environment (set by the clinical rules). */
+  setExerciseTarget(minutes: number): void {
+    this.props.musculoskeletal = { ...this.props.musculoskeletal, exerciseTargetMinutes: minutes };
   }
 
   replaceAssessments(next: OrganAssessment[]): void {

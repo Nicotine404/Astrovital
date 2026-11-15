@@ -2,6 +2,7 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 import type { AstronautTelemetry } from "../../domain/models/astronaut-telemetry.model";
 import type { VitalSigns } from "../../domain/models/vital-signs.model";
 import type { GravityEnvironment } from "../../domain/value-objects/gravity-environment.vo";
+import type { Habitat } from "../../domain/value-objects/habitat.vo";
 import type { ClockPort } from "../../application/ports/out/clock.port";
 import type { MusculoskeletalSample, TelemetryRepositoryPort } from "../../application/ports/out/telemetry-repository.port";
 import {
@@ -35,13 +36,17 @@ export class SupabaseTelemetryAdapter implements TelemetryRepositoryPort {
     return res.data as T;
   }
 
-  async getEnvironment(): Promise<GravityEnvironment> {
+  async getHabitat(): Promise<Habitat> {
     const res = await this.db.from("mission_state").select("*").eq("id", 1).maybeSingle();
-    return TelemetryMapper.environmentToDomain(SupabaseTelemetryAdapter.check<MissionStateRow | null>(res, "mission_state"));
+    return TelemetryMapper.habitatToDomain(SupabaseTelemetryAdapter.check<MissionStateRow | null>(res, "mission_state"));
   }
 
-  async saveEnvironment(environment: GravityEnvironment): Promise<void> {
-    SupabaseTelemetryAdapter.check(await this.db.from("mission_state").upsert(TelemetryMapper.environmentToRow(environment)), "mission_state");
+  async saveHabitat(habitat: Habitat): Promise<void> {
+    SupabaseTelemetryAdapter.check(await this.db.from("mission_state").upsert(TelemetryMapper.habitatToRow(habitat)), "mission_state");
+  }
+
+  async getEnvironment(): Promise<GravityEnvironment> {
+    return (await this.getHabitat()).gravity;
   }
 
   private async loadRowSets(ids?: string[]): Promise<AstronautRowSet[]> {

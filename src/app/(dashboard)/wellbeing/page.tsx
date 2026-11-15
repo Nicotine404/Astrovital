@@ -11,9 +11,9 @@ export default async function WellbeingPage() {
   return (
     <div className="space-y-6">
       <PageHeader
-        eyebrow={`Fisiología y bienestar · ${summary.environment.location} ${summary.environment.label}`}
-        title="Salud integral del tripulante"
-        description="Pérdida ósea y desplazamiento de fluidos según la gravedad del entorno, ejercicio de contramedida, check-in psicológico y objetivos nutricionales del día."
+        eyebrow={`Fisiología y bienestar · ${summary.habitat.label} · ${summary.environment.label}`}
+        title="Tu cuerpo y tu mente"
+        description="Registra tu ejercicio, cómo ves y cómo te sientes, y lo que comes y bebes. Las referencias se ajustan al lugar donde estás."
       />
       <WellbeingView summary={summary} />
     </div>

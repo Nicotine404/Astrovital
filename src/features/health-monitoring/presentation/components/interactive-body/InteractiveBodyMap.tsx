@@ -17,6 +17,7 @@ import type { AstronautSummaryDto, GravityEnvironmentDto } from "../../../applic
 import type { TwinLayer, TwinLayers, TwinViewPreset } from "./twin.types";
 import { CrewSwitcher } from "../crew/CrewSwitcher";
 import { OrganInspector } from "./OrganInspector";
+import { TwinControlsHelp } from "./TwinControlsHelp";
 
 const BodyScene = dynamic(() => import("./BodyScene"), { ssr: false, loading: () => <SceneLoading /> });
 
@@ -205,11 +206,9 @@ export function InteractiveBodyMap(props: InteractiveBodyMapProps) {
               ))}
             </div>
           </div>
-          <p className="pointer-events-none absolute top-[52px] right-5 hidden text-right font-mono text-[10px] whitespace-nowrap leading-relaxed text-muted-foreground/80 lg:block">
-            Arrastrar · rotar &nbsp;·&nbsp; Clic der. · desplazar
-            <br />
-            Rueda · zoom al cursor &nbsp;·&nbsp; WASD / QE · mover
-          </p>
+          <div className={cn("absolute top-[52px] right-5 rounded-md border", glass)}>
+            <TwinControlsHelp />
+          </div>
         </div>
 
         <OrganInspector

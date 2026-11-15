@@ -28,10 +28,10 @@ const LAYERS = [
   },
   {
     icon: Cpu,
-    title: "Inferencia en el dispositivo",
+    title: "Inferencia en el dispositivo (simulada)",
     tag: "WebGPU + WASM",
     body: "Triaje, diagnóstico diferencial y transcripción se ejecutan en la GPU de la consola, sin servidores terrestres.",
-    rows: [["Modelo", "MedLLM 4-bit"], ["Latencia", "18 ms"]],
+    rows: [["Modelo", "Simulado"], ["Latencia", "Ilustrativa"]],
     action: "Ejecutar benchmark",
     done: "18 ms · 384 MB",
   },

@@ -15,7 +15,7 @@ export function DiagnosticsView({ crew, byAstronaut }: { crew: AstronautSummaryD
     <div className="space-y-4">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <CrewSwitcher crew={crew} selectedId={member.astronaut.id} onSelect={selectAstronaut} />
-        <p className="text-[13px] text-muted-foreground">Hipótesis para {member.astronaut.name}. Requieren validación del oficial médico.</p>
+        <p className="text-[13px] text-muted-foreground">Hipótesis para {member.astronaut.name}. Simuladas: siempre requieren validación de los médicos de vuelo.</p>
       </div>
       <DiagnosisList diagnoses={byAstronaut[member.astronaut.id]?.diagnoses ?? []} />
     </div>

@@ -21,9 +21,12 @@ export class LogRadiationExposureUseCase {
     const targets = astronautId ? [await this.repository.findById(astronautId)] : await this.repository.findAll();
     if (targets.some((t) => !t)) throw new DomainError("Tripulante no encontrado", "NOT_FOUND");
     const recordedAt = this.clock.now().toISOString();
+    // Readings are external levels; the habitat's shielding decides what the crew receives.
+    const habitat = await this.repository.getHabitat();
+    const received = { ...reading, doseRateMsvDay: habitat.shield(reading.doseRateMsvDay), neutronFlux: habitat.shield(reading.neutronFlux), recordedAt };
     const evaluations = [];
     for (const t of targets) {
-      t!.logRadiation({ ...reading, recordedAt });
+      t!.logRadiation(received);
       await this.repository.save(t!);
       evaluations.push({ astronautId: t!.id, evaluation: this.rules.evaluateRadiation(t!.radiation) });
     }
