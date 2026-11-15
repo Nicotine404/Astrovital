@@ -47,7 +47,7 @@ const DAY = 86_400_000;
 export function buildSeedTables(now: Date): TelemetryTables {
   const today = now.toISOString().slice(0, 10);
   const t: TelemetryTables = {
-    mission_state: [{ id: 1, gravity_environment: "MARTIAN" }],
+    mission_state: [{ id: 1, gravity_environment: "MARTIAN", habitat: "MARS_BASE" }],
     astronauts: seed.astronauts,
     vital_signs: [],
     organ_assessments: seed.assessments as OrganAssessmentRow[],
@@ -125,6 +125,7 @@ export function buildSeedTables(now: Date): TelemetryTables {
       spinal_elongation_cm: p.elongation,
       exercise_minutes_today: p.exercise,
       exercise_target_minutes: 90, // MARTIAN routine (the seeded environment)
+      exercise_logged_on: today,
       vision_symptom: a.id === "rostova" ? 1 : 0, // SANS grade 1 in progress
       dizziness_symptom: 0,
       symptoms_recorded_at: a.id === "rostova" ? new Date(now.getTime() - 3_600_000).toISOString() : null,

@@ -9,6 +9,7 @@ import { STATUS_META } from "@/core/presentation/shared/status-meta";
 import { cn } from "@/core/utils/cn";
 import { RADIATION_LIMITS } from "../../../domain/services/clinical-rules.domain-service";
 import type { AstronautSummaryDto } from "../../../application/dto/dashboard-summary.dto";
+import { IndicatorHelp } from "../help/IndicatorHelp";
 
 /** Vertical "tank" gauge: fill = value against a scale, ticks at the action levels. */
 function TankGauge({ value, max, warning, critical, label, unit, status }: { value: number; max: number; warning: number; critical: number; label: string; unit: string; status: keyof typeof STATUS_META }) {
@@ -45,12 +46,15 @@ function TankGauge({ value, max, warning, critical, label, unit, status }: { val
  */
 export function CansRadiationWidget({
   member,
+  shelter,
   pending,
   onSimulateSolarEvent,
   onLogBackground,
   compact = false,
 }: {
   member: AstronautSummaryDto;
+  /** Where to shelter in the current habitat. */
+  shelter: string;
   pending: boolean;
   onSimulateSolarEvent: () => void;
   onLogBackground?: () => void;
@@ -64,7 +68,7 @@ export function CansRadiationWidget({
       <CardHeader className="border-b">
         <div className="space-y-1">
           <CardTitle className="flex items-center gap-2">
-            <Radiation className="size-4 text-primary" /> Radiación y neutrones (CANS)
+            <Radiation className="size-4 text-primary" /> Radiación y neutrones (CANS) <IndicatorHelp id="radiation" />
           </CardTitle>
           <p className="text-[13px] text-muted-foreground">Dosímetro del traje de {member.astronaut.shortName} y detector de neutrones del hábitat.</p>
         </div>
@@ -76,7 +80,7 @@ export function CansRadiationWidget({
             <ShieldAlert />
             <AlertTitle>Refugio obligatorio · evento de partículas solares</AlertTitle>
             <AlertDescription>
-              Dirigirse al refugio blindado (tanques de agua y polietileno) hasta que la tasa baje de {RADIATION_LIMITS.doseRate.warning} mSv/día y el flujo
+              Ve {shelter} hasta que la tasa baje de {RADIATION_LIMITS.doseRate.warning} mSv/día y el flujo
               de neutrones de {RADIATION_LIMITS.neutronFlux.warning}. Al salir, chequeo inmunológico: hemograma y recuento de linfocitos.
             </AlertDescription>
           </Alert>

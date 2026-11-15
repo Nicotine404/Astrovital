@@ -1,6 +1,7 @@
 import type { AstronautTelemetry } from "../../domain/models/astronaut-telemetry.model";
 import type { VitalSigns } from "../../domain/models/vital-signs.model";
 import type { GravityEnvironment } from "../../domain/value-objects/gravity-environment.vo";
+import type { Habitat } from "../../domain/value-objects/habitat.vo";
 import type { MusculoskeletalSample, TelemetryRepositoryPort } from "../../application/ports/out/telemetry-repository.port";
 import type { ClockPort } from "../../application/ports/out/clock.port";
 import { TelemetryMapper, type AstronautRowSet } from "./mappers/telemetry.mapper";
@@ -25,12 +26,16 @@ export class InMemoryTelemetryAdapter implements TelemetryRepositoryPort {
     return this.clock.now().toISOString().slice(0, 10);
   }
 
-  async getEnvironment(): Promise<GravityEnvironment> {
-    return TelemetryMapper.environmentToDomain(this.tables.mission_state[0] ?? null);
+  async getHabitat(): Promise<Habitat> {
+    return TelemetryMapper.habitatToDomain(this.tables.mission_state[0] ?? null);
   }
 
-  async saveEnvironment(environment: GravityEnvironment): Promise<void> {
-    this.tables.mission_state = [TelemetryMapper.environmentToRow(environment)];
+  async saveHabitat(habitat: Habitat): Promise<void> {
+    this.tables.mission_state = [TelemetryMapper.habitatToRow(habitat)];
+  }
+
+  async getEnvironment(): Promise<GravityEnvironment> {
+    return (await this.getHabitat()).gravity;
   }
 
   private rowSet(id: string): AstronautRowSet | null {

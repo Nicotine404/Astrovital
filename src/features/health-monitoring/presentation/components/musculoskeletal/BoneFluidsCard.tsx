@@ -12,6 +12,7 @@ import { SYMPTOM_SEVERITY_LABELS, type SymptomSeverity } from "../../../domain/m
 import type { HealthStatus } from "../../../domain/value-objects/health-status.vo";
 import type { ClinicalThresholds } from "../../../domain/services/clinical-rules.domain-service";
 import type { AstronautSummaryDto, GravityEnvironmentDto } from "../../../application/dto/dashboard-summary.dto";
+import { IndicatorHelp } from "../help/IndicatorHelp";
 
 function Row({ icon: Icon, label, value, unit, status, detail }: { icon: React.ElementType; label: string; value: string; unit: string; status: HealthStatus; detail: string }) {
   const meta = STATUS_META[status];
@@ -94,7 +95,9 @@ export function BoneFluidsCard({
     <Card>
       <CardHeader className="border-b">
         <div className="space-y-1">
-          <CardTitle>Hueso, fluidos y ejercicio</CardTitle>
+          <CardTitle className="flex items-center gap-1.5">
+            Hueso, fluidos y ejercicio <IndicatorHelp id="boneFluids" />
+          </CardTitle>
           <p className="text-[13px] text-muted-foreground">
             Referencias para {environment.location} ({environment.label}): pérdida ósea esperada {thresholds.boneLossPerMonthPct} %/mes.
           </p>
@@ -162,7 +165,7 @@ export function BoneFluidsCard({
         <div className="space-y-3 py-3">
           <div className="flex items-center justify-between gap-2 text-[13px]">
             <span className="flex items-center gap-2">
-              <Eye className="size-4 text-muted-foreground" /> Síntomas de visión y equilibrio
+              <Eye className="size-4 text-muted-foreground" /> Síntomas de visión y equilibrio <IndicatorHelp id="symptoms" />
             </span>
             <StatusBadge status={symptomsStatus} />
           </div>

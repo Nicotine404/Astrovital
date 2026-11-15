@@ -17,7 +17,9 @@ import {
   type VitalsEvaluation,
 } from "../../domain/services/clinical-rules.domain-service";
 import type { BodyZone } from "../../domain/value-objects/body-zone.vo";
+import type { DailyMission } from "../../domain/services/daily-mission.domain-service";
 import type { GravityEnvironment, GravityEnvironmentId } from "../../domain/value-objects/gravity-environment.vo";
+import type { Habitat, HabitatId } from "../../domain/value-objects/habitat.vo";
 import type { HealthStatus } from "../../domain/value-objects/health-status.vo";
 
 /* Plain, serialisable shapes: safe to send from Server Components to the client. */
@@ -28,6 +30,16 @@ export interface GravityEnvironmentDto {
   label: string;
   location: string;
   commDelay: string;
+  commDelaySeconds: number;
+}
+
+export interface HabitatDto {
+  id: HabitatId;
+  label: string;
+  gravity: GravityEnvironmentDto;
+  shielding: number;
+  hasResistanceDevice: boolean;
+  shelter: string;
 }
 
 export interface DosePointDto {
@@ -58,11 +70,16 @@ export interface AstronautSummaryDto {
   overall: HealthStatus;
   healthIndex: number;
   alerts: ClinicalAlert[];
+  mission: DailyMission;
 }
 
 export interface DashboardSummaryDto {
+  habitat: HabitatDto;
+  habitats: HabitatDto[];
   environment: GravityEnvironmentDto;
   environments: GravityEnvironmentDto[];
+  /** Crew members who completed all of today's tasks (cooperative goal). */
+  crewMissionsCompleted: number;
   thresholds: ClinicalThresholds;
   crew: AstronautSummaryDto[];
   generatedAt: string;
@@ -74,6 +91,16 @@ export const toGravityEnvironmentDto = (env: GravityEnvironment): GravityEnviron
   label: env.label,
   location: env.location,
   commDelay: env.formatCommDelay(),
+  commDelaySeconds: env.commDelaySeconds,
+});
+
+export const toHabitatDto = (h: Habitat): HabitatDto => ({
+  id: h.id,
+  label: h.label,
+  gravity: toGravityEnvironmentDto(h.gravity),
+  shielding: h.shielding,
+  hasResistanceDevice: h.hasResistanceDevice,
+  shelter: h.shelter,
 });
 
 /** Rebuilds the cumulative-dose curve from the reading log (newest reading = current total). */
@@ -91,11 +118,13 @@ function doseSeries(t: AstronautTelemetry): DosePointDto[] {
 
 export function toAstronautSummaryDto(
   t: AstronautTelemetry,
-  env: GravityEnvironment,
+  habitat: Habitat,
   rules: ClinicalRulesService,
-  dayFraction: number
+  dayFraction: number,
+  missionFor: (evaluation: ReturnType<ClinicalRulesService["evaluate"]>) => DailyMission
 ): AstronautSummaryDto {
-  const evaluation = rules.evaluate(t, env, dayFraction);
+  const env: GravityEnvironment = habitat.gravity;
+  const evaluation = rules.evaluate(t, env, dayFraction, habitat);
   const snapshot = t.toSnapshot();
   return {
     astronaut: snapshot.astronaut,
@@ -117,5 +146,6 @@ export function toAstronautSummaryDto(
     overall: evaluation.overall,
     healthIndex: evaluation.healthIndex,
     alerts: evaluation.alerts,
+    mission: missionFor(evaluation),
   };
 }

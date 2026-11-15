@@ -12,17 +12,17 @@ export default async function DiagnosticsPage() {
   const diagnostics = await Promise.all(summary.crew.map((c) => clinicalDiagnostics.getDiagnostics.execute(c.astronaut.id)));
   const files = diagnostics.reduce((n, d) => n + d.files.length, 0);
   const STATS = [
-    { icon: Cpu, label: "Modelo local", value: "MedLLM-Mars 4-bit", sub: "WebGPU + WASM" },
-    { icon: Timer, label: "Latencia media", value: "18 ms", sub: "p95 · 41 ms" },
+    { icon: Cpu, label: "Motor de análisis", value: "Simulado", sub: "Resultados de referencia, sin modelo real" },
+    { icon: Timer, label: "Latencia", value: "Simulada", sub: "Valor ilustrativo" },
     { icon: FileCheck2, label: "Fuentes correlacionadas", value: `${files} archivos`, sub: "PDF · audio · vídeo · DICOM" },
     { icon: Waypoints, label: "Revisión terrestre", value: "Pendiente", sub: `Retardo ${summary.environment.commDelay}` },
   ];
   return (
     <div className="space-y-6">
       <PageHeader
-        eyebrow="Diagnóstico autónomo · Vesta 4.2"
-        title="Inferencia clínica en el dispositivo"
-        description="Hipótesis diagnósticas generadas sin conexión a partir de telemetría y estudios multimodales."
+        eyebrow="Diagnóstico asistido · demostración"
+        title="Diagnóstico asistido (simulado)"
+        description="Demostración de cómo se verían hipótesis diagnósticas a partir de telemetría y estudios. Los resultados son de referencia: no hay un modelo de IA ejecutándose."
       />
 
       <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">

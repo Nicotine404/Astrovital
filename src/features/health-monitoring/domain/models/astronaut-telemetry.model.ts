@@ -96,8 +96,8 @@ export class AstronautTelemetry {
     this.props.nutrition = addIntake(base, intake);
   }
 
-  logExercise(minutes: number): void {
-    this.props.musculoskeletal = addExercise(this.props.musculoskeletal, minutes);
+  logExercise(minutes: number, today: string): void {
+    this.props.musculoskeletal = addExercise(this.props.musculoskeletal, minutes, today);
   }
 
   reportSymptoms(vision: number, dizziness: number, recordedAt: string): void {

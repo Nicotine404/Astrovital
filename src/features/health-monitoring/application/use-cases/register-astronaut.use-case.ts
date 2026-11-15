@@ -53,7 +53,7 @@ export class RegisterAstronautUseCase {
         recommendedAction: "Programar evaluación inicial",
       })),
       radiation: { cumulativeMsv: 0, neutronCumulativeMsv: 0, careerLimitMsv: CAREER_DOSE_LIMIT_MSV, readings: [] },
-      musculoskeletal: { boneDensityDeltaPct: 0, muscleMassDeltaPct: 0, cephalicFluidShiftMmHg: 0, spinalElongationCm: 0, exerciseMinutesToday: 0, exerciseTargetMinutes, visionSymptom: 0, dizzinessSymptom: 0, symptomsRecordedAt: null },
+      musculoskeletal: { boneDensityDeltaPct: 0, muscleMassDeltaPct: 0, cephalicFluidShiftMmHg: 0, spinalElongationCm: 0, exerciseMinutesToday: 0, exerciseTargetMinutes, exerciseLoggedOn: isoDate(now), visionSymptom: 0, dizzinessSymptom: 0, symptomsRecordedAt: null },
       mentalCheckins: [],
       nutrition: emptyNutritionLog(isoDate(now)),
     });

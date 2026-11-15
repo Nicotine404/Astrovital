@@ -9,6 +9,7 @@ import type { AnatomicalStructureId } from "../value-objects/anatomical-structur
 import { STRUCTURES } from "../value-objects/anatomical-structure.vo";
 import type { BodyZone } from "../value-objects/body-zone.vo";
 import type { GravityEnvironment, GravityEnvironmentId } from "../value-objects/gravity-environment.vo";
+import type { Habitat } from "../value-objects/habitat.vo";
 import { HealthStatus } from "../value-objects/health-status.vo";
 
 /* ------------------------------------------------------------------ */
@@ -135,10 +136,17 @@ export interface NutritionEvaluation {
   alerts: string[];
 }
 
+/**
+ * Who has to act on an alert: the astronaut alone, with a crewmate (to confirm, help or
+ * treat), or the flight surgeons on Earth (subject to the communication delay).
+ */
+export type Escalation = "SELF" | "CREW" | "GROUND";
+
 export interface ClinicalAlert {
   severity: Exclude<HealthStatus, "NOMINAL">;
-  zone: BodyZone | "RADIATION" | "WELLBEING" | "NUTRITION";
+  zone: BodyZone | "RADIATION" | "WELLBEING" | "NUTRITION" | "IMMUNE";
   message: string;
+  escalation: Escalation;
 }
 
 export interface TelemetryEvaluation {
@@ -177,8 +185,13 @@ export class ClinicalRulesService {
     };
   }
 
-  countermeasuresFor(env: GravityEnvironment): CountermeasureRoutine[] {
-    return COUNTERMEASURES[env.id].map((r) => ({ ...r }));
+  /** Daily routine; without a resistance device (rovers) resistance work uses bands and body weight. */
+  countermeasuresFor(env: GravityEnvironment, habitat?: Habitat): CountermeasureRoutine[] {
+    return COUNTERMEASURES[env.id].map((r) =>
+      habitat && !habitat.hasResistanceDevice && (r.id === "ared" || r.id === "resistance")
+        ? { ...r, label: "Bandas elásticas y peso corporal", purpose: "Sin máquina de resistencia a bordo: carga con bandas y peso corporal" }
+        : { ...r }
+    );
   }
 
   evaluateVitals(v: VitalSigns, env: GravityEnvironment): VitalsEvaluation {
@@ -206,7 +219,7 @@ export class ClinicalRulesService {
     };
   }
 
-  evaluateMusculoskeletal(m: Musculoskeletal, env: GravityEnvironment, dayFraction: number): MusculoskeletalEvaluation {
+  evaluateMusculoskeletal(m: Musculoskeletal, env: GravityEnvironment, dayFraction: number, habitat?: Habitat): MusculoskeletalEvaluation {
     const t = this.thresholdsFor(env);
     const projected = round2(m.boneDensityDeltaPct - t.boneLossPerMonthPct);
     const boneDensity = HealthStatus.below(projected, t.boneWarningPct, t.boneCriticalPct);
@@ -229,7 +242,7 @@ export class ClinicalRulesService {
       exercise,
       exerciseCompliancePct: Math.round(compliance * 100),
       exerciseTargetMinutes: target,
-      routine: this.countermeasuresFor(env),
+      routine: this.countermeasuresFor(env, habitat),
       vision,
       dizziness,
       overall: HealthStatus.worst(boneDensity, fluidShift, exercise, vision, dizziness),
@@ -333,9 +346,9 @@ export class ClinicalRulesService {
     return t.assessments.map((a) => ({ ...a, status: HealthStatus.worst(a.clinicalStatus, ruleStatus[a.structureId] ?? "NOMINAL") }));
   }
 
-  evaluate(t: AstronautTelemetry, env: GravityEnvironment, dayFraction: number): TelemetryEvaluation {
+  evaluate(t: AstronautTelemetry, env: GravityEnvironment, dayFraction: number, habitat?: Habitat): TelemetryEvaluation {
     const vitals = this.evaluateVitals(t.vitals, env);
-    const musculoskeletal = this.evaluateMusculoskeletal(t.musculoskeletal, env, dayFraction);
+    const musculoskeletal = this.evaluateMusculoskeletal(t.musculoskeletal, env, dayFraction, habitat);
     const radiation = this.evaluateRadiation(t.radiation);
     const mental = this.evaluateMental(t.mentalCheckins);
     const nutrition = this.evaluateNutrition(t.nutrition, dayFraction);
@@ -352,28 +365,39 @@ export class ClinicalRulesService {
     zones.IMMUNE = HealthStatus.worst(zones.IMMUNE, vitals.glucose, vitals.temperature, radiation.immuneCheckRequired ? "WARNING" : "NOMINAL");
 
     const alerts: ClinicalAlert[] = [];
-    const push = (status: HealthStatus, zone: ClinicalAlert["zone"], message: string) => {
-      if (status !== "NOMINAL") alerts.push({ severity: status, zone, message });
+    // Default: a warning is self-care; a critical finding needs a crewmate. Some criticals go to Earth.
+    const push = (status: HealthStatus, zone: ClinicalAlert["zone"], message: string, criticalTo: Escalation = "CREW") => {
+      if (status !== "NOMINAL") alerts.push({ severity: status, zone, message, escalation: status === "CRITICAL" ? criticalTo : "SELF" });
     };
     const th = this.thresholdsFor(env);
-    push(vitals.intracranialPressure, "NEURO", `PIC ${t.vitals.intracranialPressure} mmHg sobre el umbral de ${th.icpWarning} mmHg para ${env.label}: riesgo de SANS.`);
-    push(vitals.bloodPressure, "CARDIO", `Presión arterial ${t.vitals.systolic}/${t.vitals.diastolic} mmHg fuera de rango para ${env.label}.`);
-    push(vitals.spo2, "CARDIO", `Saturación de oxígeno baja (${t.vitals.spo2} %).`);
+    push(vitals.intracranialPressure, "NEURO", `PIC ${t.vitals.intracranialPressure} mmHg sobre el umbral de ${th.icpWarning} mmHg para ${env.label}: riesgo de SANS.`, "GROUND");
+    push(vitals.bloodPressure, "CARDIO", `Presión arterial ${t.vitals.systolic}/${t.vitals.diastolic} mmHg fuera de rango para ${env.label}.`, "GROUND");
+    push(vitals.spo2, "CARDIO", `Saturación de oxígeno baja (${t.vitals.spo2} %).`, "GROUND");
     push(musculoskeletal.boneDensity, "MUSCULOSKELETAL", `Densidad ósea proyectada a 30 días: ${musculoskeletal.projectedBoneDeltaPct} %.`);
     push(musculoskeletal.fluidShift, "MUSCULOSKELETAL", `Desplazamiento de fluidos ${t.musculoskeletal.cephalicFluidShiftMmHg} mmHg frente a ${th.expectedFluidShiftMmHg} mmHg esperados.`);
     push(musculoskeletal.exercise, "MUSCULOSKELETAL", `Ejercicio por debajo del ritmo diario (${musculoskeletal.exerciseCompliancePct} % de ${musculoskeletal.exerciseTargetMinutes} min para ${env.label}).`);
-    push(musculoskeletal.vision, "NEURO", "Alteración visual reportada: posible SANS. Hacer prueba de agudeza visual y OCT, y avisar a los médicos de vuelo.");
+    push(
+      musculoskeletal.vision,
+      "NEURO",
+      musculoskeletal.vision === "CRITICAL"
+        ? "Alteración visual importante: posible SANS. Prueba de agudeza visual y OCT, y reporte a los médicos de vuelo."
+        : "Alteración visual leve: repite la prueba de agudeza visual en 12 h y vigila si empeora.",
+      "GROUND"
+    );
     push(musculoskeletal.dizziness, "NEURO", "Mareo o pérdida de equilibrio: evitar tareas en altura o EVA y moverse despacio hasta que remita.");
     const pct = Math.round(radiation.careerFraction * 100);
     if (radiation.shelterRequired) {
-      alerts.push({ severity: "CRITICAL", zone: "RADIATION", message: "Evento de partículas: dirigirse al refugio blindado de inmediato." });
-      alerts.push({ severity: "WARNING", zone: "IMMUNE", message: "Tras la exposición: chequeo inmunológico (hemograma y recuento de linfocitos)." });
+      const where = habitat ? habitat.shelter : "al refugio blindado";
+      alerts.push({ severity: "CRITICAL", zone: "RADIATION", message: `Evento de partículas: toda la tripulación ${where} de inmediato.`, escalation: "CREW" });
+      alerts.push({ severity: "WARNING", zone: "IMMUNE", message: "Tras la exposición: chequeo inmunológico (hemograma y recuento de linfocitos) con ayuda de un compañero.", escalation: "CREW" });
     } else if (radiation.cumulative === "CRITICAL") {
-      alerts.push({ severity: "CRITICAL", zone: "RADIATION", message: `Dosis acumulada al ${pct} % del límite: dormir en la zona blindada, evitar EVA y hacer chequeo inmunológico.` });
+      alerts.push({ severity: "CRITICAL", zone: "RADIATION", message: `Dosis acumulada al ${pct} % del límite: dormir en la zona blindada, evitar EVA y hacer chequeo inmunológico.`, escalation: "GROUND" });
     } else push(radiation.overall, "RADIATION", `Dosis acumulada al ${pct} % del límite de carrera.`);
-    if (mental.alerts.length) for (const message of mental.alerts) alerts.push({ severity: mental.trend === "CRITICAL" ? "CRITICAL" : "WARNING", zone: "WELLBEING", message });
-    else push(mental.overall, "WELLBEING", "El último check-in psicológico indica sueño, estrés o ánimo fuera de rango.");
-    for (const msg of nutrition.alerts) alerts.push({ severity: "WARNING", zone: "NUTRITION", message: msg });
+    if (mental.alerts.length)
+      for (const message of mental.alerts)
+        alerts.push({ severity: mental.trend === "CRITICAL" ? "CRITICAL" : "WARNING", zone: "WELLBEING", message, escalation: mental.trend === "CRITICAL" ? "GROUND" : "SELF" });
+    else push(mental.overall, "WELLBEING", "El último check-in psicológico indica sueño, estrés o ánimo fuera de rango.", "GROUND");
+    for (const msg of nutrition.alerts) alerts.push({ severity: "WARNING", zone: "NUTRITION", message: msg, escalation: "SELF" });
 
     const statuses = [vitals.overall, musculoskeletal.overall, radiation.overall, mental.overall, nutrition.overall];
     let penalty = 0;

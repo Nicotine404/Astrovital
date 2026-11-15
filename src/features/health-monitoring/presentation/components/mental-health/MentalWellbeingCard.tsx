@@ -12,6 +12,7 @@ import { STATUS_META } from "@/core/presentation/shared/status-meta";
 import { cn } from "@/core/utils/cn";
 import type { MentalCheckin } from "../../../domain/models/mental-health.model";
 import type { MentalEvaluation } from "../../../domain/services/clinical-rules.domain-service";
+import { IndicatorHelp } from "../help/IndicatorHelp";
 
 function Field({ id, icon: Icon, label, value, display, min, max, step, onChange }: { id: string; icon: React.ElementType; label: string; value: number; display: string; min: number; max: number; step: number; onChange: (v: number) => void }) {
   return (
@@ -55,7 +56,9 @@ export function MentalWellbeingCard({
     <Card>
       <CardHeader className="border-b">
         <div className="space-y-1">
-          <CardTitle>Salud mental</CardTitle>
+          <CardTitle className="flex items-center gap-1.5">
+            Salud mental <IndicatorHelp id="mental" />
+          </CardTitle>
           <p className="text-[13px] text-muted-foreground">Check-in diario confidencial · últimos {history.length} días</p>
         </div>
         <StatusBadge status={evaluation.overall} />

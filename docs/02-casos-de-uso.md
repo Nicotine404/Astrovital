@@ -90,8 +90,8 @@ Los umbrales concretos están en [reglas clínicas](04-reglas-clinicas.md).
 **Objetivo:** que las reglas clínicas correspondan a dónde está el astronauta.
 
 **Flujo principal**
-1. El astronauta elige el entorno en la barra superior: 0 g (órbita/ISS), 0.16 g (Luna), 0.38 g (Marte), 1 g (Tierra).
-2. El sistema recalcula los umbrales (presión, PIC, pérdida ósea esperada, fluid shift esperado) y **la rutina obligatoria de ejercicio**.
+1. El astronauta elige **dónde está** en la barra superior: nave en tránsito o ISS (0 g), base o rover lunar (0.16 g), base o rover marciano (0.38 g), Tierra (1 g).
+2. El sistema recalcula los umbrales (presión, PIC, pérdida ósea esperada, fluid shift esperado), **la rutina obligatoria de ejercicio** (en un rover, sin máquina de resistencia, usa bandas elásticas), **el blindaje frente a la radiación** y **a dónde ir si hay una tormenta solar**.
 3. Todas las pantallas se actualizan con los nuevos colores y referencias.
 
 **Criterios de aceptación**

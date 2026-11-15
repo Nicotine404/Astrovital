@@ -102,6 +102,34 @@ Con varios check-ins en el mismo día (UTC), cuenta el último.
 
 La ingesta se compara con el **ritmo del día**, no con el total: `avance / ritmo`, donde `ritmo` es la fracción transcurrida de la jornada de vigilia (07:00–23:00 UTC, mínimo 0,1). Precaución si `avance / ritmo ≤ 0,6`; crítico si `≤ 0,3`. Superar un límite superior da precaución.
 
+## Hábitat: blindaje y equipo
+
+La gravedad sale del lugar. Además, el lugar decide cuánta radiación externa llega (multiplicador sobre la lectura) y si hay máquina de resistencia.
+
+| Lugar | Gravedad | Blindaje (× radiación externa) | Máquina de resistencia |
+|---|---|---|---|
+| Nave en tránsito | 0 g | 1 | Sí |
+| ISS | 0 g | 0,7 | Sí |
+| Base lunar | 0.16 g | 0,35 | Sí |
+| Rover lunar | 0.16 g | 1,3 | No → bandas elásticas |
+| Base en Marte | 0.38 g | 0,3 | Sí |
+| Rover marciano | 0.38 g | 1,1 | No → bandas elásticas |
+| Tierra | 1 g | 0,01 | Sí |
+
+## Quién actúa (escalamiento)
+
+| Nivel | Cuándo |
+|---|---|
+| **Tú mismo** | Toda alerta en precaución |
+| **Con un compañero** | Crítico que se resuelve a bordo: refugio por tormenta solar, chequeo inmunológico, mareo severo, ejercicio muy atrasado |
+| **Avisa a Tierra** | Crítico que necesita criterio médico: PIC, presión, SpO₂, visión, dosis acumulada cerca del límite, tendencia mental de 5 días |
+
+Para "Avisa a Tierra" la app muestra el retardo de ida y vuelta del lugar actual (por ejemplo, ~29 min desde Marte).
+
+## Misión del día
+
+Cinco tareas diarias: medir signos vitales, completar la rutina, check-in mental, hidratación al ritmo del día y proteína al ritmo del día. Cada tarea da 20 XP y completar todas suma 50 de bonificación. Hay una racha de días con la rutina completa e insignias (7 días de rutina, 7 noches de 7 h o más, check-in en 14 días distintos). Los recordatorios aparecen como avisos al abrir la app y cada 90 s; el de signos vitales se vuelve urgente si pasaron 6 h desde la última medición. La meta es cooperativa: cuántos miembros de la tripulación completaron su misión hoy.
+
 ## Zonas del cuerpo
 
 | Zona | Toma el peor estado de |

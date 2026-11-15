@@ -5,7 +5,7 @@ import { createServerContainer } from "@/core/infrastructure/di/container";
 import { runAction } from "@/core/utils/action-result";
 import {
   AstronautIdSchema,
-  ChangeGravitySchema,
+  ChangeHabitatSchema,
   LogExerciseSchema,
   LogRadiationSchema,
   MentalCheckinSchema,
@@ -18,13 +18,13 @@ import {
 /** Every mutation re-renders the dashboard layout so all pages see the recalibrated state. */
 const refresh = () => revalidatePath("/", "layout");
 
-/** RF-03: switch the operational gravity environment; all thresholds are recalculated server-side. */
-export async function changeGravityEnvironmentAction(input: unknown) {
-  return runAction(ChangeGravitySchema, input, async (dto) => {
+/** CU-04: move the crew to another place; gravity, thresholds and routine are recalculated server-side. */
+export async function changeHabitatAction(input: unknown) {
+  return runAction(ChangeHabitatSchema, input, async (dto) => {
     const { healthMonitoring } = await createServerContainer();
-    const environment = await healthMonitoring.changeGravityEnvironment.execute(dto);
+    const habitat = await healthMonitoring.changeHabitat.execute(dto);
     refresh();
-    return environment;
+    return habitat;
   });
 }
 

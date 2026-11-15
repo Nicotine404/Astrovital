@@ -1,11 +1,12 @@
 import { z } from "zod";
-import { GRAVITY_ENVIRONMENT_IDS } from "../../domain/value-objects/gravity-environment.vo";
+import { HABITAT_IDS } from "../../domain/value-objects/habitat.vo";
 import { BODY_ZONES } from "../../domain/value-objects/body-zone.vo";
 
 const astronautId = z.string().min(1).max(64);
 
-export const ChangeGravitySchema = z.object({ environmentId: z.enum(GRAVITY_ENVIRONMENT_IDS) });
-export type ChangeGravityDto = z.infer<typeof ChangeGravitySchema>;
+/** CU-04: the crew moves to another place; gravity, shielding and routine follow from it. */
+export const ChangeHabitatSchema = z.object({ habitatId: z.enum(HABITAT_IDS) });
+export type ChangeHabitatDto = z.infer<typeof ChangeHabitatSchema>;
 
 export const RecordVitalSignsSchema = z.object({
   astronautId,

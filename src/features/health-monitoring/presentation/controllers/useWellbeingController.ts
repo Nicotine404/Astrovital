@@ -24,7 +24,7 @@ export function useWellbeingController(astronautId: string, history: MentalCheck
         const res = await logMentalCheckinAction({ astronautId, ...form });
         if (!res.ok) toast.error("Check-in no registrado", { description: res.error });
         else if (res.data.overall === "NOMINAL") toast.success("Check-in registrado");
-        else toast.warning("Check-in registrado · seguimiento recomendado", { description: "Se notificará al oficial médico en la próxima ventana DSN." });
+        else toast.warning("Check-in registrado · seguimiento recomendado", { description: "Si se repite varios días, compártelo con el psicólogo de vuelo en la próxima ventana de comunicación." });
       });
     },
     [astronautId, addOptimistic]

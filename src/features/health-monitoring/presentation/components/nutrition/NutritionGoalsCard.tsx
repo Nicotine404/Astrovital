@@ -8,6 +8,7 @@ import { STATUS_META } from "@/core/presentation/shared/status-meta";
 import { cn } from "@/core/utils/cn";
 import type { NutritionIntake, NutritionLog } from "../../../domain/models/nutrition-log.model";
 import type { NUTRITION_TARGETS, NutritionEvaluation } from "../../../domain/services/clinical-rules.domain-service";
+import { IndicatorHelp } from "../help/IndicatorHelp";
 
 type Key = keyof typeof NUTRITION_TARGETS;
 const ROWS: { key: Key; label: string; unit: string }[] = [
@@ -45,7 +46,9 @@ export function NutritionGoalsCard({
     <Card>
       <CardHeader className="border-b">
         <div className="space-y-1">
-          <CardTitle>Nutrición diaria</CardTitle>
+          <CardTitle className="flex items-center gap-1.5">
+            Nutrición diaria <IndicatorHelp id="nutrition" />
+          </CardTitle>
           <p className="text-[13px] text-muted-foreground">Objetivos de vuelo · la evaluación tiene en cuenta la hora del día</p>
         </div>
         <StatusBadge status={evaluation.overall} />

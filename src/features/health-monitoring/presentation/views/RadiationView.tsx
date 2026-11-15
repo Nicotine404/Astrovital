@@ -20,7 +20,7 @@ export function RadiationView({ summary }: { summary: DashboardSummaryDto }) {
   return (
     <div className="space-y-4">
       <CrewSwitcher crew={t.crew} selectedId={member.astronaut.id} onSelect={t.selectAstronaut} className="w-fit" />
-      <CansRadiationWidget member={member} pending={radiation.isPending} onSimulateSolarEvent={radiation.simulateSolarEvent} onLogBackground={radiation.logBackground} />
+      <CansRadiationWidget member={member} shelter={summary.habitat.shelter} pending={radiation.isPending} onSimulateSolarEvent={radiation.simulateSolarEvent} onLogBackground={radiation.logBackground} />
 
       <div className="grid gap-4 xl:grid-cols-[minmax(0,1.7fr)_minmax(0,1fr)]">
         <Card>
