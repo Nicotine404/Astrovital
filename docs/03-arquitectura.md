@@ -84,7 +84,7 @@ flowchart TB
 | `infrastructure/` | `application/` (puertos), `domain/` | Presentación |
 | `presentation/` | `application/` (DTOs), `domain/` (tipos), `core/presentation` | Adaptadores concretos (se resuelven en el contenedor DI) |
 
-## Bounded contexts (slices)
+## Bounded contexts
 
 | Slice | Responsabilidad | Casos de uso |
 |---|---|---|
@@ -93,42 +93,6 @@ flowchart TB
 | `mission-ops` | Botiquín y lecturas de soporte vital de cabina (ECLSS) | Extra |
 
 El agregado raíz del núcleo es `AstronautTelemetry`: todo el estado biomédico de un astronauta. Se modifica solo a través de sus métodos (`recordVitals`, `logRadiation`, `logExercise`, `reportSymptoms`, `logMentalCheckin`, `logNutrition`, `setExerciseTarget`) y se guarda completo.
-
-```mermaid
-%%{init: {"flowchart": {"defaultRenderer": "elk"}}}%%
-classDiagram
-  class AstronautTelemetry {
-    <<aggregate root>>
-    +astronaut: Astronaut
-    +recordVitals()
-    +logRadiation()
-    +logExercise()
-    +reportSymptoms()
-    +logMentalCheckin()
-    +logNutrition()
-    +setExerciseTarget()
-    +toSnapshot()
-  }
-  AstronautTelemetry *-- VitalSigns
-  AstronautTelemetry *-- RadiationDosimetry
-  AstronautTelemetry *-- Musculoskeletal
-  AstronautTelemetry *-- "0..30" MentalCheckin
-  AstronautTelemetry *-- NutritionLog
-  AstronautTelemetry *-- "*" OrganAssessment
-  class GravityEnvironment {
-    <<value object>>
-    ZERO_G · LUNAR · MARTIAN · EARTH
-    +unloading = 1 - g
-  }
-  class ClinicalRulesService {
-    <<domain service>>
-    +thresholdsFor(env)
-    +countermeasuresFor(env)
-    +evaluate(telemetry, env, dayFraction)
-  }
-  ClinicalRulesService ..> AstronautTelemetry : evalúa
-  ClinicalRulesService ..> GravityEnvironment : usa
-```
 
 ## Estructura de directorios
 
@@ -147,7 +111,7 @@ src/
 │   │   ├── ui/                      Primitivas shadcn/ui
 │   │   ├── layouts/mission-dashboard/
 │   │   └── shared/                  StatusBadge, Sparkline, PageHeader, EcgTrace…
-│   └── utils/                       cn.ts, action-result.ts (runAction: Zod + mapeo de errores)
+  │   └── utils/                       cn.ts, action-result.ts (runAction: Zod + mapeo de errores)
 └── features/
     ├── health-monitoring/
     │   ├── domain/                  models · value-objects · services/clinical-rules · errors
@@ -160,82 +124,3 @@ supabase/
 ├── migrations/                      0001_init.sql · 0002_cu_gaps.sql
 └── seed.sql                         Generado con scripts/generate-supabase-seed.ts
 ```
-
-**Diferencias con la especificación original:**
-- La silueta del cuerpo es un **gemelo 3D** (three.js + BodyParts3D), no un SVG.
-- Se agregó una carpeta `presentation/views/` que compone componentes y controllers por página.
-- `MetricTrendChart` vive en `features/health-monitoring/presentation/components/trends/`, no en `core/`.
-
-## Flujos clave
-
-### Cambio de entorno gravitacional (CU-04)
-
-Recorre todas las capas: es el flujo de referencia.
-
-```mermaid
-%%{init: {"flowchart": {"defaultRenderer": "elk"}}}%%
-sequenceDiagram
-  actor A as Astronauta
-  participant V as GravityEnvironmentBar
-  participant C as useGravityController
-  participant SA as changeGravityEnvironmentAction
-  participant UC as ChangeGravityEnvironmentUseCase
-  participant R as ClinicalRulesService
-  participant Repo as TelemetryRepositoryPort
-
-  A->>V: elige 0 g
-  V->>C: onChange("ZERO_G")
-  C->>C: useOptimistic: muestra 0 g ya
-  C->>SA: { environmentId: "ZERO_G" }
-  SA->>SA: valida con Zod
-  SA->>UC: execute(dto)
-  UC->>Repo: saveEnvironment(0 g)
-  UC->>Repo: findAll()
-  loop cada astronauta
-    UC->>R: thresholdsFor(0 g) → rutina 150 min
-    UC->>UC: setExerciseTarget(150)
-    UC->>R: recalibrateAssessments()
-    UC->>Repo: save(telemetry)
-  end
-  SA->>SA: revalidatePath("/", "layout")
-  SA-->>C: { ok: true, data: entorno }
-  C-->>A: toast "Umbrales y rutina recalculados"
-  Note over V,Repo: El layout se vuelve a renderizar en el servidor<br/>y todas las páginas ven los nuevos colores
-```
-
-### Tormenta solar y refugio (CU-03)
-
-```mermaid
-%%{init: {"flowchart": {"defaultRenderer": "elk"}}}%%
-sequenceDiagram
-  actor A as Astronauta
-  participant C as useRadiationController
-  participant UC as LogRadiationExposureUseCase
-  participant R as ClinicalRulesService
-  A->>C: Simular evento SPE
-  C->>UC: SPE · 6.4 mSv/día · flujo 9.2 · 3 h (toda la tripulación)
-  UC->>UC: accumulateExposure() en cada dosímetro
-  UC->>R: evaluateRadiation()
-  R-->>UC: shelterRequired · immuneCheckRequired
-  UC-->>C: { shelterRequired: true }
-  C-->>A: alerta roja: refugio + chequeo inmunológico al salir
-```
-
-## Reglas de implementación
-
-1. **Dominio puro:** `features/**/domain/**` no importa `react`, `next`, `@supabase/*` ni librerías de UI.
-2. **Vista separada de datos:** los componentes (`presentation/components/**`) reciben datos por props y emiten callbacks. No hacen fetching ni llaman a Server Actions. La orquestación (carga, `useOptimistic`, errores, Realtime) vive en `presentation/controllers/**`.
-3. **shadcn/ui:** toda primitiva visual se importa de `@/core/presentation/ui/*`.
-4. **Supabase dual:** Server Components y Server Actions usan el cliente SSR a través de `container.ts`; los controllers que necesitan Realtime usan `container.client.ts`.
-5. **Mappers:** la conversión `snake_case` ↔ `camelCase` ocurre solo en `infrastructure/persistence/mappers/*.mapper.ts`.
-6. **Inyección de dependencias:** nunca `new *Adapter()` ni `new *UseCase()` fuera de `core/infrastructure/di/`.
-7. **Server Actions como única frontera de escritura:** toda mutación pasa por `runAction(schema, input, fn)`, que valida con Zod y convierte los `DomainError` en mensajes para la UI.
-
-## Cómo añadir una funcionalidad
-
-1. Dominio: modelo o regla nueva en `domain/` (TypeScript puro).
-2. Aplicación: DTO con Zod y caso de uso que use los puertos.
-3. Infraestructura: columnas nuevas en una migración `supabase/migrations/000N_*.sql`, y actualizar mapper y seed (los dos adaptadores comparten el mapper).
-4. Registrar el caso de uso en `core/infrastructure/di/container.ts`.
-5. Presentación: Server Action → controller → componente puro.
-6. Verificar: `npm run typecheck` y `npm run lint`.
