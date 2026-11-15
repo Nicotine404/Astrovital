@@ -2,6 +2,10 @@
 
 Monitorización médica autónoma para tripulaciones en el espacio profundo.
 
+Propuesta para el reto *Create Health Monitoring Software for Astronauts on Space Missions*
+(NASA Space Apps Challenge 2026). **Documentación completa en [`docs/`](docs/README.md)**: visión,
+casos de uso, arquitectura, reglas clínicas, estado y decisiones (ADR).
+
 ## Stack
 
 - **Next.js 15** (App Router, Server Components, Server Actions) + **React 19.1** + TypeScript estricto
@@ -24,9 +28,11 @@ sembrados con datos de demostración (mismo esquema y mismo mapper que con Supab
 ### Conectar Supabase
 
 1. Copia `.env.example` a `.env.local` y rellena `NEXT_PUBLIC_SUPABASE_URL` y `NEXT_PUBLIC_SUPABASE_ANON_KEY`.
-2. Aplica `supabase/migrations/0001_init.sql` (tablas, vista `latest_vital_signs`, RLS para
-   `authenticated`, publicación Realtime de `vital_signs`).
-3. Opcional: `npm run db:seed-sql` regenera `supabase/seed.sql` con los datos de demostración.
+2. Aplica las migraciones en orden: `supabase/migrations/0001_init.sql` (tablas, vista
+   `latest_vital_signs`, RLS para `authenticated`, publicación Realtime de `vital_signs`) y
+   `0002_cu_gaps.sql` (proteínas y síntomas de visión/mareo).
+3. Carga `supabase/seed.sql`. Para regenerarlo con los datos de demostración:
+   `npx tsx scripts/generate-supabase-seed.ts`.
 
 Con las variables definidas, el contenedor de dependencias enlaza automáticamente los
 adaptadores de Supabase y la telemetría en vivo pasa a Supabase Realtime.
