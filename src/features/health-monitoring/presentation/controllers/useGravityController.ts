@@ -21,7 +21,7 @@ export function useGravityController(current: GravityEnvironmentDto, environment
       startTransition(async () => {
         setOptimistic(next);
         const res = await changeGravityEnvironmentAction({ environmentId: id });
-        if (res.ok) toast.success(`Entorno ${res.data.location} · ${res.data.label}`, { description: "Umbrales clínicos recalculados para toda la tripulación." });
+        if (res.ok) toast.success(`Entorno ${res.data.location} · ${res.data.label}`, { description: "Umbrales clínicos y rutina de ejercicio recalculados." });
         else toast.error("No se pudo cambiar el entorno", { description: res.error });
       });
     },

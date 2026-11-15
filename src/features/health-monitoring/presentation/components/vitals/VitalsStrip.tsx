@@ -73,7 +73,9 @@ export function VitalsStrip({
   thresholds,
   source,
   onOpenTrends,
+  action,
 }: {
+  action?: React.ReactNode;
   latest: VitalSigns;
   series: Series;
   evaluation: VitalsEvaluation;
@@ -85,6 +87,8 @@ export function VitalsStrip({
     <section aria-label="Signos vitales en vivo" className="space-y-3">
       <div className="flex items-center justify-between gap-3">
         <h2 className="text-[15px] font-semibold tracking-tight">Signos vitales en vivo</h2>
+        <div className="flex items-center gap-3">
+        {action}
         <span className="flex items-center gap-2 font-mono text-[11px] text-muted-foreground">
           <span className="relative flex size-1.5">
             <span className="absolute inline-flex size-full animate-ping rounded-full bg-nominal opacity-70" />
@@ -92,6 +96,7 @@ export function VitalsStrip({
           </span>
           {source === "supabase" ? "Supabase Realtime" : "Telemetría simulada"} · 1.5 s
         </span>
+        </div>
       </div>
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-6">
         <Tile icon={HeartPulse} label="Frecuencia cardíaca" value={Math.round(latest.heartRate).toString()} unit="lpm" data={series.heartRate} band={[50, 100]} status={evaluation.heartRate} caption="Ritmo sinusal" zone="CARDIO" onOpenTrends={onOpenTrends} />

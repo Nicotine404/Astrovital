@@ -48,9 +48,9 @@ export function useLiveVitalsController(astronautId: string, baseline: VitalSign
       setLatest(sample);
       setSeries((prev) => Object.fromEntries(KEYS.map((k) => [k, [...prev[k].slice(1 - WINDOW), sample[k]]])) as Record<LiveVitalKey, number[]>);
     });
-    // Re-subscribe only when the astronaut changes, not on every server refresh of the baseline.
+    // Re-subscribe when the astronaut changes or a new sample is recorded, not on every server refresh.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [astronautId, vitalsStream]);
+  }, [astronautId, baseline.recordedAt, vitalsStream]);
 
   return { latest, series, source: realtime };
 }

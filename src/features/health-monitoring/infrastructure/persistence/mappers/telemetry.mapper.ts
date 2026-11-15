@@ -1,5 +1,6 @@
 import { AstronautTelemetry } from "../../../domain/models/astronaut-telemetry.model";
 import type { AssessmentMetric, OrganAssessment } from "../../../domain/models/organ-assessment.model";
+import type { SymptomSeverity } from "../../../domain/models/musculoskeletal.model";
 import type { RadiationSource } from "../../../domain/models/radiation-dosimetry.model";
 import type { VitalSigns } from "../../../domain/models/vital-signs.model";
 import { isAnatomicalStructure } from "../../../domain/value-objects/anatomical-structure.vo";
@@ -71,6 +72,9 @@ export interface MusculoskeletalStatusRow {
   spinal_elongation_cm: number;
   exercise_minutes_today: number;
   exercise_target_minutes: number;
+  vision_symptom: number;
+  dizziness_symptom: number;
+  symptoms_recorded_at: string | null;
 }
 export interface MusculoskeletalHistoryRow {
   astronaut_id: string;
@@ -94,6 +98,7 @@ export interface NutritionLogRow {
   water_ml: number;
   calcium_mg: number;
   vitamin_d_iu: number;
+  protein_g: number;
 }
 
 /** Everything persisted for one crew member. */
@@ -110,6 +115,11 @@ export interface AstronautRowSet {
 
 const num = (v: unknown) => Number(v);
 const status = (v: string): HealthStatus => (HealthStatus.isValid(v) ? v : "NOMINAL");
+/** Older rows (before migration 0002) have no symptom columns: treat as "none". */
+const severity = (v: unknown): SymptomSeverity => {
+  const n = Number(v ?? 0);
+  return (Number.isInteger(n) && n >= 0 && n <= 3 ? n : 0) as SymptomSeverity;
+};
 
 export const TelemetryMapper = {
   environmentToDomain(row: MissionStateRow | null): GravityEnvironment {
@@ -208,6 +218,9 @@ export const TelemetryMapper = {
         spinalElongationCm: num(set.musculoskeletal.spinal_elongation_cm),
         exerciseMinutesToday: num(set.musculoskeletal.exercise_minutes_today),
         exerciseTargetMinutes: num(set.musculoskeletal.exercise_target_minutes),
+        visionSymptom: severity(set.musculoskeletal.vision_symptom),
+        dizzinessSymptom: severity(set.musculoskeletal.dizziness_symptom),
+        symptomsRecordedAt: set.musculoskeletal.symptoms_recorded_at ?? null,
       },
       mentalCheckins: [...set.checkins]
         .sort((x, y) => x.recorded_at.localeCompare(y.recorded_at))
@@ -218,6 +231,7 @@ export const TelemetryMapper = {
         waterMl: n ? num(n.water_ml) : 0,
         calciumMg: n ? num(n.calcium_mg) : 0,
         vitaminDIu: n ? num(n.vitamin_d_iu) : 0,
+        proteinG: n ? num(n.protein_g ?? 0) : 0,
       },
     });
   },
@@ -270,6 +284,9 @@ export const TelemetryMapper = {
         spinal_elongation_cm: s.musculoskeletal.spinalElongationCm,
         exercise_minutes_today: s.musculoskeletal.exerciseMinutesToday,
         exercise_target_minutes: s.musculoskeletal.exerciseTargetMinutes,
+        vision_symptom: s.musculoskeletal.visionSymptom,
+        dizziness_symptom: s.musculoskeletal.dizzinessSymptom,
+        symptoms_recorded_at: s.musculoskeletal.symptomsRecordedAt,
       },
       checkins: s.mentalCheckins.map((c) => ({
         astronaut_id: id,
@@ -286,6 +303,7 @@ export const TelemetryMapper = {
         water_ml: s.nutrition.waterMl,
         calcium_mg: s.nutrition.calciumMg,
         vitamin_d_iu: s.nutrition.vitaminDIu,
+        protein_g: s.nutrition.proteinG,
       },
     };
   },

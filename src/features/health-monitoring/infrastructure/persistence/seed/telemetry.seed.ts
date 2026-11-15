@@ -35,11 +35,11 @@ const r1 = (v: number) => Math.round(v * 10) / 10;
 const r2 = (v: number) => Math.round(v * 100) / 100;
 
 /** Per-crew profile not present in the original clinical dataset. */
-const PROFILE: Record<string, { glucose: number; temp: number; fluid: number; elongation: number; exercise: number; muscle: number; sleep: number; stress: number; mood: number; intake: [number, number, number, number] }> = {
-  rostova: { glucose: 96, temp: 36.9, fluid: 22, elongation: 3.2, exercise: 35, muscle: -2.1, sleep: 6.1, stress: 6, mood: 6, intake: [1150, 1100, 380, 300] },
-  thorne: { glucose: 88, temp: 36.7, fluid: 15, elongation: 2.9, exercise: 85, muscle: -0.9, sleep: 7.4, stress: 3, mood: 8, intake: [1400, 1500, 560, 420] },
-  khan: { glucose: 91, temp: 36.8, fluid: 16, elongation: 2.6, exercise: 70, muscle: -1.2, sleep: 7.1, stress: 4, mood: 7, intake: [1250, 1300, 520, 400] },
-  lee: { glucose: 93, temp: 36.7, fluid: 14, elongation: 3.0, exercise: 95, muscle: -0.6, sleep: 5.4, stress: 5, mood: 6, intake: [1300, 900, 600, 380] },
+const PROFILE: Record<string, { glucose: number; temp: number; fluid: number; elongation: number; exercise: number; muscle: number; sleep: number; stress: number; mood: number; intake: [number, number, number, number, number] }> = {
+  rostova: { glucose: 96, temp: 36.9, fluid: 22, elongation: 3.2, exercise: 35, muscle: -2.1, sleep: 6.1, stress: 6, mood: 6, intake: [1150, 1100, 380, 300, 38] },
+  thorne: { glucose: 88, temp: 36.7, fluid: 15, elongation: 2.9, exercise: 85, muscle: -0.9, sleep: 7.4, stress: 3, mood: 8, intake: [1400, 1500, 560, 420, 62] },
+  khan: { glucose: 91, temp: 36.8, fluid: 16, elongation: 2.6, exercise: 70, muscle: -1.2, sleep: 7.1, stress: 4, mood: 7, intake: [1250, 1300, 520, 400, 55] },
+  lee: { glucose: 93, temp: 36.7, fluid: 14, elongation: 3.0, exercise: 95, muscle: -0.6, sleep: 5.4, stress: 5, mood: 6, intake: [1300, 900, 600, 380, 58] },
 };
 
 const DAY = 86_400_000;
@@ -124,7 +124,10 @@ export function buildSeedTables(now: Date): TelemetryTables {
       cephalic_fluid_shift_mmhg: p.fluid,
       spinal_elongation_cm: p.elongation,
       exercise_minutes_today: p.exercise,
-      exercise_target_minutes: 120,
+      exercise_target_minutes: 90, // MARTIAN routine (the seeded environment)
+      vision_symptom: a.id === "rostova" ? 1 : 0, // SANS grade 1 in progress
+      dizziness_symptom: 0,
+      symptoms_recorded_at: a.id === "rostova" ? new Date(now.getTime() - 3_600_000).toISOString() : null,
     });
 
     for (let d = 13; d >= 0; d--) {
@@ -139,7 +142,7 @@ export function buildSeedTables(now: Date): TelemetryTables {
       });
     }
 
-    t.nutrition_logs.push({ astronaut_id: a.id, log_date: today, calories_kcal: p.intake[0], water_ml: p.intake[1], calcium_mg: p.intake[2], vitamin_d_iu: p.intake[3] });
+    t.nutrition_logs.push({ astronaut_id: a.id, log_date: today, calories_kcal: p.intake[0], water_ml: p.intake[1], calcium_mg: p.intake[2], vitamin_d_iu: p.intake[3], protein_g: p.intake[4] });
   });
 
   return t;

@@ -47,11 +47,21 @@ export const NutritionIntakeSchema = z
     waterMl: z.number().min(0).max(5000).optional(),
     calciumMg: z.number().min(0).max(3000).optional(),
     vitaminDIu: z.number().min(0).max(10000).optional(),
+    proteinG: z.number().min(0).max(300).optional(),
   })
-  .refine((v) => [v.caloriesKcal, v.waterMl, v.calciumMg, v.vitaminDIu].some((x) => x !== undefined && x > 0), {
+  .refine((v) => [v.caloriesKcal, v.waterMl, v.calciumMg, v.vitaminDIu, v.proteinG].some((x) => x !== undefined && x > 0), {
     message: "Registra al menos un valor de ingesta",
   });
 export type NutritionIntakeDto = z.infer<typeof NutritionIntakeSchema>;
+
+/** CU-05: a completed countermeasure session. */
+export const LogExerciseSchema = z.object({ astronautId, minutes: z.number().int().min(5).max(240) });
+export type LogExerciseDto = z.infer<typeof LogExerciseSchema>;
+
+/** CU-05: vision / dizziness self-report, 0 none · 1 mild · 2 moderate · 3 severe. */
+const severity = z.number().int().min(0).max(3);
+export const ReportSymptomsSchema = z.object({ astronautId, vision: severity, dizziness: severity });
+export type ReportSymptomsDto = z.infer<typeof ReportSymptomsSchema>;
 
 export const RegisterAstronautSchema = z.object({
   name: z.string().trim().min(3).max(80),

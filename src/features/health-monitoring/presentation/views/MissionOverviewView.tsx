@@ -6,11 +6,13 @@ import { CrewSummary } from "../components/crew/CrewSummary";
 import { InteractiveBodyMap } from "../components/interactive-body/InteractiveBodyMap";
 import { CansRadiationWidget } from "../components/radiation-cans/CansRadiationWidget";
 import { BoneFluidsCard } from "../components/musculoskeletal/BoneFluidsCard";
+import { RecordVitalsDialog } from "../components/vitals/RecordVitalsDialog";
 import { VitalsStrip } from "../components/vitals/VitalsStrip";
 import { useAnatomyModelController } from "../controllers/useAnatomyModelController";
 import { useHealthSessionStore } from "../controllers/useHealthSession.store";
 import { useLiveVitalsController } from "../controllers/useLiveVitalsController";
 import { useRadiationController } from "../controllers/useRadiationController";
+import { useRecordVitalsController } from "../controllers/useRecordVitalsController";
 import { useTelemetryController } from "../controllers/useTelemetryController";
 
 /** Overview: crew, RF-01 body map with zones, live vitals, RF-02 radiation and RF-04 summary. */
@@ -21,6 +23,7 @@ export function MissionOverviewView({ summary }: { summary: DashboardSummaryDto 
   const session = useHealthSessionStore();
   const member = t.selected;
   const live = useLiveVitalsController(member.astronaut.id, member.vitals);
+  const recordVitals = useRecordVitalsController(member.astronaut.id);
 
   return (
     <div className="space-y-6">
@@ -57,6 +60,7 @@ export function MissionOverviewView({ summary }: { summary: DashboardSummaryDto 
         thresholds={t.thresholds}
         source={live.source}
         onOpenTrends={session.openTrends}
+        action={<RecordVitalsDialog key={member.astronaut.id} defaults={member.vitals} pending={recordVitals.isPending} onSubmit={recordVitals.submit} />}
       />
 
       <div className="grid gap-4 xl:grid-cols-2">

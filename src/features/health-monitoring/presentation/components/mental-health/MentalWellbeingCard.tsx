@@ -62,6 +62,13 @@ export function MentalWellbeingCard({
       </CardHeader>
       <CardContent className="grid gap-6 pt-5 lg:grid-cols-2">
         <div className="space-y-4">
+          {evaluation.alerts.length > 0 && (
+            <ul className={cn("space-y-1.5 rounded-md border px-3 py-2.5 text-[12.5px]", evaluation.trend === "CRITICAL" ? "border-critical/30 bg-critical/5 text-critical" : "border-caution/30 bg-caution/5 text-caution")}>
+              {evaluation.alerts.map((a) => (
+                <li key={a}>{a}</li>
+              ))}
+            </ul>
+          )}
           {trend.map((t) => (
             <div key={t.label}>
               <div className="mb-1 flex items-baseline justify-between text-[12.5px]">

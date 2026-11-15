@@ -8,6 +8,7 @@ import type { TelemetryRepositoryPort } from "@/features/health-monitoring/appli
 import { ChangeGravityEnvironmentUseCase } from "@/features/health-monitoring/application/use-cases/change-gravity-environment.use-case";
 import { GetAstronautTelemetryUseCase } from "@/features/health-monitoring/application/use-cases/get-astronaut-telemetry.use-case";
 import { GetVitalHistoryUseCase } from "@/features/health-monitoring/application/use-cases/get-vital-history.use-case";
+import { LogPhysicalStatusUseCase } from "@/features/health-monitoring/application/use-cases/log-physical-status.use-case";
 import { LogMentalCheckinUseCase } from "@/features/health-monitoring/application/use-cases/log-mental-checkin.use-case";
 import { LogRadiationExposureUseCase } from "@/features/health-monitoring/application/use-cases/log-radiation-exposure.use-case";
 import { RecordVitalSignsUseCase } from "@/features/health-monitoring/application/use-cases/record-vital-signs.use-case";
@@ -54,8 +55,9 @@ export const createServerContainer = cache(async () => {
       recordVitalSigns: new RecordVitalSignsUseCase(telemetry, rules, clock),
       logRadiationExposure: new LogRadiationExposureUseCase(telemetry, rules, clock),
       logMentalCheckin: new LogMentalCheckinUseCase(telemetry, rules, clock),
+      logPhysicalStatus: new LogPhysicalStatusUseCase(telemetry, rules, clock),
       validateDailyNutrition: new ValidateDailyNutritionUseCase(telemetry, rules, clock),
-      registerAstronaut: new RegisterAstronautUseCase(telemetry, clock),
+      registerAstronaut: new RegisterAstronautUseCase(telemetry, rules, clock),
       unlinkAstronaut: new UnlinkAstronautUseCase(telemetry),
       getVitalHistory: new GetVitalHistoryUseCase(telemetry, rules),
     },

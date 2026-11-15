@@ -6,10 +6,12 @@ import { runAction } from "@/core/utils/action-result";
 import {
   AstronautIdSchema,
   ChangeGravitySchema,
+  LogExerciseSchema,
   LogRadiationSchema,
   MentalCheckinSchema,
   RecordVitalSignsSchema,
   RegisterAstronautSchema,
+  ReportSymptomsSchema,
   VitalHistoryQuerySchema,
 } from "../../application/dto/record-measurement.dto";
 
@@ -50,6 +52,26 @@ export async function logMentalCheckinAction(input: unknown) {
   return runAction(MentalCheckinSchema, input, async (dto) => {
     const { healthMonitoring } = await createServerContainer();
     const evaluation = await healthMonitoring.logMentalCheckin.execute(dto);
+    refresh();
+    return evaluation;
+  });
+}
+
+/** CU-05: log a countermeasure session against today's gravity-dependent target. */
+export async function logExerciseAction(input: unknown) {
+  return runAction(LogExerciseSchema, input, async (dto) => {
+    const { healthMonitoring } = await createServerContainer();
+    const evaluation = await healthMonitoring.logPhysicalStatus.logExercise(dto);
+    refresh();
+    return evaluation;
+  });
+}
+
+/** CU-05: vision / dizziness self-report. */
+export async function reportSymptomsAction(input: unknown) {
+  return runAction(ReportSymptomsSchema, input, async (dto) => {
+    const { healthMonitoring } = await createServerContainer();
+    const evaluation = await healthMonitoring.logPhysicalStatus.reportSymptoms(dto);
     refresh();
     return evaluation;
   });

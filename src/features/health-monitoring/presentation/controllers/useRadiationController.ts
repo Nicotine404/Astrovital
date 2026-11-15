@@ -17,7 +17,7 @@ export function useRadiationController() {
       }
       if (res.data.shelterRequired) {
         toast.error("Evento de partículas solares · refugio obligatorio", {
-          description: "Tripulación al refugio blindado (tanques de agua). Detector CANS de neutrones por encima del umbral.",
+          description: "Tripulación al refugio blindado (tanques de agua). Al salir: chequeo inmunológico (hemograma y linfocitos).",
           duration: 9000,
         });
       } else toast.warning("Evento SPE registrado", { description: "Dosis añadida a todos los dosímetros." });

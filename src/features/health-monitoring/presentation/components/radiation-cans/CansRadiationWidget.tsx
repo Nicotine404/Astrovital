@@ -1,6 +1,6 @@
 "use client";
 
-import { Loader2, Radiation, ShieldAlert, Sun } from "lucide-react";
+import { Loader2, Microscope, Radiation, ShieldAlert, Sun } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/core/presentation/ui/alert";
 import { Button } from "@/core/presentation/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/core/presentation/ui/card";
@@ -77,8 +77,15 @@ export function CansRadiationWidget({
             <AlertTitle>Refugio obligatorio · evento de partículas solares</AlertTitle>
             <AlertDescription>
               Dirigirse al refugio blindado (tanques de agua y polietileno) hasta que la tasa baje de {RADIATION_LIMITS.doseRate.warning} mSv/día y el flujo
-              de neutrones de {RADIATION_LIMITS.neutronFlux.warning}.
+              de neutrones de {RADIATION_LIMITS.neutronFlux.warning}. Al salir, chequeo inmunológico: hemograma y recuento de linfocitos.
             </AlertDescription>
+          </Alert>
+        )}
+        {!ev.shelterRequired && ev.immuneCheckRequired && (
+          <Alert variant="destructive">
+            <Microscope />
+            <AlertTitle>Dosis acumulada cerca del límite · {(ev.careerFraction * 100).toFixed(0)} %</AlertTitle>
+            <AlertDescription>Dormir en la zona blindada, evitar EVA y hacer un chequeo inmunológico (hemograma y recuento de linfocitos).</AlertDescription>
           </Alert>
         )}
 

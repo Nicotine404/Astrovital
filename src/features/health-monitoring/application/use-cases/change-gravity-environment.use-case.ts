@@ -20,6 +20,7 @@ export class ChangeGravityEnvironmentUseCase {
     const crew = await this.repository.findAll();
     await Promise.all(
       crew.map((t) => {
+        t.setExerciseTarget(this.rules.thresholdsFor(environment).exerciseTargetMinutes);
         t.replaceAssessments(this.rules.recalibrateAssessments(t, environment, fraction));
         return this.repository.save(t);
       })

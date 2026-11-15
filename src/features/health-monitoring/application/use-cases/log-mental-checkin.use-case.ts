@@ -18,6 +18,6 @@ export class LogMentalCheckinUseCase {
     if (!telemetry) throw new DomainError("Tripulante no encontrado", "NOT_FOUND");
     telemetry.logMentalCheckin(createMentalCheckin({ ...input, recordedAt: this.clock.now().toISOString() }));
     await this.repository.save(telemetry);
-    return this.rules.evaluateMental(telemetry.latestCheckin);
+    return this.rules.evaluateMental(telemetry.mentalCheckins);
   }
 }
