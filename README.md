@@ -28,11 +28,12 @@ sembrados con datos de demostración (mismo esquema y mismo mapper que con Supab
 ### Conectar Supabase
 
 1. Copia `.env.example` a `.env.local` y rellena `NEXT_PUBLIC_SUPABASE_URL` y `NEXT_PUBLIC_SUPABASE_ANON_KEY`.
-2. Aplica las migraciones en orden: `supabase/migrations/0001_init.sql` (tablas, vista
-   `latest_vital_signs`, RLS para `authenticated`, publicación Realtime de `vital_signs`) y
-   `0002_cu_gaps.sql` (proteínas y síntomas de visión/mareo).
-3. Carga `supabase/seed.sql`. Para regenerarlo con los datos de demostración:
-   `npx tsx scripts/generate-supabase-seed.ts`.
+2. Aplica las migraciones en orden en el SQL Editor: `supabase/migrations/0001_init.sql` (tablas,
+   vista `latest_vital_signs`, RLS para `authenticated`, publicación Realtime de `vital_signs`),
+   `0002_cu_gaps.sql` (proteínas y síntomas de visión/mareo) y `0003_demo_anon_access.sql`
+   (acceso del rol `anon`, necesario porque la demo no tiene login; **solo para la demo**).
+3. Carga los datos de demostración por la API: `npx tsx scripts/seed-supabase.ts`
+   (o ejecuta `supabase/seed.sql`, que se regenera con `npx tsx scripts/generate-supabase-seed.ts`).
 
 Con las variables definidas, el contenedor de dependencias enlaza automáticamente los
 adaptadores de Supabase y la telemetría en vivo pasa a Supabase Realtime.
