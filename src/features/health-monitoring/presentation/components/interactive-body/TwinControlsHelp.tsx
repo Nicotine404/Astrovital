@@ -1,6 +1,6 @@
 "use client";
 
-import { Hand, Keyboard, Mouse, MousePointerClick, MoveDiagonal, ZoomIn } from "lucide-react";
+import { Hand, Keyboard, Mouse, MousePointerClick, MoveDiagonal, Rotate3d, ZoomIn } from "lucide-react";
 import { HelpDialog } from "@/core/presentation/shared/HelpDialog";
 
 const CONTROLS: { icon: React.ElementType; action: string; how: string }[] = [
@@ -8,7 +8,8 @@ const CONTROLS: { icon: React.ElementType; action: string; how: string }[] = [
   { icon: Mouse, action: "Rotar el cuerpo", how: "Mantén el clic izquierdo y arrastra" },
   { icon: Hand, action: "Desplazar la vista", how: "Mantén el clic derecho y arrastra" },
   { icon: ZoomIn, action: "Acercar o alejar", how: "Rueda del mouse (acerca hacia donde apunta el cursor)" },
-  { icon: Keyboard, action: "Moverte por la escena", how: "W A S D para avanzar y girar · Q E para subir y bajar" },
+  { icon: Keyboard, action: "Moverte por la escena", how: "W S avanzar y retroceder · A D moverte a los lados · Q E subir y bajar" },
+  { icon: Rotate3d, action: "Orbitar con el teclado", how: "Flechas del teclado" },
   { icon: MoveDiagonal, action: "Moverte más rápido", how: "Mantén Shift mientras usas el teclado" },
 ];
 

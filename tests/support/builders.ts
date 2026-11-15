@@ -50,10 +50,10 @@ export const aCheckin = (dayOfMonth: number, sleepHours: number, mood: number, s
   mood,
 });
 
-export const anAstronaut = (over: { exerciseMinutesToday?: number; vitalsAt?: string } = {}) =>
+export const anAstronaut = (over: { exerciseMinutesToday?: number; vitalsAt?: string; vitals?: Partial<VitalSigns> } = {}) =>
   AstronautTelemetry.create({
     astronaut: { id: "a1", name: "Test Astronaut", shortName: "T. Astronaut", initials: "TA", role: "Test", suitId: "S-1", bloodType: "O+", heightCm: 175, note: "" },
-    vitals: aVitals({ recordedAt: over.vitalsAt ?? `${TODAY}T08:00:00.000Z` }),
+    vitals: aVitals({ recordedAt: over.vitalsAt ?? `${TODAY}T08:00:00.000Z`, ...over.vitals }),
     assessments: [],
     radiation: { cumulativeMsv: 0, neutronCumulativeMsv: 0, careerLimitMsv: 600, readings: [] },
     musculoskeletal: aMusculoskeletal({ exerciseMinutesToday: over.exerciseMinutesToday ?? 0 }),

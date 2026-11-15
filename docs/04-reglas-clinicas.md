@@ -2,7 +2,7 @@
 
 Todas las reglas viven en un único lugar: `ClinicalRulesService` ([`clinical-rules.domain-service.ts`](../src/features/health-monitoring/domain/services/clinical-rules.domain-service.ts)). Ninguna otra parte del sistema define umbrales médicos.
 
-> ⚠️ **Aproximaciones para la demo, no validadas clínicamente.** Los órdenes de magnitud siguen la literatura del HRP de NASA (ver [visión](01-vision-alcance.md#recursos-utilizados)), pero las fórmulas lineales y los cortes exactos son decisiones de diseño del equipo ([ADR-0002](adr/0002-umbrales-dependientes-de-gravedad.md)).
+> ⚠️ **Aproximaciones para la demo, no validadas clínicamente.** Los órdenes de magnitud siguen la literatura del HRP de NASA (ver [visión](01-vision-alcance.md#recursos-utilizados)), pero las fórmulas lineales y los cortes exactos son decisiones de diseño del equipo.
 
 ## Semáforo
 
@@ -36,7 +36,7 @@ Se define la **descarga** `u = 1 − g`: la fracción del peso terrestre que el 
 | Marte | Resistencia con carga 45 · Carrera en el hábitat 30 · Cicloergómetro 15 |
 | Tierra | Reacondicionamiento post-vuelo 30 · Caminata 30 |
 
-Referencia: en la ISS se dedican unas 2,5 h diarias al ejercicio con ARED, la cinta T2 y CEVIS.
+Referencia: en la ISS se dedican unas 2,5 h diarias al ejercicio con ARED, la cinta T2 y CEVIS. En un rover no hay máquina de resistencia: ese bloque pasa a "Bandas elásticas y peso corporal" con los mismos minutos.
 
 ## Signos vitales (CU-02)
 
@@ -52,6 +52,8 @@ Referencia: en la ISS se dedican unas 2,5 h diarias al ejercicio con ARED, la ci
 | PIC | ≥ umbral del entorno | ≥ umbral crítico |
 
 Además, al registrar se rechazan los **valores fisiológicamente imposibles** (por ejemplo, frecuencia cardíaca fuera de 20–240) y una diastólica ≥ sistólica.
+
+Todos estos estados colorean las tarjetas, las zonas y el gemelo 3D, y cada indicador fuera de rango genera una alerta con su acción: repetir la medición, comer algo con azúcar si la glucosa está baja, revisar la atmósfera de la cabina si la respiración está alterada, o aplicar el protocolo de fiebre.
 
 ## Musculoesquelético y fluidos (CU-05)
 
@@ -77,6 +79,7 @@ Además, al registrar se rechazan los **valores fisiológicamente imposibles** (
 
 - **Refugio obligatorio** si la tasa o el flujo están en crítico, o si la lectura es de un SPE con tasa fuera de nominal.
 - **Chequeo inmunológico** (hemograma y linfocitos) si hay refugio o si la dosis acumulada está en crítico. En ese caso la zona **Inmune** sube al menos a precaución.
+- Antes de evaluar, cada lectura (externa) se multiplica por el **blindaje del lugar** (ver [Hábitat](#hábitat-blindaje-y-equipo)).
 - Dosis de cada lectura = tasa × horas / 24. Fracción por neutrones = `min(0,6; 0,04 × flujo)` (modelo simplificado).
 
 ## Salud mental (CU-06)
@@ -120,11 +123,11 @@ La gravedad sale del lugar. Además, el lugar decide cuánta radiación externa 
 
 | Nivel | Cuándo |
 |---|---|
-| **Tú mismo** | Toda alerta en precaución |
-| **Con un compañero** | Crítico que se resuelve a bordo: refugio por tormenta solar, chequeo inmunológico, mareo severo, ejercicio muy atrasado |
-| **Avisa a Tierra** | Crítico que necesita criterio médico: PIC, presión, SpO₂, visión, dosis acumulada cerca del límite, tendencia mental de 5 días |
+| **Tú mismo** | Las alertas en precaución, salvo el chequeo inmunológico tras una tormenta solar |
+| **Con un compañero** | Refugio por tormenta solar, chequeo inmunológico posterior, y los críticos que se resuelven a bordo: temperatura, glucosa, mareo severo, ejercicio muy atrasado, densidad ósea y fluid shift |
+| **Avisa a Tierra** | Críticos que necesitan criterio médico: frecuencia cardíaca, frecuencia respiratoria, presión, SpO₂, PIC, visión, dosis acumulada cerca del límite, check-in mental crítico y tendencia mental de 5 días |
 
-Para "Avisa a Tierra" la app muestra el retardo de ida y vuelta del lugar actual (por ejemplo, ~29 min desde Marte).
+Para "Avisa a Tierra" la app muestra el retardo de ida y vuelta del lugar actual: 1 s en órbita, 3 s en la Luna y 28 min en Marte.
 
 ## Misión del día
 

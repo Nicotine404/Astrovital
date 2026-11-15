@@ -1,6 +1,6 @@
 # Casos de uso
 
-Actor único: **astronauta** ([ADR-0004](adr/0004-actor-del-sistema.md)). Todas las evaluaciones usan el entorno gravitacional activo (CU-04).
+Actor único: **astronauta**, que evalúa su propia salud. Todas las evaluaciones usan el lugar activo (CU-04): de él salen la gravedad, el blindaje y el equipo disponible.
 
 ```mermaid
 %%{init: {"flowchart": {"defaultRenderer": "elk"}}}%%
@@ -46,7 +46,7 @@ Los umbrales concretos están en [reglas clínicas](04-reglas-clinicas.md).
 **Objetivo:** conocer los signos vitales actuales y registrar una medición propia.
 
 **Flujo principal**
-1. El sistema muestra los signos vitales en vivo (frecuencia cardíaca, presión, SpO₂, gasto cardíaco, PIC, temperatura) con su estado.
+1. El sistema muestra los signos vitales en vivo (frecuencia cardíaca, presión, SpO₂, gasto cardíaco, PIC, temperatura, glucosa) con su estado. Las mediciones reales llegan por Supabase Realtime; entre una y otra, un sensor simulado varía los valores al azar alrededor de la última real.
 2. El astronauta pulsa "Registrar medición".
 3. El formulario indica, para cada campo, **cómo tomar la medida** a bordo.
 4. El astronauta guarda; el sistema valida rangos fisiológicos, evalúa contra los umbrales del entorno y recalcula el estado de los órganos.
@@ -71,14 +71,15 @@ Los umbrales concretos están en [reglas clínicas](04-reglas-clinicas.md).
 1. El astronauta abre Dosimetría (`/radiation`).
 2. El sistema muestra los medidores de flujo de neutrones (CANS) y tasa de dosis, la dosis de carrera contra el límite de 600 mSv y la curva de dosis acumulada.
 3. El astronauta pulsa "Simular evento SPE".
-4. El sistema suma la dosis a todos los dosímetros y evalúa.
-5. Si la tasa o el flujo superan el nivel crítico: **alerta roja de refugio** ("ve al módulo blindado") y, al salir, **chequeo inmunológico** (hemograma y linfocitos).
+4. El sistema aplica el blindaje del lugar actual a la lectura, suma la dosis a todos los dosímetros y evalúa.
+5. Si corresponde: **alerta roja de refugio** que indica a dónde ir según el lugar (por ejemplo, "al refugio bajo regolito de la base" o "al habitáculo blindado del rover") y, al salir, **chequeo inmunológico** (hemograma y linfocitos) con ayuda de un compañero.
 
 **Flujo alternativo**
 - 5a. La dosis acumulada llega al 80 % del límite: alerta crítica con dormir en la zona blindada, evitar EVA y chequeo inmunológico.
 
 **Criterios de aceptación**
-- Tras simular un SPE aparece la alerta de refugio con la indicación de chequeo inmune.
+- En una base o en un rover de Marte, simular un SPE dispara la alerta de refugio con la indicación de chequeo inmune; en la Tierra, no.
+- En un rover la dosis recibida es mayor que en una base con la misma lectura externa.
 - La zona Inmune pasa a precaución cuando se requiere chequeo inmunológico.
 
 **Implementación:** `CansRadiationWidget`, `useRadiationController`, `LogRadiationExposureUseCase`.
@@ -96,9 +97,10 @@ Los umbrales concretos están en [reglas clínicas](04-reglas-clinicas.md).
 
 **Criterios de aceptación**
 - 0 g → rutina de 150 min (ARED 60 + cinta T2 45 + CEVIS 45); Marte → 90 min; Tierra → 60 min.
+- En un rover la rutina mantiene los minutos, pero el bloque de resistencia pasa a "Bandas elásticas y peso corporal".
 - Una sistólica de 135 mmHg es nominal en la Tierra (umbral 140) y precaución en 0 g (umbral 130).
 
-**Implementación:** `GravityEnvironmentBar`, `useGravityController`, `ChangeGravityEnvironmentUseCase`, `GravityEnvironment` (value object), `ClinicalRulesService.thresholdsFor`.
+**Implementación:** `HabitatSelector`, `useHabitatController`, `ChangeHabitatUseCase`, `Habitat` y `GravityEnvironment` (value objects), `ClinicalRulesService.thresholdsFor` y `countermeasuresFor`.
 
 ---
 
@@ -116,6 +118,7 @@ Los umbrales concretos están en [reglas clínicas](04-reglas-clinicas.md).
 **Criterios de aceptación**
 - Visión "moderado" con fluid shift fuera de rango → **crítico**; la zona Neurológica y los ojos lo reflejan.
 - Registrar un bloque de 45 min sube el contador de ejercicio en 45.
+- Los minutos de ejercicio vuelven a 0 al cambiar de día.
 
 **Implementación:** `BoneFluidsCard`, `usePhysicalController`, `LogPhysicalStatusUseCase`.
 
@@ -153,3 +156,18 @@ Los umbrales concretos están en [reglas clínicas](04-reglas-clinicas.md).
 - Superar 2000 mg de calcio genera una alerta de riesgo de litiasis renal.
 
 **Implementación:** `NutritionGoalsCard`, `useNutritionController`, `ValidateDailyNutritionUseCase`.
+
+---
+
+## Funciones transversales
+
+Responden a lo que pide el enunciado del reto en todos los casos de uso.
+
+**Guías «?».** Cada indicador y cada tarjeta tienen un botón «?» que explica qué es, cómo se mide a bordo, por qué importa en el espacio y qué hacer si sale mal. El visor 3D tiene su propia leyenda de controles.
+*Implementación:* `HelpDialog`, `IndicatorHelp`, `content/indicator-guides.ts`, `TwinControlsHelp`.
+
+**Alertas y quién actúa.** Cada alerta dice a quién le toca: al astronauta (precaución), a un compañero (crítico que se resuelve a bordo) o a los médicos de vuelo en Tierra (crítico que necesita criterio médico), con el retardo de ida y vuelta del lugar actual.
+*Implementación:* `AlertsPanel`, `ClinicalAlert.escalation` en `ClinicalRulesService`.
+
+**Misión del día.** Cinco tareas diarias con XP, racha de rutina completa, insignias y una meta cooperativa de tripulación. Los recordatorios de lo pendiente aparecen como avisos periódicos.
+*Implementación:* `DailyMissionService`, `DailyMissionCard`, `useRemindersController`.

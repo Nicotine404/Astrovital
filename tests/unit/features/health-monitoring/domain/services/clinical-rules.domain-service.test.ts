@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { ClinicalRulesService } from "@/features/health-monitoring/domain/services/clinical-rules.domain-service";
 import { GravityEnvironment } from "@/features/health-monitoring/domain/value-objects/gravity-environment.vo";
 import { Habitat } from "@/features/health-monitoring/domain/value-objects/habitat.vo";
-import { aCheckin, aDosimetry, aMusculoskeletal, aVitals, TODAY } from "../../../../../support/builders";
+import { aCheckin, aDosimetry, aMusculoskeletal, anAstronaut, aVitals, TODAY } from "../../../../../support/builders";
 
 const ZERO_G = GravityEnvironment.from("ZERO_G");
 const MARS = GravityEnvironment.from("MARTIAN");
@@ -61,6 +61,50 @@ describe("ClinicalRulesService · thresholds by gravity (CU-04)", () => {
     assert.equal(rover[0].label, "Bandas elásticas y peso corporal");
     assert.equal(base[0].label, "Resistencia con carga");
     assert.equal(rover.reduce((n, r) => n + r.minutes, 0), 90);
+  });
+});
+
+describe("ClinicalRulesService · vital-sign alerts (CU-02)", () => {
+  it("raises a self-care alert for low glucose and a crewmate alert when it is critical", () => {
+    // Arrange
+    const rules = new ClinicalRulesService();
+    const low = anAstronaut({ vitals: { glucose: 65 } });
+    const critical = anAstronaut({ vitals: { glucose: 50 } });
+
+    // Act
+    const lowAlert = rules.evaluate(low, MARS, 0.5).alerts.find((a) => a.message.startsWith("Glucosa baja"));
+    const criticalAlert = rules.evaluate(critical, MARS, 0.5).alerts.find((a) => a.message.startsWith("Glucosa baja"));
+
+    // Assert
+    assert.equal(lowAlert?.severity, "WARNING");
+    assert.equal(lowAlert?.escalation, "SELF");
+    assert.equal(criticalAlert?.severity, "CRITICAL");
+    assert.equal(criticalAlert?.escalation, "CREW");
+  });
+
+  it("sends a critical heart rate to the flight surgeons", () => {
+    // Arrange
+    const rules = new ClinicalRulesService();
+    const astronaut = anAstronaut({ vitals: { heartRate: 130 } });
+
+    // Act
+    const alert = rules.evaluate(astronaut, MARS, 0.5).alerts.find((a) => a.message.startsWith("Frecuencia cardíaca"));
+
+    // Assert
+    assert.equal(alert?.severity, "CRITICAL");
+    assert.equal(alert?.escalation, "GROUND");
+  });
+
+  it("raises no vital-sign alert when everything is in range", () => {
+    // Arrange
+    const rules = new ClinicalRulesService();
+    const astronaut = anAstronaut();
+
+    // Act
+    const alerts = rules.evaluate(astronaut, MARS, 0.5).alerts.filter((a) => a.zone === "CARDIO" || a.zone === "IMMUNE");
+
+    // Assert
+    assert.deepEqual(alerts, []);
   });
 });
 

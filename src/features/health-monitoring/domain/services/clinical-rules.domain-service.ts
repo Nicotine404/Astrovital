@@ -373,6 +373,39 @@ export class ClinicalRulesService {
     push(vitals.intracranialPressure, "NEURO", `PIC ${t.vitals.intracranialPressure} mmHg sobre el umbral de ${th.icpWarning} mmHg para ${env.label}: riesgo de SANS.`, "GROUND");
     push(vitals.bloodPressure, "CARDIO", `Presión arterial ${t.vitals.systolic}/${t.vitals.diastolic} mmHg fuera de rango para ${env.label}.`, "GROUND");
     push(vitals.spo2, "CARDIO", `Saturación de oxígeno baja (${t.vitals.spo2} %).`, "GROUND");
+    const v = t.vitals;
+    push(
+      vitals.heartRate,
+      "CARDIO",
+      vitals.heartRate === "CRITICAL"
+        ? `Frecuencia cardíaca ${v.heartRate} lpm: repite en reposo con un compañero y envía el ECG a los médicos de vuelo.`
+        : `Frecuencia cardíaca ${v.heartRate} lpm fuera de rango: descansa y repite en reposo en 10 min.`,
+      "GROUND"
+    );
+    push(
+      vitals.respiratoryRate,
+      "CARDIO",
+      vitals.respiratoryRate === "CRITICAL"
+        ? `Frecuencia respiratoria ${v.respiratoryRate} rpm: revisa el soporte vital de la cabina y avisa a los médicos de vuelo.`
+        : `Frecuencia respiratoria ${v.respiratoryRate} rpm fuera de rango: revisa la atmósfera de la cabina y repite en 10 min.`,
+      "GROUND"
+    );
+    push(
+      vitals.temperature,
+      "IMMUNE",
+      v.coreTemperature < 36
+        ? `Temperatura baja (${v.coreTemperature} °C): abrígate y repite en 30 min.`
+        : vitals.temperature === "CRITICAL"
+          ? `Fiebre alta (${v.coreTemperature} °C): un compañero debe confirmar la medición y aplicar el protocolo de fiebre del botiquín.`
+          : `Temperatura ${v.coreTemperature} °C: descansa, hidrátate y repite en 1 h.`
+    );
+    push(
+      vitals.glucose,
+      "IMMUNE",
+      v.glucose < 100
+        ? `Glucosa baja (${v.glucose} mg/dL): come algo con azúcar ahora y repite en 15 min.${vitals.glucose === "CRITICAL" ? " Avisa a un compañero." : ""}`
+        : `Glucosa alta (${v.glucose} mg/dL): repite la medición y revisa lo que comiste hoy.${vitals.glucose === "CRITICAL" ? " Avisa a un compañero." : ""}`
+    );
     push(musculoskeletal.boneDensity, "MUSCULOSKELETAL", `Densidad ósea proyectada a 30 días: ${musculoskeletal.projectedBoneDeltaPct} %.`);
     push(musculoskeletal.fluidShift, "MUSCULOSKELETAL", `Desplazamiento de fluidos ${t.musculoskeletal.cephalicFluidShiftMmHg} mmHg frente a ${th.expectedFluidShiftMmHg} mmHg esperados.`);
     push(musculoskeletal.exercise, "MUSCULOSKELETAL", `Ejercicio por debajo del ritmo diario (${musculoskeletal.exerciseCompliancePct} % de ${musculoskeletal.exerciseTargetMinutes} min para ${env.label}).`);

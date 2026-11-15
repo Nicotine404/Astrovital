@@ -14,7 +14,7 @@ En misiones largas (Luna, Marte) la tripulación está expuesta a los **cinco pe
 |---|---|---|
 | Radiación espacial | Cáncer, daño celular, inmunodepresión | CU-03 Radiación CANS |
 | Aislamiento y confinamiento | Estrés, mal sueño, ánimo bajo | CU-06 Salud mental |
-| Distancia de la Tierra | Sin evacuación ni consulta inmediata (retardo de comunicación) | Evaluación autónoma en el dispositivo |
+| Distancia de la Tierra | Sin evacuación ni consulta inmediata (retardo de comunicación) | Guías para actuar sin médico y aviso a Tierra con el retardo de ida y vuelta |
 | Campos de gravedad alterados | Pérdida ósea y muscular, desplazamiento de fluidos, SANS | CU-04 Gravedad, CU-05 Musculoesquelético |
 | Entorno cerrado y hostil | Cambios inmunes, nutrición insuficiente | CU-07 Nutrición, CU-02 Signos vitales |
 
@@ -24,14 +24,15 @@ El astronauta **no es médico**: necesita saber qué medir, cómo medirlo, qué 
 
 Un panel de salud que:
 
-1. **Recoge indicadores** (presión, frecuencia cardíaca, glucosa, temperatura, sueño, ánimo, radiación, nutrición, ejercicio, síntomas) por entrada manual, sensores (simulados) o imágenes.
-2. **Los evalúa con reglas clínicas que cambian según la gravedad** del entorno (0 g, Luna, Marte, Tierra).
+1. **Recoge indicadores** (presión, frecuencia cardíaca, glucosa, temperatura, sueño, ánimo, radiación, nutrición, ejercicio, síntomas) por entrada manual, sensores (simulados) o imágenes (análisis simulado).
+2. **Los evalúa con reglas clínicas que cambian según dónde está el astronauta**: nave, estación, base o rover en la Luna o Marte, o la Tierra. El lugar fija la gravedad, el blindaje frente a la radiación y el equipo de ejercicio disponible.
 3. **Los muestra con semáforo y gráficas**: un gemelo digital 3D del cuerpo donde cada zona se puede clicar, tendencias de 28 días y tarjetas por sistema.
-4. **Dice qué hacer**: alertas con acción concreta (refugio, chequeo inmune, rutina de ejercicio, repetir la medición, avisar a los médicos de vuelo).
+4. **Dice qué hacer y quién actúa**: cada alerta trae una acción concreta (refugio, chequeo inmune, rutina, repetir la medición) y a quién le toca: al astronauta, a un compañero o a los médicos de vuelo en Tierra.
+5. **Enseña y motiva**: un botón «?» por indicador explica qué es, cómo medirlo a bordo y por qué importa en el espacio; la misión del día suma tareas, recordatorios, rachas e insignias.
 
 ## Actor
 
-**El astronauta**, que evalúa su propia salud. Ver [ADR-0004](adr/0004-actor-del-sistema.md).
+**El astronauta**, que evalúa su propia salud, tal como pide el enunciado. La vista de tripulación existe como apoyo (por ejemplo, para ayudar a un compañero), no como actor principal.
 
 ## Alcance
 
@@ -59,8 +60,8 @@ Un panel de salud que:
 
 ## Supuestos
 
-- Los datos de telemetría son **sintéticos** (seeds deterministas), con rangos plausibles.
-- Sin variables de entorno de Supabase, la app funciona igual con adaptadores en memoria ([ADR-0003](adr/0003-datos-simulados-y-modo-sin-backend.md)).
+- Los datos de telemetría son **sintéticos** (seeds deterministas), con rangos plausibles. Entre mediciones reales, un sensor simulado varía los signos vitales al azar; esos valores no se guardan.
+- La persistencia es **Supabase**. Sin sus variables de entorno, la app funciona igual con adaptadores en memoria y los mismos datos de demostración.
 - La jornada de vigilia es de 07:00 a 23:00 UTC (hora de misión): la nutrición y el ejercicio se evalúan contra el ritmo del día.
 
 ## Recursos utilizados
