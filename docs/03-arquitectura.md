@@ -18,6 +18,7 @@ AstroVital combina **Clean Architecture**, **vertical slicing por feature** y **
 ## Contexto (C4 nivel 1)
 
 ```mermaid
+%%{init: {"flowchart": {"defaultRenderer": "elk"}}}%%
 flowchart LR
   astro((Astronauta))
   app[AstroVital<br/>panel de salud en el dispositivo]
@@ -34,6 +35,7 @@ flowchart LR
 ## Contenedores (C4 nivel 2)
 
 ```mermaid
+%%{init: {"flowchart": {"defaultRenderer": "elk"}}}%%
 flowchart TB
   subgraph browser[Navegador]
     views[Views + componentes puros<br/>shadcn/ui · gemelo 3D]
@@ -64,6 +66,7 @@ flowchart TB
 Las dependencias apuntan siempre hacia el dominio.
 
 ```mermaid
+%%{init: {"flowchart": {"defaultRenderer": "elk"}}}%%
 flowchart TB
   P[Presentación<br/>actions · controllers · components · views]
   A[Aplicación<br/>use cases · puertos · DTOs]
@@ -92,6 +95,7 @@ flowchart TB
 El agregado raíz del núcleo es `AstronautTelemetry`: todo el estado biomédico de un astronauta. Se modifica solo a través de sus métodos (`recordVitals`, `logRadiation`, `logExercise`, `reportSymptoms`, `logMentalCheckin`, `logNutrition`, `setExerciseTarget`) y se guarda completo.
 
 ```mermaid
+%%{init: {"flowchart": {"defaultRenderer": "elk"}}}%%
 classDiagram
   class AstronautTelemetry {
     <<aggregate root>>
@@ -169,6 +173,7 @@ supabase/
 Recorre todas las capas: es el flujo de referencia.
 
 ```mermaid
+%%{init: {"flowchart": {"defaultRenderer": "elk"}}}%%
 sequenceDiagram
   actor A as Astronauta
   participant V as GravityEnvironmentBar
@@ -201,6 +206,7 @@ sequenceDiagram
 ### Tormenta solar y refugio (CU-03)
 
 ```mermaid
+%%{init: {"flowchart": {"defaultRenderer": "elk"}}}%%
 sequenceDiagram
   actor A as Astronauta
   participant C as useRadiationController

@@ -3,6 +3,7 @@
 Actor único: **astronauta** ([ADR-0004](adr/0004-actor-del-sistema.md)). Todas las evaluaciones usan el entorno gravitacional activo (CU-04).
 
 ```mermaid
+%%{init: {"flowchart": {"defaultRenderer": "elk"}}}%%
 flowchart LR
   A((Astronauta))
   A --> CU1[CU-01 Visualizar estado anatómico<br/>y evolución biométrica]
