@@ -1,93 +1,120 @@
 # AstroVital
 
-Herramienta visual para que un astronauta evalúe su propia salud durante una misión espacial y sepa qué hacer.
+A visual tool designed to help astronauts assess their own health during space missions and determine the appropriate course of action.
 
-Propuesta para el reto *Create Health Monitoring Software for Astronauts on Space Missions* (NASA Space Apps Challenge 2026).
+Proposal for the **Create Health Monitoring Software for Astronauts on Space Missions** challenge at NASA Space Apps Challenge 2026.
 
-## Documentación
+## Documentation
 
-| Documento | Responde |
+| Document | Purpose |
 |---|---|
-| [Visión y alcance](docs/01-vision-alcance.md) | Qué es, para quién, qué problema resuelve y qué recursos usa |
-| [Casos de uso](docs/02-casos-de-uso.md) | Qué hace: CU-01 a CU-07 y funciones transversales, con criterios de aceptación |
-| [Arquitectura](docs/03-arquitectura.md) | Cómo está construido: stack, capas, slices y carpetas |
-| [Reglas clínicas](docs/04-reglas-clinicas.md) | De dónde salen los umbrales, las alertas y la misión del día |
+| [Vision and Scope](docs/01-vision-alcance.md) | Defines what the system is, who it is designed for, the problem it addresses, and the resources it uses |
+| [Use Cases](docs/02-casos-de-uso.md) | Describes system functionality: UC-01 through UC-07, cross-cutting features, and acceptance criteria |
+| [Architecture](docs/03-arquitectura.md) | Explains the technical implementation, including the technology stack, architectural layers, vertical slices, and directory structure |
+| [Clinical Rules](docs/04-reglas-clinicas.md) | Explains the sources of clinical thresholds, alerts, and daily mission recommendations |
 
-## Stack
+## Technology Stack
 
-- **Next.js 15** (App Router, Server Components, Server Actions) + **React 19** + TypeScript estricto
-- **Tailwind CSS v4** + primitivas **shadcn/ui** (`src/core/presentation/ui`)
-- **Zustand** (estado de UI) · `useOptimistic` / `useTransition` · **Zod** (DTOs)
-- **Recharts** vía `ui/chart.tsx` · **sonner** (alertas y recordatorios)
-- **three.js** + **@react-three/fiber** + **drei**: gemelo digital 3D
-- **Supabase** (`@supabase/ssr`): PostgreSQL, RLS y Realtime. No hay backend propio: la lógica corre en Server Components y Server Actions (funciones serverless al desplegar)
+- **Next.js 15** (App Router, Server Components, Server Actions) + **React 19** + strict TypeScript
+- **Tailwind CSS v4** + **shadcn/ui** primitives (`src/core/presentation/ui`)
+- **Zustand** (UI state management) · `useOptimistic` / `useTransition` · **Zod** (DTO validation)
+- **Recharts** via `ui/chart.tsx` · **sonner** (alerts and reminders)
+- **three.js** + **@react-three/fiber** + **drei**: 3D digital twin
+- **Supabase** (`@supabase/ssr`): PostgreSQL, Row-Level Security (RLS), and Realtime. No dedicated backend is required: application logic runs through Server Components and Server Actions (serverless functions when deployed).
 
-## Desarrollo
+## Development
 
 ```bash
 npm install
 npm run dev
 ```
 
-Abre http://localhost:3000.
+Open http://localhost:3000.
 
-### Conectar Supabase
+### Connecting Supabase
 
-1. Copia `.env.example` a `.env.local` y rellena `NEXT_PUBLIC_SUPABASE_URL` y `NEXT_PUBLIC_SUPABASE_ANON_KEY`.
-2. El esquema (tablas, RLS y publicación Realtime de `vital_signs`) vive en la instancia de Supabase del equipo.
-3. Para cargar o reiniciar los datos de demostración: `npm run db:seed`.
+1. Copy `.env.example` to `.env.local` and provide the values for `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY`.
+2. The database schema (tables, RLS policies, and Realtime publication for `vital_signs`) is hosted in the team's Supabase instance.
+3. To load or reset the demonstration data, run: `npm run db:seed`.
 
-Con las variables definidas, el contenedor de dependencias usa los adaptadores de Supabase y los signos vitales en vivo llegan por Realtime. Sin ellas, la app funciona con adaptadores en memoria y los mismos datos de demostración.
+When the environment variables are configured, the dependency container uses Supabase adapters, and real-time vital signs are delivered through Supabase Realtime.
 
-### Scripts
+Without these variables, the application runs using in-memory adapters and the same demonstration dataset.
 
-| Comando | Para qué |
+### Available Scripts
+
+| Command | Description |
 |---|---|
-| `npm run dev` | Servidor de desarrollo |
-| `npm run build` | Build de producción |
-| `npm run typecheck` · `npm run lint` | Tipos y lint |
-| `npm test` | Tests unitarios del dominio (`tests/`, patrón Arrange-Act-Assert, `node:test`) |
-| `npm run db:seed` | Carga los datos de demostración en Supabase por la API |
-| `npm run db:seed-sql` | Genera `supabase/seed.sql` con los mismos datos |
-| `node scripts/build-anatomy.mjs <carpeta>` | Reconstruye el modelo 3D desde BodyParts3D (ver `public/models/README.md`) |
+| `npm run dev` | Starts the development server |
+| `npm run build` | Generates a production build |
+| `npm run typecheck` · `npm run lint` | Runs type checking and linting |
+| `npm test` | Runs domain unit tests (`tests/`), following the Arrange-Act-Assert pattern and using `node:test` |
+| `npm run db:seed` | Loads demonstration data into Supabase through its API |
+| `npm run db:seed-sql` | Generates `supabase/seed.sql` containing the same demonstration data |
+| `node scripts/build-anatomy.mjs <folder>` | Rebuilds the 3D anatomical model from BodyParts3D (see `public/models/README.md`) |
 
-## Arquitectura
+## Architecture
 
-Clean Architecture + vertical slicing + DDD táctico. Detalle en [docs/03-arquitectura.md](docs/03-arquitectura.md).
+Clean Architecture + Vertical Slicing + Tactical Domain-Driven Design (DDD).
+
+See [docs/03-arquitectura.md](docs/03-arquitectura.md) for further details.
 
 ```text
 src/
-  app/(dashboard)/            Rutas: / · /crew · /diagnostics · /medkit · /radiation · /environment · /wellbeing
+  app/(dashboard)/            Routes: / · /crew · /diagnostics · /medkit · /radiation · /environment · /wellbeing
   core/
-    infrastructure/           supabase/ (SSR y navegador) · di/ (contenedores) · clock/
+    infrastructure/           supabase/ (SSR and browser) · di/ (dependency injection containers) · clock/
     presentation/             ui/ (shadcn) · layouts/ · shared/
     utils/                    cn.ts · action-result.ts
   features/
-    health-monitoring/        Núcleo: CU-01 … CU-07
-    clinical-diagnostics/     Diagnóstico asistido (simulado)
-    mission-ops/              Botiquín y soporte vital (ECLSS)
-tests/                        Tests unitarios
-scripts/                      Seed de Supabase y build del modelo 3D
+    health-monitoring/        Core functionality: UC-01 … UC-07
+    clinical-diagnostics/     Assisted diagnostics (simulated)
+    mission-ops/              Medical kit and Environmental Control and Life Support System (ECLSS)
+tests/                        Unit tests
+scripts/                      Supabase seeding and 3D model generation
 ```
 
-Reglas:
+**Architectural principles:**
 
-- El **dominio** no importa React, Next ni Supabase. Los umbrales clínicos viven en `ClinicalRulesService` y se recalculan según el lugar (nave, estación, base o rover en la Luna o Marte, Tierra).
-- Los **componentes** son puros (props + callbacks). Datos y estado viven en los **controllers**.
-- La conversión snake_case ↔ camelCase solo ocurre en los `*.mapper.ts`.
-- Adaptadores y casos de uso se instancian únicamente en `core/infrastructure/di`.
+- The **domain layer** does not depend on React, Next.js, or Supabase. Clinical thresholds are managed by `ClinicalRulesService` and recalculated according to the astronaut's location (spacecraft, space station, lunar or Martian base, rover, or Earth).
+- **Components** are pure and receive data through props and callbacks. Data and application state are managed by **controllers**.
+- Conversion between `snake_case` and `camelCase` occurs exclusively within `*.mapper.ts` files.
+- Adapters and use cases are instantiated exclusively within `core/infrastructure/di`.
 
-## Paleta "Deep Field"
+## "Deep Field" Color Palette
 
-Neutros grafito fríos, un único acento azul acero (`--primary`) para interacción y una escala clínica reservada (`--nominal`, `--caution`, `--critical`) que siempre va acompañada de icono y etiqueta. Tokens en `src/app/globals.css`.
+Cool graphite neutrals, a single steel-blue accent (`--primary`) for interactive elements, and a dedicated clinical status scale (`--nominal`, `--caution`, `--critical`).
 
-## Gemelo digital
+Each clinical status is always accompanied by an icon and a descriptive label to ensure clear and accessible communication.
 
-Modelo anatómico real de **BodyParts3D** (CC BY-SA 2.1 JP): piel, 12 sistemas de órganos y 11 regiones del esqueleto. Todo es seleccionable con clic, en el visor o desde el inspector. Las zonas clínicas (cardiopulmonar, neurológica, inmune y metabólica, músculo-esquelética) aíslan sus estructuras y abren tendencias de 28 días.
+Design tokens are defined in `src/app/globals.css`.
 
-- Controles: arrastrar para rotar, clic derecho para desplazar, rueda para acercar hacia el cursor, W/S para avanzar y retroceder, A/D para moverse a los lados, Q/E para subir y bajar, flechas para orbitar y Shift para ir más rápido. El botón «?» del visor muestra esta leyenda.
-- Capas (piel, órganos, esqueleto, vasos) y vistas predefinidas.
+## Digital Twin
 
-## Licencia
+A realistic anatomical model based on **BodyParts3D** (CC BY-SA 2.1 JP), featuring:
 
-Código bajo licencia MIT (ver `LICENSE`). El modelo anatómico `public/models/anatomy.bin` es un derivado de BodyParts3D y mantiene su licencia CC BY-SA 2.1 JP.
+- Skin
+- 12 organ systems
+- 11 skeletal regions
+
+All anatomical structures are selectable, either directly within the 3D viewer or through the inspector panel.
+
+Clinical zones (cardiopulmonary, neurological, immune and metabolic, and musculoskeletal) isolate their corresponding anatomical structures and provide access to 28-day health trends.
+
+**Navigation controls:**
+
+- Drag to rotate the model.
+- Right-click and drag to pan.
+- Scroll to zoom toward the cursor.
+- `W` / `S` to move forward and backward.
+- `A` / `D` to move sideways.
+- `Q` / `E` to move up and down.
+- Arrow keys to orbit the model.
+- `Shift` to increase movement speed.
+
+The viewer's **"?"** button displays the complete navigation guide.
+- Layers (skin, organs, skeleton, and blood vessels) and predefined views.
+
+## License
+
+The source code is licensed under the MIT License (see `LICENSE`). The anatomical model `public/models/anatomy.bin` is a derivative of BodyParts3D and retains its original **CC BY-SA 2.1 JP** license.
