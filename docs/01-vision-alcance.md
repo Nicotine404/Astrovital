@@ -45,7 +45,7 @@ Un panel de salud que:
 - CU-06 Gestionar salud mental y sueño
 - CU-07 Gestionar ingesta nutricional
 
-**Extras implementados, fuera de los CU** (aportan a la demo; ver [estado](05-estado.md)):
+**Extras implementados, fuera de los CU** (aportan a la demo):
 
 - Diagnóstico asistido por IA sobre archivos clínicos (imágenes, audio, PDF): **simulado**.
 - Botiquín y soporte vital de cabina (ECLSS): datos de demostración.

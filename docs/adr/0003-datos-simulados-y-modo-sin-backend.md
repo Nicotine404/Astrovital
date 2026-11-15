@@ -22,5 +22,5 @@ No hay sensores reales ni historial clínico real de astronautas. El jurado y el
 
 - La demo funciona sin red ni base de datos.
 - El estado en memoria dura lo que dura el proceso del servidor: se pierde al reiniciar.
-- **Riesgo de credibilidad:** la pantalla de Diagnóstico IA muestra un nombre de modelo y una latencia que no son reales. Hay que marcarlo como simulación en la UI y en la presentación ([estado](../05-estado.md)).
+- **Riesgo de credibilidad:** la pantalla de Diagnóstico IA muestra un nombre de modelo y una latencia que no son reales. Hay que marcarlo como simulación en la UI y en la presentación.
 - Usar datos reales (por ejemplo de OSDR) implica solo un adaptador nuevo, no cambios en el dominio.

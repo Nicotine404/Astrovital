@@ -1,6 +1,6 @@
 # Documentación de AstroVital
 
-Leer en este orden (≈ 15 min en total):
+Leer en este orden (≈ 12 min en total):
 
 | # | Documento | Responde |
 |---|---|---|
@@ -8,7 +8,6 @@ Leer en este orden (≈ 15 min en total):
 | 2 | [Casos de uso](02-casos-de-uso.md) | ¿Qué hace? CU-01…CU-07 con criterios de aceptación |
 | 3 | [Arquitectura](03-arquitectura.md) | ¿Cómo está construido? Capas, slices, diagramas y flujos |
 | 4 | [Reglas clínicas](04-reglas-clinicas.md) | ¿De dónde salen los umbrales y las alertas? |
-| 5 | [Estado](05-estado.md) | ¿Qué funciona hoy, qué es simulado y qué falta? |
 | — | [Decisiones (ADR)](adr/) | ¿Por qué se hizo así? |
 
 Los diagramas están en [Mermaid](https://mermaid.js.org/) y GitHub los muestra directamente.
